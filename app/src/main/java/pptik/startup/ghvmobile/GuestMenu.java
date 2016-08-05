@@ -1,5 +1,6 @@
 package pptik.startup.ghvmobile;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -37,7 +38,8 @@ import pptik.startup.ghvmobile.Support.CustomAdapter;
 import pptik.startup.ghvmobile.Support.ProfileRelawan;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
-
+import pptik.startup.ghvmobile.Utilities.DrawerUtil;
+import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 /**
  * Created by GIGABYTE on 27/06/2016.
  */
@@ -61,26 +63,25 @@ public class GuestMenu extends AppCompatActivity {
     private EditText inputCode;
     private CustomAdapter mAdapter;
     private TextView bt,bt2;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String LEVEL_ID = "roleId";
-    public static final String BSTS_ID = "userId";
-    public static final String USER_ID="UsErId";
+    public int user_ID;
     SharedPreferences prefs;
+    public boolean status;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guest_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         applicationContext = this.getApplicationContext();
+
         bt=(TextView) findViewById(R.id.btn_jadi_relawan) ;
         bt2=(TextView) findViewById(R.id.btn_news_program_issue) ;
-        prefs = getSharedPreferences("UserDetails",
+        prefs = getSharedPreferences(ApplicationConstants.USER_PREFS_NAME,
                 Context.MODE_PRIVATE);
-        String registrationId = prefs.getString(REG_ID, "");
-        String theRole = prefs.getString(LEVEL_ID, "");
-        int user_ID=prefs.getInt(USER_ID,0);
-        checkstatusdaftar(user_ID);
+        String registrationId = prefs.getString(ApplicationConstants.REG_ID, "");
+        String theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
+
+       // checkstatusdaftar();
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +115,7 @@ public class GuestMenu extends AppCompatActivity {
             }
 
         }, delay, period);
+        new DrawerUtil(this, toolbar, 0).initDrawerGuest();
     }
 
     private void AnimateandSlideShow() {
@@ -133,43 +135,23 @@ public class GuestMenu extends AppCompatActivity {
 
     }
 
-    private void checkstatusdaftar(int user_id){
+    public void checkstatusdaftar(final Context __context){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(ApplicationConstants.API_GET_STATUS_DAFTAR+user_id,
+
+        client.get(ApplicationConstants.API_GET_STATUS_DAFTAR+new GetRole(__context).getuserid(),
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
                         Log.i("response login : ", response);
+                        Log.i("response ID : ", String.valueOf(new GetRole(__context).getuserid()));
 
                         try {
                             JSONObject jObj = new JSONObject(response);
-                            boolean status = jObj.getBoolean("status");
+                            status = jObj.getBoolean("status");
                             if (status) {
-
-                                bt.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View v) {
-                                //TODO: Replace ugly dialog : DONE!, Remove this shits below if not necessary
-                                /*        new AlertDialog.Builder(GuestMenu.this)
-                                                .setTitle("Menunggu Persetujuan Admin")
-                                                .setMessage("Edit data?")
-                                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        Intent intent = new Intent(getApplicationContext(), ProfileRelawan.class);
-                                                        startActivity(intent);
-                                                        finish();
-                                                    }
-                                                })
-                                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-
-                                                    }
-                                                })
-                                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                                .show();
-                                                */
-                                        final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(GuestMenu.this);
+                                        final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(__context);
                                         alertDialog.setTitle("Info");
                                         alertDialog.setCancelable(false);
                                         alertDialog.setMessage("Maaf, Akun Anda sedang dalam verifikasi Admin." +
@@ -181,24 +163,17 @@ public class GuestMenu extends AppCompatActivity {
                                         });
                                         alertDialog.setNegativeButton("Edit Data Pendaftaran", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Intent intent = new Intent(getApplicationContext(), ProfileRelawan.class);
-                                                startActivity(intent);
-                                                finish();
+                                                Intent intent = new Intent(__context, ProfileRelawan.class);
+                                                __context.startActivity(intent);
+                                                ((Activity)__context).finish();
                                             }
                                         });
                                         alertDialog.show();
-                                    }
-                                });
                             } else {
+                                        Intent intent = new Intent(__context, DaftarRelawan.class);
+                                __context.startActivity(intent);
+                                ((Activity)__context).finish();
 
-                                bt.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getApplicationContext(), DaftarRelawan.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -218,20 +193,20 @@ public class GuestMenu extends AppCompatActivity {
 
                         // When Http response code is '404'
                         if (statusCode == 404) {
-                            Toast.makeText(getApplicationContext(),
+                            Toast.makeText(__context,
                                     "Requested resource not found",
                                     Toast.LENGTH_LONG).show();
                         }
                         // When Http response code is '500'
                         else if (statusCode == 500) {
-                            Toast.makeText(getApplicationContext(),
+                            Toast.makeText(__context,
                                     "Something went wrong at server end",
                                     Toast.LENGTH_LONG).show();
                         }
                         // When Http response code other than 404, 500
                         else {
                             Toast.makeText(
-                                    getApplicationContext(),
+                                    __context,
                                     "Unexpected Error occcured! [Most common Error: Device might "
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
                                     Toast.LENGTH_LONG).show();
@@ -239,7 +214,7 @@ public class GuestMenu extends AppCompatActivity {
                     }
                 });
     }
-    @Override
+  /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_index, menu);
@@ -261,7 +236,7 @@ public class GuestMenu extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
