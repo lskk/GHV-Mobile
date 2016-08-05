@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/relawan_activity"
+    android:background="@color/gray1"
+    tools:context=".RelawanMenu">
+
+    <LinearLayout
+        android:id="@+id/mainLay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:layout_margin="7dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:gravity="center"
+                android:background="@drawable/circle_bg_primary"
+                android:id="@+id/btn_news_program_issue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PROGRAM/\nISSUE"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorPrimaryDark" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@id/mainLay"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_common_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal" >
+        <ImageView
+            android:padding="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lets_act_new" />
+
+
+        <com.bluejamesbond.text.DocumentView
+            xmlns:ext="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            ext:documentView_text="Sebuah ajakan bagi masyarakat Indonesia di mana pun berada, untuk membuktikan kepedulian kita sebagai bangsa. Bersama kita berkolaborasi dalam berbagai bentuk kepedulian sebagai solusi isu-isu kemanusiaan baik di tanah air, maupun manca negara."
+            ext:documentView_textAlignment="left"
+            ext:documentView_textColor="@color/gray1"
+            ></com.bluejamesbond.text.DocumentView>
+    </LinearLayout>
+
+
+</RelativeLayout>

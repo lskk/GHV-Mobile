@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="community-material-typeface-1.5.54.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz/community-material-typeface/1.5.54.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz/community-material-typeface/1.5.54.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../DEVUSERDATA/.gradle/caches/modules-2/files-2.1/com.mikepenz/community-material-typeface/1.5.54.2/6ff5867959b6ac54d5ca28fd5fbd36e0c0539e98/community-material-typeface-1.5.54.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
