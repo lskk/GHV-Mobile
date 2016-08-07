@@ -1,11 +1,18 @@
-package pptik.startup.ghvmobile.Support;
+package pptik.startup.ghvmobile;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,8 +21,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -25,17 +34,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-import pptik.startup.ghvmobile.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
-import pptik.startup.ghvmobile.GetRole;
-import pptik.startup.ghvmobile.GuestMenu;
-import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.RelawanMenu;
+import pptik.startup.ghvmobile.Support.PhotoManager;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
+import android.os.AsyncTask;
 /**
  * Created by GIGABYTE on 15/06/2016.
  */
@@ -75,6 +89,15 @@ public class ProfileRelawan extends AppCompatActivity {
     private ProgressDialog pDialog;
     private String roleid;
     private Context applicationContext;
+    private ImageView picture_path;
+    private String TAG ="Vik";
+    String pathfoto__="";
+    //variable untuk foto
+    protected final int CAMERA_REQUEST = 100;
+    protected final int SELECT_PICTURE = 200;
+    private PhotoManager photoManager;
+    private String rootPhotoDirectory = "", finalPhotoPath = "";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.relawan_profile_activity);
@@ -84,6 +107,7 @@ public class ProfileRelawan extends AppCompatActivity {
         applicationContext = getApplicationContext();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
+
         String registrationId = prefs.getString(REG_ID, "");
         final String emailID = prefs.getString(EMAIL_ID, "");
         String id_user=prefs.getString(BSTS_ID,"");
@@ -91,16 +115,17 @@ public class ProfileRelawan extends AppCompatActivity {
         Log.i("userid",String.valueOf(user_ID));
         GetRole g=new GetRole(this);
         roleid=g.getrole();
+        picture_path = (ImageView)findViewById(R.id.picture_path_editprofile);
         namalengkap=(EditText)findViewById(R.id.profile_relawan_name);
         namapanggilan=(EditText)findViewById(R.id.profile_relawan_nick);
         gender = (RadioGroup) findViewById(R.id.profile_relawan_jk);
-        inputgender = (RadioButton)findViewById(R.id.pjk_Laki);
+        inputgender = (RadioButton)findViewById(R.id.pjk_laki);
         gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.pjk_Laki:
+                    case R.id.pjk_laki:
                         // do operations specific to this selection
-                        inputgender = (RadioButton)findViewById(R.id.pjk_Laki);
+                        inputgender = (RadioButton)findViewById(R.id.pjk_laki);
                         break;
                     case R.id.pjk_perempuan:
                         inputgender = (RadioButton)findViewById(R.id.pjk_perempuan);
@@ -285,16 +310,36 @@ public class ProfileRelawan extends AppCompatActivity {
                             keahlian.getText().toString(),  pengalaman.getText().toString(),  motivasi.getText().toString());
 
 
-                }   else {
+                } else {
                     Toast.makeText(getApplicationContext(),
                             "Silahkan Lengkapi data anda", Toast.LENGTH_LONG)
                             .show();
                 }
             }
         });
+        TextView uploadFoto = (TextView)findViewById(R.id.upload_photo_edit_profil_relawan);
+        uploadFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = new AlertDialog.Builder(ProfileRelawan.this).create();
+                dialog.setMessage("Silahkan Langsung Ambil Foto Terbaru");
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Camera", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    }
+                });
+                dialog.show();
+            }
+        });
         getprofileuser(user_ID);
+        photoManager  = new PhotoManager();
+        rootPhotoDirectory = photoManager.getNewPathAppsDirectory();
 
     }
+
+
+
     public void DateDialog(){
 
         DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
@@ -312,6 +357,9 @@ public class ProfileRelawan extends AppCompatActivity {
         dpDialog.show();
 
     }
+
+
+
     private void getprofileuser(int id_user){
         pDialog = ProgressDialog.show(ProfileRelawan.this, "Memuat Profile", "Harap Tunggu");
 
@@ -336,10 +384,15 @@ public class ProfileRelawan extends AppCompatActivity {
 
                                 for (int i=0;i<berita.length();i++){
                                     JSONObject abc=berita.getJSONObject(i);
+                                    pathfoto__=abc.getString("path_foto");
+                                    if (pathfoto__ !=null || !pathfoto__.isEmpty()){
+                                        new DownloadImageTask(picture_path)
+                                                .execute(pathfoto__);
+                                    }
                                     namalengkap.setText(abc.getString("nama_lengkap"));
                                     namapanggilan.setText(abc.getString("nama_panggilan"));
                                     if (abc.getInt("jk")==1){
-                                        inputgender = (RadioButton)findViewById(R.id.pjk_Laki);
+                                        inputgender = (RadioButton)findViewById(R.id.pjk_laki);
                                         inputgender.setChecked(true);
                                     }else {
                                         inputgender = (RadioButton)findViewById(R.id.pjk_perempuan);
@@ -562,7 +615,76 @@ public class ProfileRelawan extends AppCompatActivity {
                 kewarganegaraan,  alamat,  kota, provinsi,  kode_pos,
                 telp_rumah,  hp,  pekerjaan,  nama_kerabat,
                 hp_kerabat,  pendidikan_terakhir,  minat,
-                keahlian,  pengalaman_organisasi,  motivasi);
+                keahlian,  pengalaman_organisasi,  motivasi,finalPhotoPath);
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            picture_path.setImageBitmap(result);
+
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==CAMERA_REQUEST && resultCode==RESULT_OK){
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            String fileDest = sd.format(new Date())+".png";
+            File photoName = new File(fileDest);
+            String fullPhotoPath = rootPhotoDirectory+File.separator+photoName.toString();
+            //Bitmap bmp = photo.createScaledBitmap(photo, 400,400, true);
+            //Bitmap bmp = ImageScaleUtil.createScaledBitmap(photo, 400, 400, ImageScaleUtil.ScalingLogic.FIT);
+            //bmp.recycle();
+            //takePictures.setImageBitmap(photo);
+            //picture_path.setText(fullPhotoPath);
+            finalPhotoPath = fullPhotoPath;
+            picture_path.setImageBitmap(photo);
+            savebitmap(photo, fullPhotoPath);
+        }
+    }
+
+    private String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String picturepath = cursor.getString(column_index);
+        cursor.close();
+        return picturepath;
+    }
+
+    private File savebitmap(Bitmap bmp, String path) {
+        try {
+            File photo = new File(path);
+            FileOutputStream fos = new FileOutputStream(photo);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+            Log.d("Success", "File Success Created");
+            Toast.makeText(ProfileRelawan.this, path, Toast.LENGTH_LONG).show();
+            Log.d("Path", path);
+            return photo;
+        }catch (Exception e) {
+            Log.d("Failed","File Failed Created : "+e.getMessage());
+            return null;
+        }
     }
     @Override
     public void onBackPressed() {

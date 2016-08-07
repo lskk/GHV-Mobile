@@ -25,310 +25,389 @@
             android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/linearLayout"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:divider="@color/tactorange">
 
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_name"
-                    android:hint="@string/prompt_name"/>
-            </android.support.design.widget.TextInputLayout>
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:id="@+id/picture_path_aspirasi"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:background="@drawable/rounderd_border"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Foto"
+                android:layout_marginLeft="7dp"
+                android:textColor="@color/black"
+                android:background="@color/white"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:id="@+id/upload_photo_profil_relawan"
+                android:layout_marginBottom="10dp"/>
 
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_nick"
-                    android:hint="@string/prompt_nick"/>
-            </android.support.design.widget.TextInputLayout>
-            <RadioGroup
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/daftar_relawan_jk">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Jenis Kelamin :"
-                    android:id="@+id/textView" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Laki-laki"
-                    android:id="@+id/jk_Laki"
-                    android:checked="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignLeft="@+id/linearLayout2"
-                    android:layout_alignStart="@+id/linearLayout2"
-                    android:layout_marginRight="10dp"
-                    android:tag="1"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Perempuan"
-                    android:id="@+id/jk_perempuan"
-                    android:checked="false"
-                    android:layout_alignTop="@+id/rbUser"
-                    android:layout_toRightOf="@+id/rbUser"
-                    android:layout_toEndOf="@+id/rbUser"
-                    android:tag="2"/>
-            </RadioGroup>
-            <RadioGroup
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/daftar_relawan_gol_darah">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gol darah         :"
-                    android:id="@+id/textView2" />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="O"
-                    android:id="@+id/gol_o"
-                    android:checked="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="10dp"
-                    android:tag="1"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="A"
-                    android:id="@+id/gol_a"
-                    android:checked="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="10dp"
-                    android:tag="2"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="B"
-                    android:id="@+id/gol_b"
-                    android:checked="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="10dp"
-                    android:tag="3"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="AB"
-                    android:id="@+id/gol_ab"
-                    android:checked="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="10dp"
-                    android:tag="4"/>
-            </RadioGroup>
-
-
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_tlahir"
-                    android:hint="@string/prompt_tl"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="date"
-                    android:id="@+id/daftar_relawan_tgllahir"
-                    android:hint="@string/prompt_tgl" />
-            </android.support.design.widget.TextInputLayout>
-
-
-
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_agama"
-                    android:hint="@string/prompt_agama"/>
-            </android.support.design.widget.TextInputLayout>
-            <RadioGroup
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/daftar_relawan_status">
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/cornerradius"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status Perkawinan :"
-                    android:id="@+id/textView3" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="BIODATA"
+                    android:id="@+id/textView7"
+                    android:textStyle="bold" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Menikah"
-                    android:id="@+id/s_menikah"
-                    android:checked="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignLeft="@+id/linearLayout2"
-                    android:layout_alignStart="@+id/linearLayout2"
-                    android:layout_marginRight="10dp"
-                    android:tag="1"/>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_name"
+                        android:hint="@string/prompt_name" />
+                </android.support.design.widget.TextInputLayout>
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Belum"
-                    android:id="@+id/s_b_menikah"
-                    android:checked="false"
-                    android:layout_alignTop="@+id/rbUser"
-                    android:layout_toRightOf="@+id/rbUser"
-                    android:layout_toEndOf="@+id/rbUser"
-                    android:tag="2"/>
-            </RadioGroup>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_jumlahanak"
-                    android:hint="@string/prompt_anak"/>
-            </android.support.design.widget.TextInputLayout>
-            <RadioGroup
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/daftar_relawan_jidentitas">
-
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_nick"
+                        android:hint="@string/prompt_nick"/>
+                </android.support.design.widget.TextInputLayout>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Jenis Identitas :"
-                    android:id="@+id/textView4" />
+                    android:textSize="20dp"
+                    android:text="Jenis Kelamin"
+                    android:id="@+id/textView"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="KTP"
-                    android:id="@+id/ji_ktp"
-                    android:checked="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="10dp"
-                    android:tag="1"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SIM"
-                    android:id="@+id/ji_sim"
-                    android:checked="false"
-                    android:tag="2"/>
-            </RadioGroup>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
+                <RadioGroup
+
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_no_identitas"
-                    android:hint="@string/prompt_identitas"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/daftar_relawan_jk"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Laki-laki"
+                        android:id="@+id/jk_Laki"
+                        android:checked="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignLeft="@+id/linearLayout2"
+                        android:layout_alignStart="@+id/linearLayout2"
+                        android:layout_marginRight="10dp"
+                        android:tag="1"
+                        android:layout_gravity="center" />
 
-            <RadioGroup
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:id="@+id/daftar_relawan_kewarganegaraan">
-
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Perempuan"
+                        android:id="@+id/jk_perempuan"
+                        android:checked="false"
+                        android:layout_alignTop="@+id/rbUser"
+                        android:layout_toRightOf="@+id/rbUser"
+                        android:layout_toEndOf="@+id/rbUser"
+                        android:tag="2"
+                        android:layout_gravity="center" />
+                </RadioGroup>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kewarganegaraan :"
-                    android:id="@+id/textView5" />
+                    android:text="Golongan Darah"
+                    android:id="@+id/textView2"
+                    android:textSize="20dp"
+                    android:gravity="center_horizontal" />
+                <RadioGroup
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/daftar_relawan_gol_darah"
+                    android:gravity="center_horizontal">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Indonesia"
-                    android:id="@+id/k_wni"
-                    android:checked="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="10dp"
-                    android:tag="1"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="O"
+                        android:id="@+id/gol_o"
+                        android:checked="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:tag="1"/>
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Asing"
-                    android:id="@+id/k_wna"
-                    android:checked="false"
-                    android:tag="2"/>
-            </RadioGroup>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A"
+                        android:id="@+id/gol_a"
+                        android:checked="false"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:tag="2"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="B"
+                        android:id="@+id/gol_b"
+                        android:checked="false"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:tag="3"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AB"
+                        android:id="@+id/gol_ab"
+                        android:checked="false"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:tag="4"/>
+                </RadioGroup>
 
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/daftar_relawan_alamat"
-                    android:hint="@string/prompt_alamat"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_kota"
-                    android:hint="@string/prompt_kota"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_prov"
-                    android:hint="@string/prompt_Provinsi"/>
-            </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="fill_parent"
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_tlahir"
+                        android:hint="@string/prompt_tl"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:id="@+id/daftar_relawan_tgllahir"
+                        android:hint="@string/prompt_tgl" />
+                </android.support.design.widget.TextInputLayout>
+
+
+
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_agama"
+                        android:hint="@string/prompt_agama"/>
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:textSize="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_kodepos"
-                    android:hint="Kode Pos"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
+                    android:text="Status Perkawinan"
+                    android:id="@+id/textView3"
+                    android:gravity="center" />
+
+                <RadioGroup
+                    android:gravity="center_horizontal"
                     android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/daftar_relawan_status">
+
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Menikah"
+                        android:id="@+id/s_menikah"
+                        android:checked="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignLeft="@+id/linearLayout2"
+                        android:layout_alignStart="@+id/linearLayout2"
+                        android:layout_marginRight="10dp"
+                        android:tag="1"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Belum Menikah"
+                        android:id="@+id/s_b_menikah"
+                        android:checked="false"
+                        android:layout_alignTop="@+id/rbUser"
+                        android:layout_toRightOf="@+id/rbUser"
+                        android:layout_toEndOf="@+id/rbUser"
+                        android:tag="2"/>
+                </RadioGroup>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_jumlahanak"
+                        android:hint="@string/prompt_anak"/>
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:textSize="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_tlpn"
-                    android:hint="@string/prompt_telp"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
+                    android:text="Jenis Identitas"
+                    android:id="@+id/textView4"
+                    android:gravity="center|center_horizontal" />
+                <RadioGroup
+                    android:gravity="center_horizontal"
                     android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/daftar_relawan_jidentitas">
+
+
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="KTP"
+                        android:id="@+id/ji_ktp"
+                        android:checked="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:tag="1"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SIM"
+                        android:id="@+id/ji_sim"
+                        android:checked="false"
+                        android:tag="2"/>
+                </RadioGroup>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_no_identitas"
+                        android:hint="@string/prompt_identitas"/>
+                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:textSize="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_hp"
-                    android:hint="@string/prompt_hp"/>
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
+                    android:text="Kewarganegaraan"
+                    android:id="@+id/textView5"
+                    android:gravity="center_horizontal" />
+                <RadioGroup
+                    android:gravity="center_horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/daftar_relawan_aktivitas"
-                    android:hint="@string/prompt_aktivitas"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/daftar_relawan_kewarganegaraan">
+
+
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Indonesia"
+                        android:id="@+id/k_wni"
+                        android:checked="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:tag="1"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Asing"
+                        android:id="@+id/k_wna"
+                        android:checked="false"
+                        android:tag="2"/>
+                </RadioGroup>
+
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:ems="10"
+                        android:id="@+id/daftar_relawan_alamat"
+                        android:hint="@string/prompt_alamat"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_kota"
+                        android:hint="@string/prompt_kota"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_prov"
+                        android:hint="@string/prompt_Provinsi"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_kodepos"
+                        android:hint="Kode Pos"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_tlpn"
+                        android:hint="@string/prompt_telp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_hp"
+                        android:hint="@string/prompt_hp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/daftar_relawan_aktivitas"
+                        android:hint="@string/prompt_aktivitas"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/cornerradius"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="DATA KERABAT"
+                android:textStyle="bold" />
             <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
@@ -345,13 +424,35 @@
                     android:id="@+id/daftar_relawan_hp_kerabat"
                     android:hint="@string/prompt_hp_kerabat"/>
             </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/cornerradius"
+            android:layout_marginBottom="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="PENDIDIKAN DAN ORGANISASI"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Pendidikan Terakhir"
-                android:id="@+id/textView6" />
+                android:id="@+id/textView6"
+                android:textSize="20dp"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp" />
 
             <RadioGroup
+                android:gravity="center_horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -447,19 +548,22 @@
                     android:id="@+id/daftar_relawan_motivasi"
                     android:hint="@string/prompt_motivasi"/>
             </android.support.design.widget.TextInputLayout>
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/actorange"
-                android:text="Daftar"
-                android:textColor="@color/white"
-                android:onClick="RegisterUser"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/linearLayout"
-                android:layout_alignLeft="@+id/linearLayout"
-                android:layout_alignStart="@+id/linearLayout"
-                android:id="@+id/daftar_relawan_btnRegister" />
+
+            </LinearLayout>
         </LinearLayout>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/actlighorange"
+            android:text="Daftar"
+            android:textColor="@color/white"
+            android:onClick="RegisterUser"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/linearLayout"
+            android:layout_alignLeft="@+id/linearLayout"
+            android:layout_alignStart="@+id/linearLayout"
+            android:id="@+id/daftar_relawan_btnRegister"
+            android:layout_alignEnd="@+id/linearLayout" />
     </RelativeLayout>
 
 </ScrollView>

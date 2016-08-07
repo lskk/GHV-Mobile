@@ -99,7 +99,7 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.Support.ProfileRelawan"
+            android:name=".ProfileRelawan"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >

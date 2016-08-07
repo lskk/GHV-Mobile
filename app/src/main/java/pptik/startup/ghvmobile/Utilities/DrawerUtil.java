@@ -2,12 +2,9 @@ package pptik.startup.ghvmobile.Utilities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -21,12 +18,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 
 import pptik.startup.ghvmobile.Admin;
-import pptik.startup.ghvmobile.DaftarRelawan;
-import pptik.startup.ghvmobile.Detailmateri;
 import pptik.startup.ghvmobile.GuestMenu;
 import pptik.startup.ghvmobile.Login;
-import pptik.startup.ghvmobile.Support.ProfileRelawan;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 
 /**

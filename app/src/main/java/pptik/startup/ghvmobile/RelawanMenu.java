@@ -19,8 +19,6 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import pptik.startup.ghvmobile.Support.ProfileRelawan;
-
 /**
  * Created by edo on 6/29/2016.
  */

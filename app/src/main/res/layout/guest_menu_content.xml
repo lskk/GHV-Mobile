@@ -13,12 +13,14 @@
         android:layout_height="150dp"
         android:background="@color/colorPrimary"
         android:layout_gravity="center_vertical|center_horizontal"></ImageView>
+
     <org.osmdroid.views.MapView
         android:layout_below="@+id/ImageView3_Left"
         android:id="@+id/mainMap_guest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_myloc_guest"
         android:layout_width="wrap_content"

@@ -49,7 +49,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import pptik.startup.ghvmobile.Support.CustomAdapter;
-import pptik.startup.ghvmobile.Support.ProfileRelawan;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;

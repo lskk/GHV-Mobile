@@ -2,6 +2,7 @@ package pptik.startup.ghvmobile.Connection;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -9,6 +10,9 @@ import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import pptik.startup.ghvmobile.Utils.TimeTools;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
@@ -80,69 +84,6 @@ public class RequestRest extends ConnectionHandler {
         }, mClient);
     }
 
-
-    public void setOrder(String asal, String tujuan, String jarak, String latAsal, String longAsal, String lotTujuan, String longTujuan, String id){
-
-
-        RequestParams params = new RequestParams();
-        mClient.addHeader("sessid", "0");
-        mClient.addHeader("deviceid", "1234567");
-        mClient.addHeader("API-KEY", "SEMUT_ANDROID");
-        params.put("Id_user_memberBSTS", id);
-        params.put("Asal", asal);
-        params.put("Tujuan", tujuan);
-        params.put("Jarak", jarak);
-        params.put("Lat_asal", latAsal);
-        params.put("Long_asal",longAsal);
-        params.put("Lat_tujuan", lotTujuan);
-        params.put("Long_tujuan", longTujuan);
-
-        //-------- check
-        Log.i("jarak" , jarak);
-        Log.i("lat asal" , latAsal);
-        Log.i("long asal" , longAsal);
-        Log.i("lat tujuan" , lotTujuan);
-        Log.i("long tujuan" , longTujuan);
-
-        post("userorder", params, new JsonHttpResponseHandler() {
-
-            //   ProgressDialog dialog;
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                Log.i(TAG_SETORDER, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
-            }
-
-            @Override
-            public void onSuccess(JSONObject response) {
-                super.onSuccess(response);
-                Log.i(TAG_SETORDER, "Success");
-                responseHandler.onSuccessJSONObject(response.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers,
-                                  String responseBody, Throwable e) {
-                super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_SETORDER, "Failed");
-                responseHandler.onFailure(e.toString());//e.getMessage());
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                Log.i(TAG_SETORDER, "Disconnected");
-                //   dialog.dismiss();
-            }
-
-        }, mClient);
-    }
-
-
-
-
     public void registerUser( String email,  String password, String regId){
         RequestParams params = new RequestParams();
         params.put("email", email);
@@ -199,7 +140,7 @@ public class RequestRest extends ConnectionHandler {
                                  String kewarganegaraan, String alamat, String kota,String provinsi, String kode_pos,
                                  String telp_rumah, String hp, String pekerjaan, String nama_kerabat,
                                  String hp_kerabat, String pendidikan_terakhir, String minat,
-                                 String keahlian, String pengalaman_organisasi, String motivasi){
+                                 String keahlian, String pengalaman_organisasi, String motivasi,String pathfoto){
         RequestParams params = new RequestParams();
         params.put("nama_lengkap",nama_lengkap);
         params.put("nama_panggilan",nama_panggilan);
@@ -227,7 +168,16 @@ public class RequestRest extends ConnectionHandler {
         params.put("keahlian",keahlian);
         params.put("pengalaman_organisasi",pengalaman_organisasi);
         params.put("motivasi",motivasi);
+        if (pathfoto.isEmpty() || pathfoto==null){
+            params.put("img_profil_relawan", false);
+        }else {
+            File photo = new File(pathfoto);
+            try {
+                params.put("img_profil_relawan", photo);
+            } catch (FileNotFoundException e) {
 
+            }
+        }
         post("useract/storerelawan/"+email, params, new JsonHttpResponseHandler() {
 
             //   ProgressDialog dialog;
@@ -308,217 +258,6 @@ public class RequestRest extends ConnectionHandler {
             public void onFinish() {
                 super.onFinish();
                 Log.i(TAG_DAFTAR_RELAWAN, "Disconnected");
-                //   dialog.dismiss();
-            }
-
-        }, mClient);
-    }
-    public void setBid(String idreq, String iduserojek, String lat, String lon, String harga){
-
-
-        RequestParams params = new RequestParams();
-        mClient.addHeader("sessid", "0");
-        mClient.addHeader("deviceid", "1234567");
-        mClient.addHeader("API-KEY", "SEMUT_ANDROID");
-        params.put("Id_request", idreq);
-        params.put("Id_user_ojek", iduserojek);
-        params.put("Long_ojek", lon);
-        params.put("Lat_ojek", lat);
-        params.put("Harga", harga);
-
-        Log.i("lat", lat);
-        Log.i("Lon", lon);
-
-        post("insertbidojek", params, new JsonHttpResponseHandler() {
-
-            //   ProgressDialog dialog;
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                Log.i(TAG_SETBID, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
-            }
-
-            @Override
-            public void onSuccess(JSONObject response) {
-                super.onSuccess(response);
-                Log.i(TAG_SETBID, "Success");
-                responseHandler.onSuccessJSONObject(response.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers,
-                                  String responseBody, Throwable e) {
-                super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_SETBID, "Failed");
-                responseHandler.onFailure(e.toString());//e.getMessage());
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                Log.i(TAG_SETBID, "Disconnected");
-                //   dialog.dismiss();
-            }
-
-        }, mClient);
-    }
-
-
-
-    public void getListBidder(String userid){
-
-
-        RequestParams params = new RequestParams();
-        mClient.addHeader("sessid", "0");
-        mClient.addHeader("deviceid", "1234567");
-        mClient.addHeader("API-KEY", "SEMUT_ANDROID");
-        params.put("Id_user_memberBSTS", userid);
-
-
-        post("getlistbidder", params, new JsonHttpResponseHandler() {
-
-            //   ProgressDialog dialog;
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                Log.i(TAG_GETBID, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
-            }
-
-            @Override
-            public void onSuccess(JSONObject response) {
-                super.onSuccess(response);
-                Log.i(TAG_GETBID, "Success");
-                responseHandler.onSuccessJSONObject(response.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers,
-                                  String responseBody, Throwable e) {
-                super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_GETBID, "Failed");
-                responseHandler.onFailure(e.toString());//e.getMessage());
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                Log.i(TAG_GETBID, "Disconnected");
-                //   dialog.dismiss();
-            }
-
-        }, mClient);
-    }
-
-
-
-    public void selectOjek(String userid, String ojekid, String idRequest){
-
-
-        RequestParams params = new RequestParams();
-        mClient.addHeader("sessid", "0");
-        mClient.addHeader("deviceid", "1234567");
-        mClient.addHeader("API-KEY", "SEMUT_ANDROID");
-        params.put("Id_user", userid);
-        params.put("Id_user_ojek", ojekid);
-    //    params.put("Id_request", idRequest);
-        Log.i(TAG_SELECTOJEK, "Ojek id " + ojekid);
-        Log.i(TAG_SELECTOJEK, "user " + userid);
-        Log.i(TAG_SELECTOJEK, "idreq " + idRequest);
-
-        post("usergetojek", params, new JsonHttpResponseHandler() {
-
-            //   ProgressDialog dialog;
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                Log.i(TAG_SELECTOJEK, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
-            }
-
-            @Override
-            public void onSuccess(JSONObject response) {
-                super.onSuccess(response);
-                Log.i(TAG_SELECTOJEK, "Success");
-                responseHandler.onSuccessJSONObject(response.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers,
-                                  String responseBody, Throwable e) {
-                super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_SELECTOJEK, "Failed");
-                responseHandler.onFailure(e.toString());//e.getMessage());
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                Log.i(TAG_SELECTOJEK, "Disconnected");
-                //   dialog.dismiss();
-            }
-
-        }, mClient);
-    }
-
-
-
-
-
-    public void ojekApprove(String userid, String ojekid, String latOjek, String lonOjek, String estimasi){
-
-
-        RequestParams params = new RequestParams();
-        mClient.addHeader("sessid", "0");
-        mClient.addHeader("deviceid", "1234567");
-        mClient.addHeader("API-KEY", "SEMUT_ANDROID");
-        params.put("Id_user", userid);
-        params.put("Id_user_ojek", ojekid);
-        params.put("Lat_ojek", latOjek);
-        params.put("Long_ojek", lonOjek);
-        params.put("Estimasi", estimasi);
-
-        //    params.put("Id_request", idRequest);
-        Log.i(TAG_APPROVEOJEK, "Ojek id " + ojekid);
-        Log.i(TAG_APPROVEOJEK, "user " + userid);
-        Log.i(TAG_SELECTOJEK, "lot ojek" + latOjek);
-        Log.i(TAG_SELECTOJEK, "lon ojek" + lonOjek);
-        Log.i(TAG_SELECTOJEK, "estimasi" + estimasi);
-
-        post("approveojek", params, new JsonHttpResponseHandler() {
-
-            //   ProgressDialog dialog;
-
-            @Override
-            public void onStart() {
-                super.onStart();
-                Log.i(TAG_SELECTOJEK, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
-            }
-
-            @Override
-            public void onSuccess(JSONObject response) {
-                super.onSuccess(response);
-                Log.i(TAG_SELECTOJEK, "Success");
-                responseHandler.onSuccessJSONObject(response.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers,
-                                  String responseBody, Throwable e) {
-                super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_SELECTOJEK, "Failed");
-                responseHandler.onFailure(e.toString());//e.getMessage());
-            }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                Log.i(TAG_SELECTOJEK, "Disconnected");
                 //   dialog.dismiss();
             }
 
