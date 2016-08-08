@@ -47,7 +47,8 @@
                 android:textStyle="bold"
                 android:padding="10dp"
                 android:id="@+id/upload_photo_edit_profil_relawan"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:textSize="25dp" />
 
 
             <LinearLayout
@@ -90,7 +91,9 @@
                     android:text="Jenis Kelamin"
                     android:id="@+id/textView"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal" />
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="8dp" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -103,7 +106,7 @@
                     android:orientation="horizontal"
                     android:id="@+id/profile_relawan_jk"
                     android:layout_gravity="center"
-                    android:gravity="center_horizontal">
+                    android:gravity="left">
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -135,13 +138,15 @@
                     android:text="Golongan Darah"
                     android:id="@+id/textView2"
                     android:textSize="20dp"
-                    android:gravity="center_horizontal" />
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="8dp" />
                 <RadioGroup
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:id="@+id/profile_relawan_gol_darah"
-                    android:gravity="center_horizontal">
+                    android:gravity="left">
 
                     <RadioButton
                         android:layout_width="wrap_content"
@@ -217,10 +222,12 @@
                     android:layout_height="wrap_content"
                     android:text="Status Perkawinan"
                     android:id="@+id/textView3"
-                    android:gravity="center" />
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="8dp" />
 
                 <RadioGroup
-                    android:gravity="center_horizontal"
+                    android:gravity="left"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
@@ -264,13 +271,15 @@
                     android:layout_height="wrap_content"
                     android:text="Jenis Identitas"
                     android:id="@+id/textView4"
-                    android:gravity="center|center_horizontal" />
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="8dp" />
                 <RadioGroup
-                    android:gravity="center_horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:id="@+id/profile_relawan_jidentitas">
+                    android:id="@+id/profile_relawan_jidentitas"
+                    android:gravity="left">
 
 
 
@@ -306,13 +315,15 @@
                     android:layout_height="wrap_content"
                     android:text="Kewarganegaraan"
                     android:id="@+id/textView5"
-                    android:gravity="center_horizontal" />
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="8dp" />
                 <RadioGroup
-                    android:gravity="center_horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:id="@+id/profile_relawan_kewarganegaraan">
+                    android:id="@+id/profile_relawan_kewarganegaraan"
+                    android:gravity="left">
 
 
 
@@ -450,11 +461,12 @@
                     android:text="Pendidikan Terakhir"
                     android:id="@+id/textView6"
                     android:textSize="20dp"
-                    android:gravity="center_horizontal"
-                    android:paddingTop="10dp" />
+                    android:gravity="left"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="5dp" />
 
                 <RadioGroup
-                    android:gravity="center_horizontal"
+                    android:gravity="left"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"

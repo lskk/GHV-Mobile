@@ -32,9 +32,10 @@ import java.util.ArrayList;
 
 import pptik.startup.ghvmobile.Support.CustomAdapter;
 import pptik.startup.ghvmobile.Support.Program;
+import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
-public class Guest extends AppCompatActivity {
+public class GuestListProgram extends AppCompatActivity {
 
     private ListView lv;
     private ArrayList<Program> listProgram;
@@ -65,15 +66,15 @@ public class Guest extends AppCompatActivity {
         int user_ID=prefs.getInt(USER_ID,0);
         lv=(ListView) findViewById(R.id.listView_program);
         listProgram = new ArrayList<Program>();
-
+        new DrawerUtil(this, toolbar, 0).initDrawerGuest();
         CollectingMateri(this);
 
     }
 
 
 
-    private void CollectingMateri(final Guest guest) {
-        pDialog = ProgressDialog.show(Guest.this, null, "Memuat Data..");
+    private void CollectingMateri(final GuestListProgram guestListProgram) {
+        pDialog = ProgressDialog.show(GuestListProgram.this, null, "Memuat Data..");
 
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
@@ -109,7 +110,7 @@ public class Guest extends AppCompatActivity {
                                   //  Log.i("idberita",abc.getString("id_program"));
                                 }
 
-                                mAdapter = new CustomAdapter(guest, listProgram);
+                                mAdapter = new CustomAdapter(guestListProgram, listProgram);
                                 lv.setAdapter(mAdapter);
                                 pDialog.dismiss();
                             } else {
@@ -165,32 +166,7 @@ public class Guest extends AppCompatActivity {
 
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_index, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()){
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
-                startActivity(intent);
-                finish();
-                return true;
-            case android.R.id.home:
-                checkRoleToBack();
-                return  true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 
     @Override
     protected void onDestroy() {

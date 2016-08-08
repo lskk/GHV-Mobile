@@ -86,7 +86,7 @@ public class Detailmateri  extends AppCompatActivity {
             startActivity(intent);
             finish();
         }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, Guest.class);
+            intent = new Intent(applicationContext, GuestListProgram.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("1")) {

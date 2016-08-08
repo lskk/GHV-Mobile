@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import pptik.startup.ghvmobile.ApprovalRelawan;
 import pptik.startup.ghvmobile.Detailmateri;
-import pptik.startup.ghvmobile.Guest;
+import pptik.startup.ghvmobile.GuestListProgram;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Relawan;
 
@@ -26,10 +26,10 @@ public class CustomAdapter extends BaseAdapter{
     Context context;
     private static LayoutInflater inflater=null;
 
-    public CustomAdapter(Guest guest, ArrayList<Program> data) {
+    public CustomAdapter(GuestListProgram guestListProgram, ArrayList<Program> data) {
         listProgram = new ArrayList<Program>();
         listProgram = data;
-        context= guest;
+        context= guestListProgram;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -77,7 +77,7 @@ public class CustomAdapter extends BaseAdapter{
         nama.setText(listProgram.get(_position).getNamaProgram());
 
         TextView tanggal = ((TextView) view.findViewById(R.id.lv_program_start));
-        tanggal.setText("Tanggal : "+listProgram.get(_position).getMulai());
+        tanggal.setText(listProgram.get(_position).getMulai());
 
         TextView supervisor = ((TextView) view.findViewById(R.id.lv_program_supervisor));
         supervisor.setText("Supervisor : "+listProgram.get(_position).getSupervisor());
@@ -97,16 +97,7 @@ public class CustomAdapter extends BaseAdapter{
                 Intent intent = new Intent(context, Detailmateri.class);
                 intent.putExtra("program", listProgram.get(_position));
                 context.startActivity(intent);
-               /* Log.i("test :", listProgram.get(_position).getNamaProgram());
-                Log.i("test :", listProgram.get(_position).getMulai());
-                Log.i("test :", listProgram.get(_position).getAkhir());
-                Log.i("test :", listProgram.get(_position).getSupervisor());
-                Log.i("test :", listProgram.get(_position).getDeskripsi());
-                Log.i("test :", listProgram.get(_position).getLokasiProgram());
-                Log.i("test :", listProgram.get(_position).getLatitude());
-                Log.i("test :", listProgram.get(_position).getLongitude());
-                Log.i("test :", listProgram.get(_position).getKeterangan());*/
-            }
+                }
         });
 
         return view;

@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -139,20 +140,11 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
     }
 
     private void AnimateandSlideShow() {
-
-
         slidingimage = (ImageView)findViewById(R.id.ImageView3_Left);
         slidingimage.setImageResource(IMAGE_IDS[currentimageindex%IMAGE_IDS.length]);
-
         currentimageindex++;
-
         Animation rotateimage = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-
-
         slidingimage.startAnimation(rotateimage);
-
-
-
     }
 
     public void checkstatusdaftar(final Context __context){
@@ -171,26 +163,26 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
                             JSONObject jObj = new JSONObject(response);
                             status = jObj.getBoolean("status");
                             if (status) {
-                                        final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(__context);
-                                        alertDialog.setTitle("Info");
-                                        alertDialog.setCancelable(false);
-                                        alertDialog.setMessage("Maaf, Akun Anda sedang dalam verifikasi Admin." +
-                                                "\nCobalah untuk memberikan informasi yang benar dan sesuai agar akun Anda dapat diverifikasi");
-                                        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                alertDialog.create().dismiss();
-                                            }
-                                        });
-                                        alertDialog.setNegativeButton("Edit Data Pendaftaran", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Intent intent = new Intent(__context, ProfileRelawan.class);
-                                                __context.startActivity(intent);
-                                                ((Activity)__context).finish();
-                                            }
-                                        });
-                                        alertDialog.show();
+                                final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(__context);
+                                alertDialog.setTitle("Info");
+                                alertDialog.setCancelable(false);
+                                alertDialog.setMessage("Maaf, Akun Anda sedang dalam verifikasi Admin." +
+                                        "\nCobalah untuk memberikan informasi yang benar dan sesuai agar akun Anda dapat diverifikasi");
+                                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        alertDialog.create().dismiss();
+                                    }
+                                });
+                                alertDialog.setNegativeButton("Edit Data Pendaftaran", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(__context, ProfileRelawan.class);
+                                        __context.startActivity(intent);
+                                        ((Activity)__context).finish();
+                                    }
+                                });
+                                alertDialog.show();
                             } else {
-                                        Intent intent = new Intent(__context, DaftarRelawan.class);
+                                Intent intent = new Intent(__context, DaftarRelawan.class);
                                 __context.startActivity(intent);
                                 ((Activity)__context).finish();
 
@@ -248,23 +240,18 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
     }
     private void bindingXml(){
         fabMyLoc = (FloatingActionButton)findViewById(R.id.fab_myloc_guest);
-        fabAdd = (FloatingActionButton)findViewById(R.id.fab_add_guest);
+
         fabMyLoc.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
                 .icon(Ionicons.Icon.ion_android_locate)
                 .color(context.getResources().getColor(R.color.colorPrimary))
                 .sizeDp(60)));
-        fabAdd.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
-                .icon(Ionicons.Icon.ion_android_add)
-                .color(context.getResources().getColor(R.color.actlighorange))
-                .sizeDp(60)));
-
-        //--- Click Listeners
         fabMyLoc.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 zoomMapToCurrent();
             }
         });
+
     }
     private void initMap() {
         mapset = (MapView) findViewById(R.id.mainMap_guest);

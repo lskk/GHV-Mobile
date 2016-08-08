@@ -35,6 +35,7 @@ public interface ApplicationConstants {
     static final String API_APPROVAL_BERITA = "http://167.205.7.228:8087/v1/beritaact/approveberita/";
     static final String API_DELETE_BERITA = "http://167.205.7.228:8087/v1/beritaact/deleteberitabyid/";
 
+  static final String FINE_REQUEST="FinERequest";
   static final String REG_ID = "regId";
   static final String EMAIL_ID = "eMailId";
   static final String LEVEL_ID = "roleId";

@@ -20,15 +20,8 @@ import pptik.startup.ghvmobile.setup.ApplicationConstants;
 public class RequestRest extends ConnectionHandler {
 
     private  String TAG_TESTCON = "Connection Test";
-    private  String TAG_SETORDER = "Setorder";
-    private  String TAG_LOGIN= "Login";
-    private  String TAG_APPROVEOJEK;
     private  String TAG_SIGNUP = "Signup";
     private  String TAG_DAFTAR_RELAWAN = "Daftar_relawan";
-    private  String TAG_GETBID = "Get list ojek";
-    private  String TAG_SELECTOJEK = "Select Ojek";
-    private String TAG_SETBID = "Set bid";
-
     protected static AsyncHttpClient mClient = new AsyncHttpClient();
 
     public RequestRest(Context context, IConnectionResponseHandler handler) {
@@ -168,6 +161,7 @@ public class RequestRest extends ConnectionHandler {
         params.put("keahlian",keahlian);
         params.put("pengalaman_organisasi",pengalaman_organisasi);
         params.put("motivasi",motivasi);
+        Log.i("path foto request rest",pathfoto);
         if (pathfoto.isEmpty() || pathfoto==null){
             params.put("img_profil_relawan", false);
         }else {
@@ -178,6 +172,7 @@ public class RequestRest extends ConnectionHandler {
 
             }
         }
+        Log.i("param",params.toString());
         post("useract/storerelawan/"+email, params, new JsonHttpResponseHandler() {
 
             //   ProgressDialog dialog;

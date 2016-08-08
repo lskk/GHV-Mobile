@@ -25,13 +25,14 @@
     <include layout="@layout/guest_menu_content" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add_guest"
+        android:id="@+id/fab_myloc_guest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
+        android:layout_gravity="bottom|end"
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/white"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" />
-
 
 </android.support.design.widget.CoordinatorLayout>
 

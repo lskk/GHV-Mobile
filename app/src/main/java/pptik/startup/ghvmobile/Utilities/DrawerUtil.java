@@ -18,6 +18,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 
 import pptik.startup.ghvmobile.Admin;
+import pptik.startup.ghvmobile.GuestListProgram;
 import pptik.startup.ghvmobile.GuestMenu;
 import pptik.startup.ghvmobile.Login;
 
@@ -153,7 +154,9 @@ public class DrawerUtil {
                                 gm.checkstatusdaftar(context);
                                 result.closeDrawer();
                             }else if(drawerItem.getIdentifier() == 2){
-                                //--- PERMINTAAN TPI
+                                //--- Daftar Issue/berita
+                                intent = new Intent(context, GuestListProgram.class);
+                                context.startActivity(intent);
                                 result.closeDrawer();
                             }else if(drawerItem.getIdentifier() == 3){
                                 //--- logout

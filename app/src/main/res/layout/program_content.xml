@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/guest_program_activity"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Guest">
+    tools:context=".GuestListProgram">
 
     <ListView
         android:divider="@null"
