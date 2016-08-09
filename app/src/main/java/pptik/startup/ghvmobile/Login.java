@@ -196,6 +196,7 @@ public class Login extends AppCompatActivity {
                     //    Toast.makeText(applicationContext, "Registered with GCM Server successfully.\n\n" + msg, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Login.this, "Reg ID Creation Failed.\n\nEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time." + msg, Toast.LENGTH_LONG).show();
+                    prgDialog.dismiss();
                 }
             }
         }.execute(null, null, null);
@@ -211,7 +212,7 @@ public class Login extends AppCompatActivity {
             } else {
                 Toast.makeText(
                         Login.this,
-                        "Maaf, perangkat Anda tidak mendukung Play sERVICE",
+                        "Maaf, perangkat Anda tidak mendukung Play service",
                         Toast.LENGTH_LONG).show();
                 finish();
             }

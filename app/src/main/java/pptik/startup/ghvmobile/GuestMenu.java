@@ -270,12 +270,19 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
     }
 
     private void zoomMapToCurrent(){
-        mapController.setZoom(25);
-        mapController.animateTo(currentPoint);
-        //  mapController.setCenter(currentPoint);
-        mapset.invalidate();
-        curMarker.setPosition(currentPoint);
-        mapset.getOverlays().add(curMarker);
+        try {
+
+            mapController.setZoom(25);
+            mapController.animateTo(currentPoint);
+            //  mapController.setCenter(currentPoint);
+            mapset.invalidate();
+            curMarker.setPosition(currentPoint);
+            mapset.getOverlays().add(curMarker);
+        } catch (Throwable e) {
+            Toast.makeText(this, "Location not Detected, Please Turn On GPS", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
@@ -342,7 +349,12 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        try{
+            mGoogleApiClient.connect();
+        }catch (Exception e){
+            Toast.makeText(this, "Location not Detected, Please Turn On GPS", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

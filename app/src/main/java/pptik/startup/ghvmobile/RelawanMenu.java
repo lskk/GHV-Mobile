@@ -39,7 +39,7 @@ public class RelawanMenu extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.relawan_activity);
+        setContentView(R.layout.relawan_menu_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         applicationContext = this.getApplicationContext();

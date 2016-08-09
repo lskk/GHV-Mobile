@@ -137,8 +137,8 @@ public class DrawerUtil {
                 .addDrawerItems(
                         registerRelawan = new PrimaryDrawerItem().withName("Register Volunteer").withIcon(GoogleMaterial.Icon.gmd_pan_tool).withIdentifier(1),
                         listProgramIssue = new PrimaryDrawerItem().withName("Daftar Program dan Issue").withIcon(GoogleMaterial.Icon.gmd_view_headline).withIdentifier(2),
-                        tentangKami = new PrimaryDrawerItem().withName("About Us").withIcon(GoogleMaterial.Icon.gmd_info).withIdentifier(2),
-                        logout = new PrimaryDrawerItem().withName("Log Out").withIcon(GoogleMaterial.Icon.gmd_exit_to_app).withIdentifier(3)
+                        tentangKami = new PrimaryDrawerItem().withName("About Us").withIcon(GoogleMaterial.Icon.gmd_info).withIdentifier(3),
+                        logout = new PrimaryDrawerItem().withName("Log Out").withIcon(GoogleMaterial.Icon.gmd_exit_to_app).withIdentifier(4)
 
                 )
                 .withSelectedItem(identifier)
@@ -159,15 +159,15 @@ public class DrawerUtil {
                                 context.startActivity(intent);
                                 result.closeDrawer();
                             }else if(drawerItem.getIdentifier() == 3){
+
+                                result.closeDrawer();
+                            }else if(drawerItem.getIdentifier() == 4){
                                 //--- logout
                                 context.getSharedPreferences("UserDetails",
                                         Context.MODE_PRIVATE).edit().clear().commit();
-                                 intent = new Intent(context, Login.class);
+                                intent = new Intent(context, Login.class);
                                 context.startActivity(intent);
                                 ((Activity)context).finish();
-                                result.closeDrawer();
-                            }else if(drawerItem.getIdentifier() == 4){
-
                                 result.closeDrawer();
 
                             }else if(drawerItem.getIdentifier() == 5){
