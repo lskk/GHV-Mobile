@@ -10,7 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/relawan_program_activity"
-    tools:context=".Relawan"
+    tools:context=".User_Relawan.Relawan_Program"
     >
 
     <android.support.v7.widget.AppCompatButton

@@ -42,5 +42,8 @@ public interface ApplicationConstants {
   static final String BSTS_ID = "userId";
   static final String USER_ID="UsErId";
   static final String USER_PREFS_NAME="UserDetails";
+  static final String USER_LATITUDE="LaTidude";
+  static final String USER_LONGITUDE="LongiTude";
+
 
 }

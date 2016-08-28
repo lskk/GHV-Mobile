@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".GuestMenu"
+    tools:context=".User_Guest.GuestMenu"
     tools:showIn="@layout/guest_menu_activity">
     <ImageView
         android:id="@+id/ImageView3_Left"

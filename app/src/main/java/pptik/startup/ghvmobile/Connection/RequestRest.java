@@ -133,7 +133,7 @@ public class RequestRest extends ConnectionHandler {
                                  String kewarganegaraan, String alamat, String kota,String provinsi, String kode_pos,
                                  String telp_rumah, String hp, String pekerjaan, String nama_kerabat,
                                  String hp_kerabat, String pendidikan_terakhir, String minat,
-                                 String keahlian, String pengalaman_organisasi, String motivasi,String pathfoto){
+                                 String keahlian, String pengalaman_organisasi, String motivasi,String pathfoto,String latitude,String longitude){
         RequestParams params = new RequestParams();
         params.put("nama_lengkap",nama_lengkap);
         params.put("nama_panggilan",nama_panggilan);
@@ -161,6 +161,8 @@ public class RequestRest extends ConnectionHandler {
         params.put("keahlian",keahlian);
         params.put("pengalaman_organisasi",pengalaman_organisasi);
         params.put("motivasi",motivasi);
+        params.put("latitude",latitude);
+        params.put("longitude",longitude);
         Log.i("path foto request rest",pathfoto);
         if (pathfoto.isEmpty() || pathfoto==null){
             params.put("img_profil_relawan", false);

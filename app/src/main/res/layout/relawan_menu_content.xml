@@ -7,23 +7,17 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/relawan_menu_activity"
     android:background="@color/gray1"
-    tools:context=".RelawanMenu">
-
+    tools:context=".User_Relawan.RelawanMenu">
     <ImageView
         android:id="@+id/ImageView3_Left"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/colorPrimary"
         android:layout_gravity="center_vertical|center_horizontal"></ImageView>
-
     <org.osmdroid.views.MapView
         android:layout_below="@+id/ImageView3_Left"
         android:id="@+id/mainMap_guest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-
-
-
 </RelativeLayout>

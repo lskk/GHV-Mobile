@@ -11,7 +11,7 @@
     android:paddingBottom="5dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/relawan_profile_activity"
-    tools:context=".ProfileRelawan">
+    tools:context=".User_Relawan.ProfileRelawan">
 
     <RelativeLayout
         android:layout_width="match_parent"
