@@ -34,6 +34,8 @@ public interface ApplicationConstants {
     static final String API_GET_PROGRAM_BY_ID_USER = "http://167.205.7.228:8087/v1/beritaact/beritabyiduser/";
     static final String API_APPROVAL_BERITA = "http://167.205.7.228:8087/v1/beritaact/approveberita/";
     static final String API_DELETE_BERITA = "http://167.205.7.228:8087/v1/beritaact/deleteberitabyid/";
+    static final String API_GET_MAP_VIEW = "http://167.205.7.228:8087/v1/useract/locationanddetail";
+
 
   static final String FINE_REQUEST="FinERequest";
   static final String REG_ID = "regId";
@@ -45,5 +47,9 @@ public interface ApplicationConstants {
   static final String USER_LATITUDE="LaTidude";
   static final String USER_LONGITUDE="LongiTude";
 
+  //------- MARKER PREFS NAME
+  static final String MARKER_TOTAL_VALUE = "marker_total_value";
+  static final String MARKER_USER = "marker_user";
+  static final String MARKER_PROGRAM = "marker_program";
 
 }

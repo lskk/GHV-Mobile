@@ -19,6 +19,8 @@ import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 public class RequestRest extends ConnectionHandler {
 
+    final int DEFAULT_TIMEOUT = 400 * 1000;
+    private  String TAG_MAPVIEW = "Get Mapview ";
     private  String TAG_TESTCON = "Connection Test";
     private  String TAG_SIGNUP = "Signup";
     private  String TAG_DAFTAR_RELAWAN = "Daftar_relawan";
@@ -76,6 +78,7 @@ public class RequestRest extends ConnectionHandler {
 
         }, mClient);
     }
+
 
     public void registerUser( String email,  String password, String regId){
         RequestParams params = new RequestParams();
@@ -212,7 +215,7 @@ public class RequestRest extends ConnectionHandler {
     }
     public void submitProgram(String id_user,String nama_program
             ,String lokasi_program,String mulai,String akhir
-            ,String supervisor,String deskripsi,String keterangan){
+            ,String supervisor,String deskripsi,String keterangan,String latitude,String longitude){
         RequestParams params = new RequestParams();
         params.put("id_user",id_user);
         params.put("nama_program",nama_program);
@@ -222,8 +225,8 @@ public class RequestRest extends ConnectionHandler {
         params.put("supervisor",supervisor);
         params.put("deskripsi",deskripsi);
         params.put("keterangan",keterangan);
-        params.put("latitude","belum ada");
-        params.put("longitude","belum ada");
+        params.put("latitude",latitude);
+        params.put("longitude",longitude);
 
         post("beritaact/store", params, new JsonHttpResponseHandler() {
 

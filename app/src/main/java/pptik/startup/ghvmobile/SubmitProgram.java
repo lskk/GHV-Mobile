@@ -56,6 +56,9 @@ public class SubmitProgram extends AppCompatActivity {
     private String RoleID;
     private  int id_user;
 
+    //lokasi
+    private String currentLatitude,currentLongitude;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.submit_issue_activity);
@@ -64,6 +67,8 @@ public class SubmitProgram extends AppCompatActivity {
         applicationContext = getApplicationContext();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
+        currentLatitude=prefs.getString(ApplicationConstants.USER_LATITUDE,"0");
+        currentLongitude=prefs.getString(ApplicationConstants.USER_LONGITUDE,"0");
         RoleID = prefs.getString(ApplicationConstants.LEVEL_ID, "");
         id_user=prefs.getInt(ApplicationConstants.USER_ID,0);
         namaprogram=(EditText)findViewById(R.id.submit_program_nama);
@@ -182,7 +187,7 @@ public class SubmitProgram extends AppCompatActivity {
 
         req.submitProgram( id_user, nama_program
                 , lokasi_program, mulai, akhir
-                , supervisor, deskripsi, keterangan);
+                , supervisor, deskripsi, keterangan,currentLatitude,currentLongitude);
     }
         public void DateMulai(){
 

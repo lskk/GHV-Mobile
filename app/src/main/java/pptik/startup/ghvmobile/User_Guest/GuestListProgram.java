@@ -86,7 +86,7 @@ public class GuestListProgram extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
+                        Log.i("response : ", response);
 
                         try {
                             JSONObject jObj = new JSONObject(response);
