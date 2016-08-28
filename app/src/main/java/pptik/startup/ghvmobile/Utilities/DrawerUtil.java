@@ -17,10 +17,13 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 
-import pptik.startup.ghvmobile.Admin;
-import pptik.startup.ghvmobile.GuestListProgram;
-import pptik.startup.ghvmobile.GuestMenu;
+import pptik.startup.ghvmobile.SubmitedProgram;
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
+import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Login;
+import pptik.startup.ghvmobile.User_Relawan.ProfileRelawan;
+import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 
 
 /**
@@ -162,6 +165,90 @@ public class DrawerUtil {
 
                                 result.closeDrawer();
                             }else if(drawerItem.getIdentifier() == 4){
+                                //--- logout
+                                context.getSharedPreferences("UserDetails",
+                                        Context.MODE_PRIVATE).edit().clear().commit();
+                                intent = new Intent(context, Login.class);
+                                context.startActivity(intent);
+                                ((Activity)context).finish();
+                                result.closeDrawer();
+
+                            }else if(drawerItem.getIdentifier() == 5){
+                                result.closeDrawer();
+
+                            }else if(drawerItem.getIdentifier() == 6){
+                                //--- LOGOUT
+                                result.closeDrawer();
+                            }
+                        }
+
+                        return false;
+                    }
+                })
+                .withShowDrawerOnFirstLaunch(true)
+                .build();
+
+        //result.setSelection(0);
+        result.closeDrawer();
+    }
+    public void initDrawerRelawan() {
+
+
+
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity((Activity) context)
+                //   .withHeaderBackground(context.getResources().getDrawable(R.drawable.bitmap_cover_drawer))
+                .build();
+
+        PrimaryDrawerItem profileRelawan;
+        PrimaryDrawerItem listProgramIssue;
+        PrimaryDrawerItem submittedProgram;
+        PrimaryDrawerItem tentangKami;
+        PrimaryDrawerItem logout;
+
+
+        result = new DrawerBuilder()
+                .withActivity((Activity) context)
+                .withAccountHeader(headerResult)
+                .withToolbar(toolbar)
+                .withDisplayBelowStatusBar(false)
+                .withActionBarDrawerToggleAnimated(true)
+                .addDrawerItems(
+                        profileRelawan = new PrimaryDrawerItem().withName("Profile").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(1),
+                        listProgramIssue = new PrimaryDrawerItem().withName("Daftar Program dan Issue").withIcon(GoogleMaterial.Icon.gmd_view_headline).withIdentifier(2),
+                        submittedProgram = new PrimaryDrawerItem().withName("Submitted Program").withIcon(GoogleMaterial.Icon.gmd_view_headline).withIdentifier(3),
+                        tentangKami = new PrimaryDrawerItem().withName("About Us").withIcon(GoogleMaterial.Icon.gmd_info).withIdentifier(4),
+                        logout = new PrimaryDrawerItem().withName("Log Out").withIcon(GoogleMaterial.Icon.gmd_exit_to_app).withIdentifier(5)
+
+                )
+                .withSelectedItem(identifier)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            Intent intent = null;
+
+                            if (drawerItem.getIdentifier() == 1) {
+                                //--- daftar relawan
+                                intent = new Intent(context, ProfileRelawan.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                            }else if(drawerItem.getIdentifier() == 2){
+                                //--- Daftar Issue/berita
+                                intent = new Intent(context, Relawan_Program.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                            }else if(drawerItem.getIdentifier() == 3){
+
+                                intent = new Intent(context, SubmitedProgram.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                            }else if(drawerItem.getIdentifier() == 4){
+
+                                intent = new Intent(context, SubmitedProgram.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                            }else if(drawerItem.getIdentifier() == 5){
                                 //--- logout
                                 context.getSharedPreferences("UserDetails",
                                         Context.MODE_PRIVATE).edit().clear().commit();

@@ -9,7 +9,7 @@
     android:background="@color/gray1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/detail_approval_relawan_activity"
-    tools:context=".ApprovalRelawanDetail">
+    tools:context=".User_Admin.ApprovalRelawanDetail">
 
     <RelativeLayout
         android:layout_width="match_parent"

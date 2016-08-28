@@ -56,13 +56,13 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".GuestListProgram"
+            android:name=".User_Guest.GuestListProgram"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.GuestMenu"
+            android:name=".User_Guest.GuestMenu"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -75,19 +75,19 @@
         </activity>
 
         <activity
-            android:name="pptik.startup.ghvmobile.DaftarRelawan"
+            android:name=".User_Guest.DaftarRelawan"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.Relawan"
+            android:name=".User_Relawan.Relawan_Program"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.RelawanMenu"
+            android:name=".User_Relawan.RelawanMenu"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -99,49 +99,49 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".ProfileRelawan"
+            android:name=".User_Relawan.ProfileRelawan"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.Admin"
+            android:name=".User_Admin.Admin"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.ApprovalRelawan"
+            android:name=".User_Admin.ApprovalRelawan"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.ApprovalRelawanDetail"
+            android:name=".User_Admin.ApprovalRelawanDetail"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.ApprovalProgram"
+            android:name=".User_Admin.ApprovalProgram"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.ApprovalProgramDetail"
+            android:name=".User_Admin.ApprovalProgramDetail"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.DisapprovRelawan"
+            android:name=".User_Admin.DisapprovRelawan"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="pptik.startup.ghvmobile.DisapprovProgram"
+            android:name=".User_Admin.DisapprovProgram"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >

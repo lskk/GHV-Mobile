@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -40,6 +39,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Guest.GuestMenu;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 import  pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 public class Login extends AppCompatActivity {
@@ -58,11 +60,7 @@ public class Login extends AppCompatActivity {
 
     private String deviceid;
 
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String LEVEL_ID = "roleId";
-    public static final String BSTS_ID = "userId";
-    public static final String USER_ID="UsErId";
+
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     GoogleCloudMessaging gcmObj;
@@ -87,9 +85,9 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        String registrationId = prefs.getString(REG_ID, "");
-        String theRole = prefs.getString(LEVEL_ID, "");
-        int user_ID=prefs.getInt(USER_ID,0);
+        String registrationId = prefs.getString(ApplicationConstants.REG_ID, "");
+        String theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
+        int user_ID=prefs.getInt(ApplicationConstants.USER_ID,0);
         if (!TextUtils.isEmpty(registrationId)) {
             if(theRole.contains("3")){
                 Intent i = new Intent(Login.this,GuestMenu.class);
@@ -381,10 +379,10 @@ public class Login extends AppCompatActivity {
                                         String emailID, String role, int id) {
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(REG_ID, regId);
-        editor.putString(EMAIL_ID, emailID);
-        editor.putString(LEVEL_ID, role);
-        editor.putInt(USER_ID, id);
+        editor.putString(ApplicationConstants.REG_ID, regId);
+        editor.putString(ApplicationConstants.EMAIL_ID, emailID);
+        editor.putString(ApplicationConstants.LEVEL_ID, role);
+        editor.putInt(ApplicationConstants.USER_ID, id);
         Log.i("dude",String.valueOf(id));
         editor.commit();
     }

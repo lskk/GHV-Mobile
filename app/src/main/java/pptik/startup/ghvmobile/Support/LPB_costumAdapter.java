@@ -9,8 +9,8 @@ import android.widget.TextView;
 import android.content.Intent;
 import java.util.ArrayList;
 
-import pptik.startup.ghvmobile.ApprovalProgram;
-import pptik.startup.ghvmobile.ApprovalProgramDetail;
+import pptik.startup.ghvmobile.User_Admin.ApprovalProgram;
+import pptik.startup.ghvmobile.User_Admin.ApprovalProgramDetail;
 import pptik.startup.ghvmobile.R;
 
 /**

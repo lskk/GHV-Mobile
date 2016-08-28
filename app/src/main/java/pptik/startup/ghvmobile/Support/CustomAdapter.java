@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import pptik.startup.ghvmobile.ApprovalRelawan;
+import pptik.startup.ghvmobile.User_Admin.ApprovalRelawan;
 import pptik.startup.ghvmobile.Detailmateri;
-import pptik.startup.ghvmobile.GuestListProgram;
+import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.Relawan;
+import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 
 /**
  * Created by fiyyanp on 4/25/2016.
@@ -34,10 +34,10 @@ public class CustomAdapter extends BaseAdapter{
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
-    public CustomAdapter(Relawan guest, ArrayList<Program> data) {
+    public CustomAdapter(Relawan_Program relawan_program, ArrayList<Program> data) {
         listProgram = new ArrayList<Program>();
         listProgram = data;
-        context= guest;
+        context= relawan_program;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

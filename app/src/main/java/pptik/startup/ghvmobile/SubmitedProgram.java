@@ -27,8 +27,11 @@ import java.util.ArrayList;
  * Created by edo on 6/12/2016.
  */
 
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Support.SubmitedAdapter;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 public class SubmitedProgram extends AppCompatActivity {
@@ -41,11 +44,7 @@ public class SubmitedProgram extends AppCompatActivity {
     private SubmitedAdapter mAdapter;
     private Button bt;
     private int iduser;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String BSTS_ID  = "bStsID";
-    public static final String USER_ID    = "UsErId";
-    public static final String LEVEL_ID = "roleId";
+
     SharedPreferences prefs;
 
 
@@ -59,10 +58,8 @@ public class SubmitedProgram extends AppCompatActivity {
         listProgram = new ArrayList<Program>();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-        String registrationId = prefs.getString(REG_ID, "");
-        final String emailID = prefs.getString(EMAIL_ID, "");
-        String id_user=prefs.getString(BSTS_ID,"");
-        iduser=prefs.getInt(USER_ID,0);
+
+        iduser=prefs.getInt(ApplicationConstants.USER_ID,0);
 
         CollectingMateri(this);
 
@@ -175,7 +172,7 @@ public class SubmitedProgram extends AppCompatActivity {
         GetRole g=new GetRole(this);
         String roleid=g.getrole();
         if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan.class);
+            intent = new Intent(applicationContext, RelawanMenu.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("3")){

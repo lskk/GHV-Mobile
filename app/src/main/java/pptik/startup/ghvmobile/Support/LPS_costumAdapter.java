@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import pptik.startup.ghvmobile.ApprovalProgramDetail;
-import pptik.startup.ghvmobile.DisapprovProgram;
+import pptik.startup.ghvmobile.User_Admin.ApprovalProgramDetail;
+import pptik.startup.ghvmobile.User_Admin.DisapprovProgram;
 import pptik.startup.ghvmobile.R;
 
 /**

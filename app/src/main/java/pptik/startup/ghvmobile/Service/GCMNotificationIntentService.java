@@ -19,11 +19,11 @@ import org.json.JSONObject;
 import java.util.Random;
 
 
-import pptik.startup.ghvmobile.Admin;
-import pptik.startup.ghvmobile.ApprovalProgram;
-import pptik.startup.ghvmobile.ApprovalRelawan;
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Admin.ApprovalProgram;
+import pptik.startup.ghvmobile.User_Admin.ApprovalRelawan;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.Relawan;
+import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 public class GCMNotificationIntentService extends IntentService {
@@ -103,7 +103,7 @@ public class GCMNotificationIntentService extends IntentService {
         Log.e("Print", msg);
 
         if (i==1){
-            Intent resultIntent = new Intent(this, Relawan.class);
+            Intent resultIntent = new Intent(this, Relawan_Program.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                     resultIntent, PendingIntent.FLAG_ONE_SHOT);
             NotificationCompat.Builder mNotifyBuilder;

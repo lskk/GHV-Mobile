@@ -11,7 +11,7 @@
     android:gravity="top"
     android:background="@color/gray1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".DisapprovRelawan"
+    tools:context=".User_Admin.DisapprovRelawan"
     tools:showIn="@layout/dissaprove_relawan_activity"
     android:orientation="vertical" android:weightSum="2">
     <LinearLayout

@@ -9,7 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
 import pptik.startup.ghvmobile.Support.Program;
+import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 
 /**
  * Created by edo on 6/12/2016.
@@ -82,7 +85,7 @@ public class Detailmateri  extends AppCompatActivity {
     private void checkRoleToBack() {
         Intent intent;
         if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan.class);
+            intent = new Intent(applicationContext, Relawan_Program.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("3")){

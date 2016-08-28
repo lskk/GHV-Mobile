@@ -24,8 +24,11 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
+import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
+import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
+import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 
 /**
  * Created by GIGABYTE on 14/06/2016.
@@ -154,7 +157,7 @@ public class SubmitProgram extends AppCompatActivity {
 
                     if (RoleID.contains("2")){
 
-                        Intent i = new Intent(SubmitProgram.this,Relawan.class);
+                        Intent i = new Intent(SubmitProgram.this,Relawan_Program.class);
                         startActivity(i);
                         finish();
                     }else if(RoleID.contains("1")){
@@ -266,7 +269,7 @@ public class SubmitProgram extends AppCompatActivity {
         GetRole g=new GetRole(this);
         String roleid=g.getrole();
         if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan.class);
+            intent = new Intent(applicationContext, Relawan_Program.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("3")){
