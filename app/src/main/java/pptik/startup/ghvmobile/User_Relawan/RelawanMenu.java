@@ -43,6 +43,7 @@ import java.util.TimerTask;
 
 import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.SubmitProgram;
 import pptik.startup.ghvmobile.SubmitedProgram;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
@@ -67,7 +68,7 @@ public class RelawanMenu extends AppCompatActivity implements GoogleApiClient.Co
     public boolean status;
 
     //keperluan map
-    private FloatingActionButton fabMyLoc, fabAdd;
+    private FloatingActionButton fabMyLoc,fabAddProgram;
     private boolean isFirstZoom = false;
     int permissionCheck =0;
     private static final int INITIAL_REQUEST=1337;
@@ -145,7 +146,6 @@ public class RelawanMenu extends AppCompatActivity implements GoogleApiClient.Co
     }
     private void bindingXml(){
         fabMyLoc = (FloatingActionButton)findViewById(R.id.fab_myloc_guest);
-
         fabMyLoc.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
                 .icon(Ionicons.Icon.ion_android_locate)
                 .color(context.getResources().getColor(R.color.colorPrimary))
@@ -154,6 +154,20 @@ public class RelawanMenu extends AppCompatActivity implements GoogleApiClient.Co
             @Override
             public void onClick(View view) {
                 zoomMapToCurrent();
+            }
+        });
+
+        fabAddProgram=(FloatingActionButton)findViewById(R.id.fab_add_program);
+        fabAddProgram.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
+                .icon(Ionicons.Icon.ion_plus_circled)
+                .color(context.getResources().getColor(R.color.colorPrimary))
+                .sizeDp(60)));
+        fabAddProgram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SubmitProgram.class);
+                startActivity(intent);
+                finish();
             }
         });
 

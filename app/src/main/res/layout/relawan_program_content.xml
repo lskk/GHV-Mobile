@@ -12,20 +12,11 @@
     tools:showIn="@layout/relawan_program_activity"
     tools:context=".User_Relawan.Relawan_Program"
     >
-
-    <android.support.v7.widget.AppCompatButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit Issue/Program"
-        android:id="@+id/btn_form_submit_issue"
-        android:background="@drawable/bg_common_button"
-        android:textColor="@color/white"
-        style="@style/Widget.AppCompat.Button.Colored" />
-
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="5dp"
         android:divider="@null"
         android:id="@+id/listView_program" />
+
 </android.support.v7.widget.LinearLayoutCompat>

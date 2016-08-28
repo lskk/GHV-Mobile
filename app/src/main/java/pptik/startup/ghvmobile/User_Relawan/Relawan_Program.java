@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -39,6 +40,7 @@ import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.CustomAdapter;
 import pptik.startup.ghvmobile.Support.Program;
+import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 public class Relawan_Program extends AppCompatActivity {
@@ -50,8 +52,6 @@ public class Relawan_Program extends AppCompatActivity {
     private EditText inputCode;
     private CustomAdapter mAdapter;
     private Button bt;
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -64,16 +64,7 @@ public class Relawan_Program extends AppCompatActivity {
         listProgram = new ArrayList<Program>();
 
         CollectingMateri(this);
-        bt=(Button)findViewById(R.id.btn_form_submit_issue);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SubmitProgram.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
+        new DrawerUtil(this, toolbar, 0).initDrawerRelawan();
     }
 
     private void CollectingMateri(final Relawan_Program relawan) {
@@ -169,40 +160,8 @@ public class Relawan_Program extends AppCompatActivity {
 
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_relawan, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()){
-            case R.id.menu_profile:
-                intent = new Intent(applicationContext, ProfileRelawan.class);
-                startActivity(intent);
-                return true;
-            case R.id.menu_submited_issue:
-                intent = new Intent(applicationContext, SubmitedProgram.class);
-                startActivity(intent);
-                return true;
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
-                startActivity(intent);
-                finish();
-                return true;
-            case android.R.id.home:
-                checkRoleToBack();
-                return  true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
 
-    }
 
     private void checkRoleToBack() {
         Intent intent;

@@ -28,17 +28,14 @@ import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
+import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 /**
  * Created by GIGABYTE on 14/06/2016.
  */
 public class SubmitProgram extends AppCompatActivity {
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String BSTS_ID  = "bStsID";
-    public static final String LEVEL_ID = "roleId";
-    public static final String USER_ID="UsErId";
     SharedPreferences prefs;
     Context applicationContext;
 
@@ -64,16 +61,11 @@ public class SubmitProgram extends AppCompatActivity {
         setContentView(R.layout.submit_issue_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         applicationContext = getApplicationContext();
-
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-        RoleID = prefs.getString(LEVEL_ID, "");
-        String registrationId = prefs.getString(REG_ID, "");
-        final String emailID = prefs.getString(EMAIL_ID, "");
-        id_user=prefs.getInt(USER_ID,0);
+        RoleID = prefs.getString(ApplicationConstants.LEVEL_ID, "");
+        id_user=prefs.getInt(ApplicationConstants.USER_ID,0);
         namaprogram=(EditText)findViewById(R.id.submit_program_nama);
         lokasiprogram=(EditText)findViewById(R.id.submit_program_lokasi);
         mulai=(EditText)findViewById(R.id.submit_program_mulai);
@@ -157,7 +149,7 @@ public class SubmitProgram extends AppCompatActivity {
 
                     if (RoleID.contains("2")){
 
-                        Intent i = new Intent(SubmitProgram.this,Relawan_Program.class);
+                        Intent i = new Intent(SubmitProgram.this,RelawanMenu.class);
                         startActivity(i);
                         finish();
                     }else if(RoleID.contains("1")){
@@ -227,32 +219,7 @@ public class SubmitProgram extends AppCompatActivity {
 
         }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_index, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()){
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
-                startActivity(intent);
-                finish();
-                return true;
-            case android.R.id.home:
-                checkRoleToBack();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 
     @Override
     protected void onDestroy() {
@@ -269,11 +236,7 @@ public class SubmitProgram extends AppCompatActivity {
         GetRole g=new GetRole(this);
         String roleid=g.getrole();
         if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan_Program.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, GuestListProgram.class);
+            intent = new Intent(applicationContext, RelawanMenu.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("1")) {
