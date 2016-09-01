@@ -1,10 +1,13 @@
 package pptik.startup.ghvmobile.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 
 import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 /**
  * Created by hynra on 8/18/16.
@@ -29,8 +33,10 @@ public class MarkerUserFragment extends Fragment implements View.OnClickListener
     private Button BTN_detail;
     private ImageView thumbnail;
     private String pathfoto=null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        SharedPreferences prefs;
         View view = inflater.inflate(R.layout.fragments_user_detail, container, false);
         nama=(TextView)view.findViewById(R.id.fragment_user_name);
         hp=(TextView)view.findViewById(R.id.fragment_user_hp);
@@ -42,6 +48,12 @@ public class MarkerUserFragment extends Fragment implements View.OnClickListener
         if (pathfoto !=null || !pathfoto.isEmpty()){
             new DownloadImageTask(thumbnail)
                     .execute(pathfoto);
+        }
+         prefs = getActivity().getApplicationContext().getSharedPreferences("UserDetails",
+                Context.MODE_PRIVATE);
+        String role=prefs.getString(ApplicationConstants.LEVEL_ID,"0");
+        if (Integer.parseInt(role) !=1){
+            BTN_detail.setVisibility(View.INVISIBLE);
         }
         return view;
     }

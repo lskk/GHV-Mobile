@@ -197,8 +197,8 @@ public class RelawanMenu extends AppCompatActivity implements
             mapController.animateTo(currentPoint);
             //  mapController.setCenter(currentPoint);
             mapset.invalidate();
-            curMarker.setPosition(currentPoint);
-            mapset.getOverlays().add(curMarker);
+           /* curMarker.setPosition(currentPoint);
+            mapset.getOverlays().add(curMarker);*/
         } catch (Throwable e) {
             Toast.makeText(this, "Location not Detected, Please Turn On GPS", Toast.LENGTH_SHORT).show();
         }
@@ -462,21 +462,21 @@ public class RelawanMenu extends AppCompatActivity implements
         switch (type){
             case ApplicationConstants.MARKER_ADMIN:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_pin)
-                        .color(context.getResources().getColor(R.color.actgreen))
+                        .icon(Ionicons.Icon.ion_android_hand)
+                        .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
                 Log.i("admin : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
             case ApplicationConstants.MARKER_USER:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_pin)
+                        .icon(Ionicons.Icon.ion_android_hand)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
                 Log.i("user : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
             case ApplicationConstants.MARKER_PROGRAM:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_pin)
+                        .icon(Ionicons.Icon.ion_ios_lightbulb)
                         .color(context.getResources().getColor(R.color.red))
                         .sizeDp(48));
                 Log.i("program : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
