@@ -46,10 +46,7 @@ public interface ApplicationConstants {
   static final String USER_PREFS_NAME="UserDetails";
   static final String USER_LATITUDE="LaTidude";
   static final String USER_LONGITUDE="LongiTude";
-
+  static final int MARKER_ME = 0,MARKER_ADMIN=1,MARKER_USER=2,MARKER_PROGRAM=3;
   //------- MARKER PREFS NAME
-  static final String MARKER_TOTAL_VALUE = "marker_total_value";
-  static final String MARKER_USER = "marker_user";
-  static final String MARKER_PROGRAM = "marker_program";
 
 }

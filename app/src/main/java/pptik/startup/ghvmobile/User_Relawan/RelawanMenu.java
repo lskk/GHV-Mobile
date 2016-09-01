@@ -10,22 +10,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -52,17 +48,13 @@ import org.osmdroid.views.overlay.Marker;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
-import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitProgram;
-import pptik.startup.ghvmobile.SubmitedProgram;
-import pptik.startup.ghvmobile.Support.CustomAdapter;
-import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
-import pptik.startup.ghvmobile.fragments.MarkerDetailFragment;
+import pptik.startup.ghvmobile.fragments.MarkerProgramFragment;
+import pptik.startup.ghvmobile.fragments.MarkerUserFragment;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
 
 /**
@@ -71,17 +63,6 @@ import pptik.startup.ghvmobile.setup.ApplicationConstants;
 public class RelawanMenu extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener, Marker.OnMarkerClickListener {
-
-    public int currentimageindex=0;
-    //    Timer timer;
-//    TimerTask task;
-    ImageView slidingimage;
-
-    private int[] IMAGE_IDS = {
-            R.drawable.banner1, R.drawable.banner2, R.drawable.banner3,
-            R.drawable.banner4,R.drawable.banner5,R.drawable.banner6
-    };
-
     SharedPreferences prefs;
     public boolean status;
 
@@ -110,8 +91,9 @@ public class RelawanMenu extends AppCompatActivity implements
     private String TAG_MAP_VIEW = "Map View";
     private int totalRequest = 0;
     private boolean isSuccess = false;
+    private ImageButton closeFragment;
 
-    private static final int MARKER_ME = 0,MARKER_ADMIN=1,MARKER_USER=2,MARKER_PROGRAM=3;
+
 
 
     private FragmentManager fragmentManager;
@@ -136,13 +118,7 @@ public class RelawanMenu extends AppCompatActivity implements
         setAndRunTimer();
     }
 
-    private void AnimateandSlideShow() {
-        slidingimage = (ImageView)findViewById(R.id.ImageView3_Left);
-        slidingimage.setImageResource(IMAGE_IDS[currentimageindex%IMAGE_IDS.length]);
-        currentimageindex++;
-        Animation rotateimage = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        slidingimage.startAnimation(rotateimage);
-    }
+
 
     private void setLocationBuilder(){
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -183,27 +159,18 @@ public class RelawanMenu extends AppCompatActivity implements
             }
         });
 
+        closeFragment=(ImageButton)findViewById(R.id.closeFragment);
+        closeFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showbutton();
+            }
+        });
         loadingPin = (Loading)findViewById(R.id.loadingPin);
         pinDetail = (LinearLayout) findViewById(R.id.pinDetail);
         loadingPin.setAutoRun(true);
         loadingPin.setVisibility(View.GONE);
-        final Handler mHandler = new Handler();
-        // Create runnable for posting
-        final Runnable mUpdateResults = new Runnable() {
-            public void run() {
-                AnimateandSlideShow();
-            }
-        };
-        int delay = 1000; // delay for 1 sec.
-        int period = 15000; // repeat every 4 sec.
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
 
-            public void run() {
-                mHandler.post(mUpdateResults);
-            }
-
-        }, delay, period);
 
 
     }
@@ -335,9 +302,11 @@ public class RelawanMenu extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+
         //Now lets connect to the API
         if(mGoogleApiClient.isConnected() == false)
             mGoogleApiClient.connect();
+        setAndRunTimer();
     }
 
     @Override
@@ -361,6 +330,7 @@ public class RelawanMenu extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
+        timer2.cancel();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -410,17 +380,17 @@ public class RelawanMenu extends AppCompatActivity implements
                                 JSONArray jsonArray= jObj.getJSONArray("admin");
                                 for(int i = 0; i < jsonArray.length(); i++){
                                     JSONObject childObject = jsonArray.getJSONObject(i);
-                                        addMarker(MARKER_ADMIN, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                        addMarker(ApplicationConstants.MARKER_ADMIN, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
                                 }
                                 JSONArray jsonArray2= jObj.getJSONArray("relawan");
                                 for(int i = 0; i < jsonArray2.length(); i++){
                                     JSONObject childObject = jsonArray2.getJSONObject(i);
-                                        addMarker(MARKER_USER, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                        addMarker(ApplicationConstants.MARKER_USER, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
                                 }
                                 JSONArray jsonArray3= jObj.getJSONArray("program");
                                 for(int i = 0; i < jsonArray3.length(); i++){
                                     JSONObject childObject = jsonArray3.getJSONObject(i);
-                                        addMarker(MARKER_PROGRAM, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                        addMarker(ApplicationConstants.MARKER_PROGRAM, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
                                 }
 
 
@@ -430,11 +400,11 @@ public class RelawanMenu extends AppCompatActivity implements
                         }
                         JSONObject json = new JSONObject();
                         try {
-                            json.put("type", MARKER_ME);
+                            json.put("type", ApplicationConstants.MARKER_ME);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        addMarker(MARKER_ME, currentLatitude, currentLongitude, json );
+                        addMarker(ApplicationConstants.MARKER_ME, currentLatitude, currentLongitude, json );
 
                         mapset.invalidate();
                         // Hide Progress Dialog
@@ -490,28 +460,28 @@ public class RelawanMenu extends AppCompatActivity implements
         marker.setOnMarkerClickListener(this);
 
         switch (type){
-            case MARKER_ADMIN:
+            case ApplicationConstants.MARKER_ADMIN:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_android_pin)
                         .color(context.getResources().getColor(R.color.actgreen))
                         .sizeDp(48));
                 Log.i("admin : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
-            case MARKER_USER:
+            case ApplicationConstants.MARKER_USER:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_android_pin)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
                 Log.i("user : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
-            case MARKER_PROGRAM:
+            case ApplicationConstants.MARKER_PROGRAM:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_android_pin)
                         .color(context.getResources().getColor(R.color.red))
                         .sizeDp(48));
                 Log.i("program : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
-            case MARKER_ME:
+            case ApplicationConstants.MARKER_ME:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_android_pin)
                         .color(context.getResources().getColor(R.color.colorPrimary))
@@ -526,16 +496,31 @@ public class RelawanMenu extends AppCompatActivity implements
     @Override
     public boolean onMarkerClick(Marker marker, MapView mapView) {
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         JSONObject obj = (JSONObject)marker.getRelatedObject();
-        pinDetail.setVisibility(View.VISIBLE);
-        if(obj.optInt("type") == MARKER_ADMIN) {
-            MarkerDetailFragment fragment = new MarkerDetailFragment();
-            //   fragment.setData(obj);
+        hidebutton();
+        if(obj.optInt("type") == ApplicationConstants.MARKER_ADMIN ||obj.optInt("type") == ApplicationConstants.MARKER_USER) {
+            MarkerUserFragment fragment = new MarkerUserFragment();
+            fragment.setData(obj);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
             //    toolbar_bottom.setVisibility(View.INVISIBLE);
+        }else if (obj.optInt("type")==ApplicationConstants.MARKER_PROGRAM){
+            MarkerProgramFragment fragment=new MarkerProgramFragment();
+            fragment.setData(obj);
+            fragmentTransaction.replace(R.id.pinDetail, fragment);
         }
-
-        return false;
+        fragmentTransaction.commit();
+        return true;
+    }
+    private void hidebutton(){
+        fabMyLoc.setVisibility(View.INVISIBLE);
+        fabAddProgram.setVisibility(View.INVISIBLE);
+        pinDetail.setVisibility(View.VISIBLE);
+    }
+    private void showbutton(){
+        fabMyLoc.setVisibility(View.VISIBLE);
+        fabAddProgram.setVisibility(View.VISIBLE);
+        pinDetail.setVisibility(View.INVISIBLE);
     }
 }
