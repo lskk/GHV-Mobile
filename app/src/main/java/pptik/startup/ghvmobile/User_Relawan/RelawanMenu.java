@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,11 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -48,9 +43,11 @@ import org.osmdroid.views.overlay.Marker;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitProgram;
+import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 import pptik.startup.ghvmobile.fragments.MarkerProgramFragment;
@@ -78,6 +75,7 @@ public class RelawanMenu extends AppCompatActivity implements
     private String TAG = this.getClass().getSimpleName();
     private double currentLatitude;
     private double currentLongitude;
+    private int id_user;
     private Context context;
     MapView mapset;
     GeoPoint currentPoint;
@@ -112,6 +110,7 @@ public class RelawanMenu extends AppCompatActivity implements
         bindingXml();
         prefs = getSharedPreferences(ApplicationConstants.USER_PREFS_NAME,
                 Context.MODE_PRIVATE);
+        id_user=prefs.getInt(ApplicationConstants.USER_ID,0);
         new DrawerUtil(this, toolbar, 0).initDrawerRelawan();
         updateMap();
         timer2 = new Timer();
@@ -192,7 +191,7 @@ public class RelawanMenu extends AppCompatActivity implements
 
     private void zoomMapToCurrent(){
         try {
-
+            updateCurrentLocation();
             mapController.setZoom(25);
             mapController.animateTo(currentPoint);
             //  mapController.setCenter(currentPoint);
@@ -330,7 +329,6 @@ public class RelawanMenu extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        timer2.cancel();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -499,16 +497,20 @@ public class RelawanMenu extends AppCompatActivity implements
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         JSONObject obj = (JSONObject)marker.getRelatedObject();
-        hidebutton();
+
         if(obj.optInt("type") == ApplicationConstants.MARKER_ADMIN ||obj.optInt("type") == ApplicationConstants.MARKER_USER) {
+            hidebutton();
             MarkerUserFragment fragment = new MarkerUserFragment();
             fragment.setData(obj);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
             //    toolbar_bottom.setVisibility(View.INVISIBLE);
         }else if (obj.optInt("type")==ApplicationConstants.MARKER_PROGRAM){
+            hidebutton();
             MarkerProgramFragment fragment=new MarkerProgramFragment();
             fragment.setData(obj);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
+        }else if (obj.optInt("type")==ApplicationConstants.MARKER_ME){
+
         }
         fragmentTransaction.commit();
         return true;
@@ -522,5 +524,34 @@ public class RelawanMenu extends AppCompatActivity implements
         fabMyLoc.setVisibility(View.VISIBLE);
         fabAddProgram.setVisibility(View.VISIBLE);
         pinDetail.setVisibility(View.INVISIBLE);
+    }
+
+    private void updateCurrentLocation() {
+        RequestRest req = new RequestRest(RelawanMenu.this, new IConnectionResponseHandler(){
+            @Override
+            public void OnSuccessArray(JSONArray result){
+                Log.i("result", result.toString());
+
+            }
+            @Override
+            public void onSuccessJSONObject(String result){
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    Log.i("Test", result);
+                } catch (JSONException e){
+                }
+            }
+            @Override
+            public void onFailure(String e){
+                Log.i("Test", e);
+            }
+            @Override
+            public void onSuccessJSONArray(String result){
+                Log.i("Test", result);
+            }
+        });
+
+
+        req.updateCurrentLocation(String.valueOf(id_user) ,String.valueOf(currentLatitude) ,String.valueOf(currentLongitude));
     }
 }

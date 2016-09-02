@@ -258,41 +258,7 @@ public class GCMNotificationIntentService extends IntentService {
         // Set Vibrate, Sound and Light
 
     }
-    private  void notifToSingleOjek(String msg){
-        Log.e("Print", msg);
-        Intent resultIntent = new Intent(this, Admin.class);
-        resultIntent.putExtra("msg", msg);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
-                resultIntent, PendingIntent.FLAG_ONE_SHOT);
 
-        NotificationCompat.Builder mNotifyBuilder;
-        NotificationManager mNotificationManager;
-
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("Opang")
-                .setContentText("Tawaran Anda diterima")
-                .setSmallIcon(R.drawable.opang_logo_small);
-        // Set pending intent
-        mNotifyBuilder.setContentIntent(resultPendingIntent);
-
-        // Set Vibrate, Sound and Light
-        int defaults = 0;
-        defaults = defaults | Notification.DEFAULT_LIGHTS;
-        defaults = defaults | Notification.DEFAULT_VIBRATE;
-        defaults = defaults | Notification.DEFAULT_SOUND;
-
-        mNotifyBuilder.setDefaults(defaults);
-        // Set the content for Notification
-        mNotifyBuilder.setContentText("Tawaran Anda diterima");
-        // Set autocancel
-        mNotifyBuilder.setAutoCancel(true);
-        // Post a notification
-        Random random = new Random();
-        int m = random.nextInt(9999 - 1000) + 1000;
-        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
-    }
 
 
 

@@ -2,6 +2,8 @@ package pptik.startup.ghvmobile.User_Guest;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,7 +23,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +40,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 
+import net.qiujuer.genius.ui.widget.Loading;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
@@ -48,12 +55,16 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
+import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.User_Relawan.ProfileRelawan;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.CustomAdapter;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
+import pptik.startup.ghvmobile.fragments.MarkerProgramFragment;
+import pptik.startup.ghvmobile.fragments.MarkerUserFragment;
 import pptik.startup.ghvmobile.setup.ApplicationConstants;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 
@@ -61,25 +72,14 @@ import pptik.startup.ghvmobile.Utilities.DrawerUtil;
  * Created by GIGABYTE on 27/06/2016.
  */
 
-public class GuestMenu extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
-    public int currentimageindex=0;
-    //    Timer timer;
-//    TimerTask task;
-    ImageView slidingimage;
-
-    private int[] IMAGE_IDS = {
-            R.drawable.banner1, R.drawable.banner2, R.drawable.banner3,
-            R.drawable.banner4,R.drawable.banner5,R.drawable.banner6
-    };
-
-
-
+public class GuestMenu extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener, Marker.OnMarkerClickListener {
     SharedPreferences prefs;
     public boolean status;
 
     //keperluan map
-    private FloatingActionButton fabMyLoc, fabAdd;
+    private FloatingActionButton fabMyLoc;
     private boolean isFirstZoom = false;
     int permissionCheck =0;
     private static final int INITIAL_REQUEST=1337;
@@ -90,12 +90,20 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
     private String TAG = this.getClass().getSimpleName();
     private double currentLatitude;
     private double currentLongitude;
+    private int id_user;
     private Context context;
     MapView mapset;
     GeoPoint currentPoint;
     Marker curMarker;
     IMapController mapController;
 
+    //keperluan marker
+    private Loading loadingPin;
+    private Timer timer2;
+    private String TAG_MAP_VIEW = "Map View";
+    private int totalRequest = 0;
+    private ImageButton closeFragment;
+    private LinearLayout pinDetail;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guest_menu_activity);
@@ -109,38 +117,16 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
         bindingXml();
         prefs = getSharedPreferences(ApplicationConstants.USER_PREFS_NAME,
                 Context.MODE_PRIVATE);
+        id_user=prefs.getInt(ApplicationConstants.USER_ID,0);
         String registrationId = prefs.getString(ApplicationConstants.REG_ID, "");
         String theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
-
-
-        final Handler mHandler = new Handler();
-        // Create runnable for posting
-        final Runnable mUpdateResults = new Runnable() {
-            public void run() {
-                AnimateandSlideShow();
-            }
-        };
-        int delay = 1000; // delay for 1 sec.
-        int period = 15000; // repeat every 4 sec.
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            public void run() {
-                mHandler.post(mUpdateResults);
-            }
-
-        }, delay, period);
-
         new DrawerUtil(this, toolbar, 0).initDrawerGuest();
+        updateMap();
+        timer2 = new Timer();
+        setAndRunTimer();
     }
 
-    private void AnimateandSlideShow() {
-        slidingimage = (ImageView)findViewById(R.id.ImageView3_Left);
-        slidingimage.setImageResource(IMAGE_IDS[currentimageindex%IMAGE_IDS.length]);
-        currentimageindex++;
-        Animation rotateimage = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        slidingimage.startAnimation(rotateimage);
-    }
+
 
     public void checkstatusdaftar(final Context __context){
         AsyncHttpClient client = new AsyncHttpClient();
@@ -199,7 +185,7 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
                         // Hide Progress Dialog
 
                         // When Http response code is '404'
-                        if (statusCode == 404) {
+                      /*  if (statusCode == 404) {
                             Toast.makeText(__context,
                                     "Requested resource not found",
                                     Toast.LENGTH_LONG).show();
@@ -217,7 +203,7 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
                                     "Unexpected Error occcured! [Most common Error: Device might "
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
                                     Toast.LENGTH_LONG).show();
-                        }
+                        }*/
                     }
                 });
     }
@@ -246,7 +232,17 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
                 zoomMapToCurrent();
             }
         });
-
+        closeFragment=(ImageButton)findViewById(R.id.closeFragment);
+        closeFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showbutton();
+            }
+        });
+        loadingPin = (Loading)findViewById(R.id.loadingPin);
+        pinDetail = (LinearLayout) findViewById(R.id.pinDetail);
+        loadingPin.setAutoRun(true);
+        loadingPin.setVisibility(View.GONE);
     }
     private void initMap() {
         mapset = (MapView) findViewById(R.id.mainMap_guest);
@@ -266,7 +262,7 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
 
     private void zoomMapToCurrent(){
         try {
-
+            updateCurrentLocation();
             mapController.setZoom(25);
             mapController.animateTo(currentPoint);
             //  mapController.setCenter(currentPoint);
@@ -379,11 +375,13 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
         //Now lets connect to the API
         if(mGoogleApiClient.isConnected() == false)
             mGoogleApiClient.connect();
+        setAndRunTimer();
     }
 
     @Override
     protected  void onDestroy(){
         super.onDestroy();
+        timer2.cancel();
         if(mGoogleApiClient.isConnected()){
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
@@ -403,5 +401,222 @@ public class GuestMenu extends AppCompatActivity implements GoogleApiClient.Conn
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+    //---------------- RELOAD MAP EVERY 0.5 SEC
+    private void showLoadingPin(){
+        loadingPin.setVisibility(View.VISIBLE);
+        loadingPin.start();
+    }
+    private void hideLoadingPin(){
+        loadingPin.setVisibility(View.INVISIBLE);
+        loadingPin.stop();
+    }
+    private void setAndRunTimer(){
+        timer2.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                GuestMenu.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateMap();
+                    }
+                });
+            }
+        }, 5000, 5000);
+    }
+    private void updateMap(){
+        GuestMenu.this.showLoadingPin();
+        totalRequest += 1;
+        Log.i(TAG_MAP_VIEW, "----------------------- Request no "+totalRequest+" ------------------------");
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(ApplicationConstants.API_GET_MAP_VIEW,
+                new AsyncHttpResponseHandler() {
+                    // When the response returned by REST has Http
+                    // response code '200'
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.i(TAG_MAP_VIEW, response);
+                        hideLoadingPin();
+
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            boolean status = jObj.getBoolean("status");
+                            if (status) {
+                                mapset.getOverlays().clear();
+                                JSONArray jsonArray= jObj.getJSONArray("admin");
+                                for(int i = 0; i < jsonArray.length(); i++){
+                                    JSONObject childObject = jsonArray.getJSONObject(i);
+                                    addMarker(ApplicationConstants.MARKER_ADMIN, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                }
+                                JSONArray jsonArray2= jObj.getJSONArray("relawan");
+                                for(int i = 0; i < jsonArray2.length(); i++){
+                                    JSONObject childObject = jsonArray2.getJSONObject(i);
+                                    addMarker(ApplicationConstants.MARKER_USER, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                }
+                                JSONArray jsonArray3= jObj.getJSONArray("program");
+                                for(int i = 0; i < jsonArray3.length(); i++){
+                                    JSONObject childObject = jsonArray3.getJSONObject(i);
+                                    addMarker(ApplicationConstants.MARKER_PROGRAM, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                }
+
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        JSONObject json = new JSONObject();
+                        try {
+                            json.put("type", ApplicationConstants.MARKER_ME);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        addMarker(ApplicationConstants.MARKER_ME, currentLatitude, currentLongitude, json );
+
+                        mapset.invalidate();
+                        // Hide Progress Dialog
+
+                    }
+
+                    // When the response returned by REST has Http
+                    // response code other than '200' such as '404',
+                    // '500' or '403' etc
+                    @Override
+                    public void onFailure(int statusCode, Throwable error,
+                                          String content) {
+                        // Hide Progress Dialog
+                        hideLoadingPin();
+                        // When Http response code is '404'
+                        if (statusCode == 404) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Requested resource not found",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        // When Http response code is '500'
+                        else if (statusCode == 500) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Something went wrong at server end",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        // When Http response code other than 404, 500
+                        else {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Unexpected Error occcured! [Most common Error: Device might "
+                                            + "not be connected to Internet or remote server is not up and running], check for other errors as well",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
+    //------------------------ ADD MARKER
+    private void addMarker(int type, double Latitude, double Longitude, JSONObject info){
+        GeoPoint startPoint = new GeoPoint(Latitude, Longitude);
+
+        Marker marker = new Marker(mapset);
+        marker.setPosition(startPoint);
+        try {
+            info.put("type", type);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        marker.setRelatedObject(info);
+        marker.setOnMarkerClickListener(this);
+
+        switch (type){
+            case ApplicationConstants.MARKER_ADMIN:
+                marker.setIcon(new IconicsDrawable(this)
+                        .icon(Ionicons.Icon.ion_android_hand)
+                        .color(context.getResources().getColor(R.color.actorange))
+                        .sizeDp(48));
+                Log.i("admin : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+                break;
+            case ApplicationConstants.MARKER_USER:
+                marker.setIcon(new IconicsDrawable(this)
+                        .icon(Ionicons.Icon.ion_android_hand)
+                        .color(context.getResources().getColor(R.color.actorange))
+                        .sizeDp(48));
+                Log.i("user : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+                break;
+            case ApplicationConstants.MARKER_PROGRAM:
+                marker.setIcon(new IconicsDrawable(this)
+                        .icon(Ionicons.Icon.ion_ios_lightbulb)
+                        .color(context.getResources().getColor(R.color.red))
+                        .sizeDp(48));
+                Log.i("program : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+                break;
+            case ApplicationConstants.MARKER_ME:
+                marker.setIcon(new IconicsDrawable(this)
+                        .icon(Ionicons.Icon.ion_android_pin)
+                        .color(context.getResources().getColor(R.color.colorPrimary))
+                        .sizeDp(48));
+                Log.i("me : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+                break;
+        }
+
+        mapset.getOverlays().add(marker);
+    }
+    @Override
+    public boolean onMarkerClick(Marker marker, MapView mapView) {
+
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        JSONObject obj = (JSONObject)marker.getRelatedObject();
+
+        if(obj.optInt("type") == ApplicationConstants.MARKER_ADMIN ||obj.optInt("type") == ApplicationConstants.MARKER_USER) {
+            hidebutton();
+            MarkerUserFragment fragment = new MarkerUserFragment();
+            fragment.setData(obj);
+            fragmentTransaction.replace(R.id.pinDetail, fragment);
+            //    toolbar_bottom.setVisibility(View.INVISIBLE);
+        }else if (obj.optInt("type")==ApplicationConstants.MARKER_PROGRAM){
+            hidebutton();
+            MarkerProgramFragment fragment=new MarkerProgramFragment();
+            fragment.setData(obj);
+            fragmentTransaction.replace(R.id.pinDetail, fragment);
+        }else if (obj.optInt("type")==ApplicationConstants.MARKER_ME){
+
+        }
+        fragmentTransaction.commit();
+        return true;
+    }
+    private void hidebutton(){
+        fabMyLoc.setVisibility(View.INVISIBLE);
+
+        pinDetail.setVisibility(View.VISIBLE);
+    }
+    private void showbutton(){
+        fabMyLoc.setVisibility(View.VISIBLE);
+
+        pinDetail.setVisibility(View.INVISIBLE);
+    }
+
+    private void updateCurrentLocation() {
+        RequestRest req = new RequestRest(GuestMenu.this, new IConnectionResponseHandler(){
+            @Override
+            public void OnSuccessArray(JSONArray result){
+                Log.i("result", result.toString());
+
+            }
+            @Override
+            public void onSuccessJSONObject(String result){
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    Log.i("Test", result);
+                } catch (JSONException e){
+                }
+            }
+            @Override
+            public void onFailure(String e){
+                Log.i("Test", e);
+            }
+            @Override
+            public void onSuccessJSONArray(String result){
+                Log.i("Test", result);
+            }
+        });
+
+
+        req.updateCurrentLocation(String.valueOf(id_user) ,String.valueOf(currentLatitude) ,String.valueOf(currentLongitude));
     }
 }

@@ -24,6 +24,7 @@ public class RequestRest extends ConnectionHandler {
     private  String TAG_TESTCON = "Connection Test";
     private  String TAG_SIGNUP = "Signup";
     private  String TAG_DAFTAR_RELAWAN = "Daftar_relawan";
+    private  String TAG_UPDATE_CURRENT_LOCATION = "Update Lokasi";
     protected static AsyncHttpClient mClient = new AsyncHttpClient();
 
     public RequestRest(Context context, IConnectionResponseHandler handler) {
@@ -258,6 +259,45 @@ public class RequestRest extends ConnectionHandler {
             public void onFinish() {
                 super.onFinish();
                 Log.i(TAG_DAFTAR_RELAWAN, "Disconnected");
+                //   dialog.dismiss();
+            }
+
+        }, mClient);
+    }
+    public void updateCurrentLocation(String id_user,String latitude
+            ,String longitude){
+        RequestParams params = new RequestParams();
+
+        get(ApplicationConstants.API_UPDATE_CURRENT_LOCATION+id_user+"/"+latitude+"/"+longitude, params, new JsonHttpResponseHandler() {
+
+            //   ProgressDialog dialog;
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                Log.i(TAG_UPDATE_CURRENT_LOCATION, "Sending request");
+                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
+            }
+
+            @Override
+            public void onSuccess(JSONObject status) {
+                super.onSuccess(status);
+                Log.i(TAG_UPDATE_CURRENT_LOCATION, "Success");
+                responseHandler.onSuccessJSONObject(status.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseBody, Throwable e) {
+                super.onFailure(statusCode, headers, responseBody, e);
+                Log.e(TAG_UPDATE_CURRENT_LOCATION, "Failed");
+                responseHandler.onFailure(e.toString());//e.getMessage());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                Log.i(TAG_UPDATE_CURRENT_LOCATION, "Disconnected");
                 //   dialog.dismiss();
             }
 

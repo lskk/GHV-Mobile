@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-smallcaps"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAllCaps="true"
                 android:text="Large Text"
                 android:id="@+id/lv_program_name"
                 android:textColor="@color/red_500"
