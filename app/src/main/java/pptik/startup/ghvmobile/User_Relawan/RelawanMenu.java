@@ -329,10 +329,10 @@ public class RelawanMenu extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (timer2!=null){
+            timer2.cancel();
+        }
+        finish();
     }
     //---------------- RELOAD MAP EVERY 0.5 SEC
     private void showLoadingPin(){
@@ -371,6 +371,14 @@ public class RelawanMenu extends AppCompatActivity implements
                         hideLoadingPin();
 
                         try {
+                            JSONObject json = new JSONObject();
+                            try {
+                                json.put("type", ApplicationConstants.MARKER_ME);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            addMarker(ApplicationConstants.MARKER_ME, currentLatitude, currentLongitude, json );
+
                             JSONObject jObj = new JSONObject(response);
                             boolean status = jObj.getBoolean("status");
                             if (status) {
@@ -396,13 +404,6 @@ public class RelawanMenu extends AppCompatActivity implements
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        JSONObject json = new JSONObject();
-                        try {
-                            json.put("type", ApplicationConstants.MARKER_ME);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        addMarker(ApplicationConstants.MARKER_ME, currentLatitude, currentLongitude, json );
 
                         mapset.invalidate();
                         // Hide Progress Dialog

@@ -1,4 +1,4 @@
-package pptik.startup.ghvmobile.Utils;
+package pptik.startup.ghvmobile.Utilities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

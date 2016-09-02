@@ -1,4 +1,4 @@
-package pptik.startup.ghvmobile.Utils;
+package pptik.startup.ghvmobile.Utilities;
 
 public class AutoCompleteBean {
     String description;

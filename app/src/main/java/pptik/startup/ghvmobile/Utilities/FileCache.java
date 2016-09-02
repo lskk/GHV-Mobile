@@ -1,4 +1,4 @@
-package pptik.startup.ghvmobile.Utils;
+package pptik.startup.ghvmobile.Utilities;
 
 import android.content.Context;
 

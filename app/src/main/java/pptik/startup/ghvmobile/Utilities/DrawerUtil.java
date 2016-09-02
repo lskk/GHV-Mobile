@@ -161,6 +161,7 @@ public class DrawerUtil {
                                 intent = new Intent(context, GuestListProgram.class);
                                 context.startActivity(intent);
                                 result.closeDrawer();
+                                ((Activity)context).finish();
                             }else if(drawerItem.getIdentifier() == 3){
 
                                 result.closeDrawer();
@@ -233,16 +234,19 @@ public class DrawerUtil {
                                 intent = new Intent(context, ProfileRelawan.class);
                                 context.startActivity(intent);
                                 result.closeDrawer();
+                                ((Activity)context).finish();
                             }else if(drawerItem.getIdentifier() == 2){
                                 //--- Daftar Issue/berita
                                 intent = new Intent(context, Relawan_Program.class);
                                 context.startActivity(intent);
                                 result.closeDrawer();
+                                ((Activity)context).finish();
                             }else if(drawerItem.getIdentifier() == 3){
 
                                 intent = new Intent(context, SubmitedProgram.class);
                                 context.startActivity(intent);
                                 result.closeDrawer();
+                                ((Activity)context).finish();
                             }else if(drawerItem.getIdentifier() == 4){
 
                                 intent = new Intent(context, SubmitedProgram.class);
