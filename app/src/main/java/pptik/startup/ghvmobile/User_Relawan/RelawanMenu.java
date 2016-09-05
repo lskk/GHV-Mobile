@@ -47,12 +47,11 @@ import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitProgram;
-import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
-import pptik.startup.ghvmobile.fragments.MarkerProgramFragment;
-import pptik.startup.ghvmobile.fragments.MarkerUserFragment;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Fragments.MarkerProgramFragment;
+import pptik.startup.ghvmobile.Fragments.MarkerUserFragment;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by edo on 6/29/2016.

@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -17,6 +20,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 
+import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitedProgram;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
@@ -35,7 +39,7 @@ public class DrawerUtil {
     private Toolbar toolbar;
     private int identifier;
     private com.mikepenz.materialdrawer.Drawer result;
-    private SecondaryDrawerItem bantuanItem;
+    private ImageView _profilePicture;
     private int roleid;
     SharedPreferences prefs;
     public DrawerUtil(Context _context, Toolbar _toolbar, int _identifier){
@@ -122,9 +126,13 @@ public class DrawerUtil {
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity((Activity) context)
-                //   .withHeaderBackground(context.getResources().getDrawable(R.drawable.bitmap_cover_drawer))
+                .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.actlighorange)))
+                .withHeightDp(250)
+                //   .withHeightDp(UIUtils.getActionBarHeight(context)*2)
+                .withAccountHeader(R.layout.header_layout)
+                .withTextColor(Color.BLACK)
+                //    .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.colorPorcelenDark)))
                 .build();
-
         PrimaryDrawerItem registerRelawan;
         PrimaryDrawerItem listProgramIssue;
         PrimaryDrawerItem tentangKami;
@@ -198,7 +206,12 @@ public class DrawerUtil {
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity((Activity) context)
-                //   .withHeaderBackground(context.getResources().getDrawable(R.drawable.bitmap_cover_drawer))
+                .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.actlighorange)))
+                .withHeightDp(250)
+                //   .withHeightDp(UIUtils.getActionBarHeight(context)*2)
+                .withAccountHeader(R.layout.header_layout)
+                .withTextColor(Color.BLACK)
+                //    .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.colorPorcelenDark)))
                 .build();
 
         PrimaryDrawerItem profileRelawan;
@@ -252,6 +265,7 @@ public class DrawerUtil {
                                 intent = new Intent(context, SubmitedProgram.class);
                                 context.startActivity(intent);
                                 result.closeDrawer();
+                                ((Activity)context).finish();
                             }else if(drawerItem.getIdentifier() == 5){
                                 //--- logout
                                 context.getSharedPreferences("UserDetails",

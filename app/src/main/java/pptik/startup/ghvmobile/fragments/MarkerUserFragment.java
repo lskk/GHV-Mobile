@@ -1,4 +1,4 @@
-package pptik.startup.ghvmobile.fragments;
+package pptik.startup.ghvmobile.Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by hynra on 8/18/16.

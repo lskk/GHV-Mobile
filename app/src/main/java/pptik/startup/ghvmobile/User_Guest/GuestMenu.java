@@ -1,10 +1,8 @@
 package pptik.startup.ghvmobile.User_Guest;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,14 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -51,7 +42,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,12 +50,10 @@ import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.User_Relawan.ProfileRelawan;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.Support.CustomAdapter;
-import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
-import pptik.startup.ghvmobile.fragments.MarkerProgramFragment;
-import pptik.startup.ghvmobile.fragments.MarkerUserFragment;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Fragments.MarkerProgramFragment;
+import pptik.startup.ghvmobile.Fragments.MarkerUserFragment;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 
 /**

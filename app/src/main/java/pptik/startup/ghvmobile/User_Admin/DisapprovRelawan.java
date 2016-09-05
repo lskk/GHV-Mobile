@@ -28,7 +28,7 @@ import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataUser2;
 import pptik.startup.ghvmobile.Support.LRS_costumAdapter;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by GIGABYTE on 15/06/2016.

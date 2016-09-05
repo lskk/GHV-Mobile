@@ -19,12 +19,11 @@ import org.json.JSONObject;
 import java.util.Random;
 
 
-import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Admin.ApprovalProgram;
 import pptik.startup.ghvmobile.User_Admin.ApprovalRelawan;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class GCMNotificationIntentService extends IntentService {
     // Sets an ID for the notification, so it can be updated

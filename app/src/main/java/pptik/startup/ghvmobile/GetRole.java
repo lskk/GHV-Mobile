@@ -3,7 +3,7 @@ package pptik.startup.ghvmobile;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by GIGABYTE on 20/06/2016.

@@ -5,14 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,16 +27,13 @@ import java.util.ArrayList;
  */
 
 import pptik.startup.ghvmobile.GetRole;
-import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.SubmitProgram;
-import pptik.startup.ghvmobile.SubmitedProgram;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.CustomAdapter;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class Relawan_Program extends AppCompatActivity {
     private ListView lv;

@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataUser;
 import pptik.startup.ghvmobile.Support.DataUser2;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by GIGABYTE on 17/06/2016.

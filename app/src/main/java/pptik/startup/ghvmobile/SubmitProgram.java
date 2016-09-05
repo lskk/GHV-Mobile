@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,10 +24,8 @@ import java.util.Calendar;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
-import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
 import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
-import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by GIGABYTE on 14/06/2016.

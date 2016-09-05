@@ -2,7 +2,6 @@ package pptik.startup.ghvmobile.Connection;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -14,8 +13,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import pptik.startup.ghvmobile.Utils.TimeTools;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class RequestRest extends ConnectionHandler {
 
@@ -40,7 +38,7 @@ public class RequestRest extends ConnectionHandler {
 
     public void testConnection(){
         RequestParams params = new RequestParams();
-        mClient.addHeader("x-ami-dt", TimeTools.getCurrentTime());
+        //mClient.addHeader("x-ami-dt", TimeTools.getCurrentTime());
         mClient.addHeader("x-ami-cc", "MOBILE");
         System.setProperty("http.keepAlive", "false");
         get("network.json", params, new JsonHttpResponseHandler() {

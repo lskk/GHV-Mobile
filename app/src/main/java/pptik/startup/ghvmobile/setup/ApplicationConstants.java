@@ -1,4 +1,4 @@
-package pptik.startup.ghvmobile.setup;
+package pptik.startup.ghvmobile.Setup;
 
 
 public interface ApplicationConstants {

@@ -32,7 +32,7 @@ import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Support.SubmitedAdapter;
 import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class SubmitedProgram extends AppCompatActivity {
     private ListView lv;

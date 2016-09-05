@@ -29,7 +29,7 @@ import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataProgram;
 import pptik.startup.ghvmobile.Support.LPB_costumAdapter;
 import pptik.startup.ghvmobile.Support.LPS_costumAdapter;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by GIGABYTE on 20/06/2016.

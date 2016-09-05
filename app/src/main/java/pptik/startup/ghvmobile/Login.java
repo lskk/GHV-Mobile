@@ -42,7 +42,7 @@ import java.io.IOException;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
-import  pptik.startup.ghvmobile.setup.ApplicationConstants;
+import  pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class Login extends AppCompatActivity {
     private static final int REQUEST_READ_CONTACTS = 0;

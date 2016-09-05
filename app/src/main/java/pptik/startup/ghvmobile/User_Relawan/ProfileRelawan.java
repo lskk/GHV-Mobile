@@ -48,7 +48,7 @@ import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.PhotoManager;
-import pptik.startup.ghvmobile.setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 import android.os.AsyncTask;
 /**
@@ -96,7 +96,6 @@ public class ProfileRelawan extends AppCompatActivity {
     String pathfoto__="";
     //variable untuk foto
     protected final int CAMERA_REQUEST = 100;
-    protected final int SELECT_PICTURE = 200;
     private PhotoManager photoManager;
     private String rootPhotoDirectory = "", finalPhotoPath = "";
 
@@ -114,9 +113,7 @@ public class ProfileRelawan extends AppCompatActivity {
                 Context.MODE_PRIVATE);
         finalLatitude=prefs.getString(ApplicationConstants.USER_LATITUDE,"0");
         finalLongitude=prefs.getString(ApplicationConstants.USER_LONGITUDE,"0");
-        String registrationId = prefs.getString(REG_ID, "");
         final String emailID = prefs.getString(EMAIL_ID, "");
-        String id_user=prefs.getString(BSTS_ID,"");
         int user_ID=prefs.getInt(USER_ID,0);
         Log.i("userid",String.valueOf(user_ID));
         GetRole g=new GetRole(this);
@@ -391,10 +388,9 @@ public class ProfileRelawan extends AppCompatActivity {
                                 for (int i=0;i<berita.length();i++){
                                     JSONObject abc=berita.getJSONObject(i);
                                     pathfoto__=abc.getString("path_foto");
-                                    if (pathfoto__ !=null || !pathfoto__.isEmpty()){
-                                        new DownloadImageTask(picture_path)
+                                    new DownloadImageTask(picture_path)
                                                 .execute(pathfoto__);
-                                    }
+
                                     namalengkap.setText(abc.getString("nama_lengkap"));
                                     namapanggilan.setText(abc.getString("nama_panggilan"));
                                     if (abc.getInt("jk")==1){
