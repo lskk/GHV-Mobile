@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataUser;
@@ -31,6 +32,8 @@ import pptik.startup.ghvmobile.Support.DataUser2;
 import pptik.startup.ghvmobile.Support.LRB_costumAdapter;
 import pptik.startup.ghvmobile.Support.LRS_costumAdapter;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 
 /**
  * Created by GIGABYTE on 15/06/2016.
@@ -191,18 +194,12 @@ public class ApprovalRelawan extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-    @Override
-    public void onBackPressed() {
-        checkRoleToBackup();
-
-    }
-
     private void checkRoleToBackup() {
-     /*   Intent intent;
+        Intent intent;
         GetRole g=new GetRole(this);
         String roleid=g.getrole();
         if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan.class);
+            intent = new Intent(applicationContext, RelawanMenu.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("3")){
@@ -213,7 +210,7 @@ public class ApprovalRelawan extends AppCompatActivity {
             intent = new Intent(applicationContext, Admin.class);
             startActivity(intent);
             finish();
-        } */
+        }
         finish();
     }
 
@@ -221,5 +218,12 @@ public class ApprovalRelawan extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         CollectingMateri(this);
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+        intent = new Intent(applicationContext, Admin.class);
+        startActivity(intent);
+        finish();
     }
 }

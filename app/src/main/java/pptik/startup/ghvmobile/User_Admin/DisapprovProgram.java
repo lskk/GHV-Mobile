@@ -185,4 +185,11 @@ public class DisapprovProgram extends AppCompatActivity {
         super.onResume();
         CollectingMateri2(this);
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+        intent = new Intent(applicationContext, Admin.class);
+        startActivity(intent);
+        finish();
+    }
 }

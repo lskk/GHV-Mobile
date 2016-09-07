@@ -40,16 +40,11 @@ public class ApprovalProgram extends AppCompatActivity {
 
     private ProgressDialog pDialog,pDialog2;
     private Context applicationContext;
-    private Dialog addingClassDialog;
-    private EditText inputCode;
-    private LPB_costumAdapter mAdapter;
-    private LPS_costumAdapter mAdapter2;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String LEVEL_ID = "roleId";
-    public static final String BSTS_ID = "userId";
-    public static final String USER_ID="UsErId";
 
+    private LPB_costumAdapter mAdapter;
+
+
+private  Intent intent;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.approval_program_activity);
@@ -157,7 +152,7 @@ public class ApprovalProgram extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
+
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
@@ -188,5 +183,11 @@ public class ApprovalProgram extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         CollectingMateri(this);
+    }
+    @Override
+    public void onBackPressed() {
+        intent = new Intent(applicationContext, Admin.class);
+        startActivity(intent);
+        finish();
     }
 }

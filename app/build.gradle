@@ -19,8 +19,9 @@ android {
         }
     }
     dexOptions {
-        javaMaxHeapSize "4g"
+        incremental = true;
         preDexLibraries = false
+        javaMaxHeapSize "2g"
     }
     repositories {
         maven { url 'http://repo1.maven.org/maven2' }

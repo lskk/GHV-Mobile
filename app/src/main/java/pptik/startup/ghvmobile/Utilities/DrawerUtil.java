@@ -23,6 +23,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitedProgram;
 import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Admin.ApprovalProgram;
+import pptik.startup.ghvmobile.User_Admin.ApprovalRelawan;
+import pptik.startup.ghvmobile.User_Admin.DisapprovProgram;
+import pptik.startup.ghvmobile.User_Admin.DisapprovRelawan;
 import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
 import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Login;
@@ -281,6 +285,95 @@ public class DrawerUtil {
                             }else if(drawerItem.getIdentifier() == 6){
                                 //--- LOGOUT
                                 result.closeDrawer();
+                            }
+                        }
+
+                        return false;
+                    }
+                })
+                .withShowDrawerOnFirstLaunch(true)
+                .build();
+
+        //result.setSelection(0);
+        result.closeDrawer();
+    }
+    public void initDrawerAdmin() {
+
+
+
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity((Activity) context)
+                .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.actlighorange)))
+                .withHeightDp(250)
+                //   .withHeightDp(UIUtils.getActionBarHeight(context)*2)
+                .withAccountHeader(R.layout.header_layout)
+                .withTextColor(Color.BLACK)
+                //    .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.colorPorcelenDark)))
+                .build();
+
+        PrimaryDrawerItem approvalRelawan;
+        PrimaryDrawerItem approvedRelawan;
+        PrimaryDrawerItem approvalProgram;
+        PrimaryDrawerItem approvedProgram;
+        PrimaryDrawerItem submitProgram;
+        PrimaryDrawerItem tentangKami;
+        PrimaryDrawerItem logout;
+
+
+        result = new DrawerBuilder()
+                .withActivity((Activity) context)
+                .withAccountHeader(headerResult)
+                .withToolbar(toolbar)
+                .withDisplayBelowStatusBar(false)
+                .withActionBarDrawerToggleAnimated(true)
+                .addDrawerItems(
+                        approvalRelawan = new PrimaryDrawerItem().withName("Daftar Calon Relawan").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(1),
+                        approvedRelawan = new PrimaryDrawerItem().withName("Daftar Relawan").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(2),
+                        approvalProgram = new PrimaryDrawerItem().withName("Daftar Program Belum di Verifikasi").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(3),
+                        approvedProgram = new PrimaryDrawerItem().withName("Daftar Program").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(4),
+                        logout = new PrimaryDrawerItem().withName("Log Out").withIcon(GoogleMaterial.Icon.gmd_exit_to_app).withIdentifier(5)
+                )
+                .withSelectedItem(identifier)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            Intent intent = null;
+
+                            if (drawerItem.getIdentifier() == 1) {
+                                //--- daftar relawan
+                                intent = new Intent(context, ApprovalRelawan.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                                ((Activity)context).finish();
+                            }else if(drawerItem.getIdentifier() == 2){
+                                //--- Daftar Issue/berita
+                                intent = new Intent(context, DisapprovRelawan.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                                ((Activity)context).finish();
+                            }else if(drawerItem.getIdentifier() == 3){
+
+                                intent = new Intent(context, ApprovalProgram.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                                ((Activity)context).finish();
+                            }else if(drawerItem.getIdentifier() == 4){
+
+                                intent = new Intent(context, DisapprovProgram.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                                ((Activity)context).finish();
+                            }else if(drawerItem.getIdentifier() == 5){
+                                //--- logout
+                                context.getSharedPreferences("UserDetails",
+                                        Context.MODE_PRIVATE).edit().clear().commit();
+                                intent = new Intent(context, Login.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                                ((Activity)context).finish();
+
+
                             }
                         }
 

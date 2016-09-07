@@ -103,10 +103,5 @@ public class Detailmateri  extends AppCompatActivity {
     public void  onDestroy(){
         super.onDestroy();
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent;
-        checkRoleToBack();
 
-    }
 }
