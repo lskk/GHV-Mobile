@@ -42,7 +42,8 @@ public class DrawerUtil {
     private Context context;
     private Toolbar toolbar;
     private int identifier;
-    private com.mikepenz.materialdrawer.Drawer result;
+    AccountHeader headerResult;
+    private Drawer result;
     private ImageView _profilePicture;
     private int roleid;
     SharedPreferences prefs;
@@ -50,6 +51,13 @@ public class DrawerUtil {
         context = _context;
         toolbar = _toolbar;
         identifier = _identifier;
+    }
+    public AccountHeader getDrawerHeader(){
+        return  headerResult;
+    }
+
+    public Drawer getDrawer(){
+        return result;
     }
 
     public void initDrawer() {
@@ -298,10 +306,7 @@ public class DrawerUtil {
         result.closeDrawer();
     }
     public void initDrawerAdmin() {
-
-
-
-        AccountHeader headerResult = new AccountHeaderBuilder()
+         headerResult = new AccountHeaderBuilder()
                 .withActivity((Activity) context)
                 .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.actlighorange)))
                 .withHeightDp(250)

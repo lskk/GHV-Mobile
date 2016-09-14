@@ -663,15 +663,6 @@ public class ProfileRelawan extends AppCompatActivity {
         }
     }
 
-    private String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String picturepath = cursor.getString(column_index);
-        cursor.close();
-        return picturepath;
-    }
 
     private File savebitmap(Bitmap bmp, String path) {
         try {

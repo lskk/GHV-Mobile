@@ -4,13 +4,7 @@
     android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/material_drawer_account_header_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/drawer_bg"
-        android:background="@drawable/drawer_bg"
-        android:scaleType="fitXY" />
+
 
     <RelativeLayout
 
@@ -22,11 +16,11 @@
             android:layout_height="120dp"
             android:id="@+id/mainHeaderAva"
             android:layout_centerInParent="true"
-            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_color="@color/white"
             app:civ_border_width="2dp"
             />
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/Headername"
             android:layout_below="@id/mainHeaderAva"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

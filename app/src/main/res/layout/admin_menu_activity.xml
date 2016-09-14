@@ -18,7 +18,7 @@
         <include layout="@layout/admin_menu_content" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_myloc_guest"
+        android:id="@+id/fab_myloc_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

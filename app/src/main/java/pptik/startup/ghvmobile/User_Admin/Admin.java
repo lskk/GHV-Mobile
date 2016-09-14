@@ -8,7 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -23,8 +26,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -36,6 +41,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.Drawer;
 
 import net.qiujuer.genius.ui.widget.Loading;
 
@@ -48,6 +55,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -92,6 +100,7 @@ public class Admin extends AppCompatActivity implements
     Marker curMarker;
     IMapController mapController;
 
+    private String pathfotoRef,email;
     //keperluan marker
     private Loading loadingPin;
     private Timer timer,timer2;
@@ -101,57 +110,73 @@ public class Admin extends AppCompatActivity implements
     private boolean isSuccess = false;
     private ImageButton closeFragment;
 
-
-
-
+    private Drawer mainDrawer;
+    private AccountHeader mainHeader;
+    DrawerUtil drawerUtil;
+    ImageView headerAva;
+    private TextView headername;
     private FragmentManager fragmentManager;
     private LinearLayout pinDetail;
     private Toolbar toolbar;
     protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.admin_menu_activity);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-    applicationContext = getApplicationContext();
-        permissionCheck = ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION);
-        initMap();
-        setLocationBuilder();
-        bindingXml();
+   context = getApplicationContext();
         prefs = getSharedPreferences(ApplicationConstants.USER_PREFS_NAME,
                 Context.MODE_PRIVATE);
         id_user=prefs.getInt(ApplicationConstants.USER_ID,0);
-        new DrawerUtil(this, toolbar, 0).initDrawerAdmin();
+        pathfotoRef=prefs.getString(ApplicationConstants.PATH_FOTO_USER,ApplicationConstants.DEFAULT_PATH_FOTO);
+        email=prefs.getString(ApplicationConstants.EMAIL_ID,"");
+
+        permissionCheck = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION);
+        bindingXml();
+        initMap();
+        setLocationBuilder();
+        initNavigationDrawer();
         updateMap();
         timer2 = new Timer();
         setAndRunTimer();
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_index, menu);
-        return true;
-    }
+    public void initNavigationDrawer(){
+        drawerUtil = new DrawerUtil(this, toolbar,0);
+        drawerUtil.initDrawerAdmin();
+        mainDrawer = drawerUtil.getDrawer();
+        mainHeader = drawerUtil.getDrawerHeader();
+        headername=(TextView)mainHeader.getView().findViewById(R.id.Headername);
+        headerAva = (ImageView)mainHeader.getView().findViewById(R.id.mainHeaderAva);
+        new DownloadImageTask(headerAva)
+                .execute(pathfotoRef);
+        headername.setText(email.toString());
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()){
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
-                startActivity(intent);
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
         }
 
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                //Log.e("Error get image", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            headerAva.setImageBitmap(result);
+
+        }
     }
-
-
-
     private void setLocationBuilder(){
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -165,7 +190,7 @@ public class Admin extends AppCompatActivity implements
                 .setFastestInterval(1 * 1000);
     }
     private void bindingXml(){
-        fabMyLoc = (FloatingActionButton)findViewById(R.id.fab_myloc_guest);
+        fabMyLoc = (FloatingActionButton)findViewById(R.id.fab_myloc_admin);
         fabMyLoc.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
                 .icon(Ionicons.Icon.ion_android_locate)
                 .color(context.getResources().getColor(R.color.colorPrimary))

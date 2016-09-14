@@ -293,11 +293,12 @@ public class Login extends AppCompatActivity {
                                 String gcmid = user.getString("gcm_id");
                                 int id_user = user.getInt("id_user");
                                 String Level = user.getString("level");
+                                String pathfoto=user.getString("path_foto");
                                 if(Level.equals("")){
                                     Level = "3";
                                 }
                                 //store to sharedpreference
-                                storeRegIdinSharedPref(getApplicationContext(), gcmid, Email, Level,id_user );
+                                storeRegIdinSharedPref(getApplicationContext(), gcmid, Email, Level,id_user,pathfoto );
                                 String theRole = Level;
                                 Log.i("Login role : ", Level);
                                 Log.i("Login role : ", String.valueOf(id_user));
@@ -376,14 +377,14 @@ public class Login extends AppCompatActivity {
                 });
     }
     private void storeRegIdinSharedPref(Context context, String regId,
-                                        String emailID, String role, int id) {
+                                        String emailID, String role, int id,String pathfotouser) {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(ApplicationConstants.REG_ID, regId);
         editor.putString(ApplicationConstants.EMAIL_ID, emailID);
         editor.putString(ApplicationConstants.LEVEL_ID, role);
         editor.putInt(ApplicationConstants.USER_ID, id);
-        Log.i("dude",String.valueOf(id));
+        editor.putString(ApplicationConstants.PATH_FOTO_USER, pathfotouser);
         editor.commit();
     }
 }
