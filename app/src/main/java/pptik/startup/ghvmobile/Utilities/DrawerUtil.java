@@ -316,6 +316,7 @@ public class DrawerUtil {
                 //    .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.colorPorcelenDark)))
                 .build();
 
+        PrimaryDrawerItem profile;
         PrimaryDrawerItem approvalRelawan;
         PrimaryDrawerItem approvedRelawan;
         PrimaryDrawerItem approvalProgram;
@@ -332,10 +333,11 @@ public class DrawerUtil {
                 .withDisplayBelowStatusBar(false)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        approvalRelawan = new PrimaryDrawerItem().withName("Daftar Calon Relawan").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(1),
-                        approvedRelawan = new PrimaryDrawerItem().withName("Daftar Relawan").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(2),
-                        approvalProgram = new PrimaryDrawerItem().withName("Daftar Program Belum di Verifikasi").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(3),
-                        approvedProgram = new PrimaryDrawerItem().withName("Daftar Program").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(4),
+                        profile = new PrimaryDrawerItem().withName("Profile").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(0),
+                        approvalRelawan = new PrimaryDrawerItem().withName("Daftar Calon Relawan").withIcon(GoogleMaterial.Icon.gmd_recent_actors).withIdentifier(1),
+                        approvedRelawan = new PrimaryDrawerItem().withName("Daftar Relawan").withIcon(GoogleMaterial.Icon.gmd_pan_tool).withIdentifier(2),
+                        approvalProgram = new PrimaryDrawerItem().withName("Daftar Program Belum di Verifikasi").withIcon(GoogleMaterial.Icon.gmd_event_busy).withIdentifier(3),
+                        approvedProgram = new PrimaryDrawerItem().withName("Daftar Program").withIcon(GoogleMaterial.Icon.gmd_event_available).withIdentifier(4),
                         logout = new PrimaryDrawerItem().withName("Log Out").withIcon(GoogleMaterial.Icon.gmd_exit_to_app).withIdentifier(5)
                 )
                 .withSelectedItem(identifier)
@@ -377,8 +379,12 @@ public class DrawerUtil {
                                 context.startActivity(intent);
                                 result.closeDrawer();
                                 ((Activity)context).finish();
+                            }else if(drawerItem.getIdentifier() == 0){
 
-
+                                intent = new Intent(context, ProfileRelawan.class);
+                                context.startActivity(intent);
+                                result.closeDrawer();
+                                ((Activity)context).finish();
                             }
                         }
 

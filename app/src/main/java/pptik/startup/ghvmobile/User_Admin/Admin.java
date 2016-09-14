@@ -39,6 +39,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -519,21 +520,21 @@ public class Admin extends AppCompatActivity implements
         switch (type){
             case ApplicationConstants.MARKER_ADMIN:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_hand)
+                        .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
                 Log.i("admin : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
             case ApplicationConstants.MARKER_USER:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_hand)
+                        .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
                 Log.i("user : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
             case ApplicationConstants.MARKER_PROGRAM:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_ios_lightbulb)
+                        .icon(GoogleMaterial.Icon.gmd_beenhere)
                         .color(context.getResources().getColor(R.color.red))
                         .sizeDp(48));
                 Log.i("program : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
