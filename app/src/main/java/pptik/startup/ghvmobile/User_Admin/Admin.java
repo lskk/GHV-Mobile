@@ -218,6 +218,10 @@ public class Admin extends AppCompatActivity implements
         });
 
         closeFragment=(ImageButton)findViewById(R.id.closeFragment);
+        closeFragment.setImageDrawable(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_keyboard_arrow_down)
+                .color(context.getResources().getColor(R.color.white))
+                .sizeDp(24));
         closeFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -479,23 +483,23 @@ public class Admin extends AppCompatActivity implements
                         hideLoadingPin();
                         // When Http response code is '404'
                         if (statusCode == 404) {
-                            Toast.makeText(getApplicationContext(),
+                           /* Toast.makeText(getApplicationContext(),
                                     "Requested resource not found",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG).show();*/
                         }
                         // When Http response code is '500'
                         else if (statusCode == 500) {
-                            Toast.makeText(getApplicationContext(),
+                           /* Toast.makeText(getApplicationContext(),
                                     "Something went wrong at server end",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG).show();*/
                         }
                         // When Http response code other than 404, 500
                         else {
-                            Toast.makeText(
+                           /* Toast.makeText(
                                     getApplicationContext(),
                                     "Unexpected Error occcured! [Most common Error: Device might "
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG).show();*/
                         }
                     }
                 });
@@ -562,7 +566,9 @@ public class Admin extends AppCompatActivity implements
             hidebutton();
             MarkerUserFragment fragment = new MarkerUserFragment();
             fragment.setData(obj);
+            pinDetail.setVisibility(View.VISIBLE);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
+            Log.i("asdasdads","fuck");
             //    toolbar_bottom.setVisibility(View.INVISIBLE);
         }else if (obj.optInt("type")==ApplicationConstants.MARKER_PROGRAM){
             hidebutton();

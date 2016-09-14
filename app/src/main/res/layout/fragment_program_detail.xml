@@ -82,13 +82,15 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="124dp"
-        android:layout_height="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
         android:text="Lihat Detail"
         android:id="@+id/fragment_program_BTN_detail"
         android:layout_gravity="right"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bg_button_rounded_accent"
         android:textColor="@color/white" />
 
