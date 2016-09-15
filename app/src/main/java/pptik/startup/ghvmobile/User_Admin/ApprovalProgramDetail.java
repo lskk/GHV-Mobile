@@ -32,16 +32,11 @@ import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 public class ApprovalProgramDetail  extends AppCompatActivity {
     private DataProgram dp;
     private DataProgram2 dp2;
-    private String roleid;
     private int id_program,status_program;
     private TextView nama,awal,akhir,status,supervisor,lokasi,keterangan,deskripsi;
-    private Context applicationContext;
+
     private Button btnApprove,btnDelete;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String BSTS_ID  = "bStsID";
-    public static final String USER_ID    = "UsErId";
-    public static final String LEVEL_ID = "roleId";
+
     SharedPreferences prefs;
     private ProgressDialog pDialog;
 
@@ -53,10 +48,8 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Detail Program");
-        applicationContext = getApplicationContext();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-        roleid = prefs.getString(LEVEL_ID, "");
         nama = (TextView) findViewById(R.id.detail_program_nama);
         awal = (TextView) findViewById(R.id.detail_program_awal);
         akhir=(TextView) findViewById(R.id.detail_program_akhir);
@@ -72,22 +65,22 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
         }
 
         btnApprove = (Button) findViewById(R.id.btn_approval_program);
-        if (status_program==1){
+         if (status_program==1){
+            dp= (DataProgram) extras.getSerializable("detail");
+            id_program=dp.getIdProgram();
+            btnApprove.setText("Disapprove");
+            btnApprove.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    approveprogram(2);
+                }
+            });
+        }else {
             dp= (DataProgram) extras.getSerializable("detail");
             id_program=dp.getIdProgram();
             btnApprove.setText("Approve");
             btnApprove.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     approveprogram(1);
-                }
-            });
-        }else {
-            dp2= (DataProgram2) extras.getSerializable("detail");
-            id_program=dp2.getIdProgram();
-            btnApprove.setText("DisApprove");
-            btnApprove.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    approveprogram(2);
                 }
             });
         }

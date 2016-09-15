@@ -49,11 +49,11 @@ public class LRS_costumAdapter extends BaseAdapter {
     @Override
     public View getView(final int _position, View convertView, ViewGroup parent) {
         View view = convertView;
-        // There are three cases here
         if (view == null) {
-            // 1) The view has not yet been created - we need to initialize the YouTubeThumbnailView.
             view = inflater.inflate(R.layout.lv_list_relawan, parent, false);
         }
+        TextView joindate = (TextView) view.findViewById(R.id.lv_relawan_join_date);
+        joindate.setText("Join Date :"+ listDataUser2.get(_position).get_joindate());
 
         TextView nama = (TextView) view.findViewById(R.id.lv_relawn_name);
         nama.setText(listDataUser2.get(_position).getNamaLengkap());
@@ -65,17 +65,8 @@ public class LRS_costumAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, ApprovalRelawanDetail.class);
                 intent.putExtra("detail", listDataUser2.get(_position));
-                intent.putExtra("status",3);
+                intent.putExtra("status",1);
                 context.startActivity(intent);
-               /* Log.i("test :", listProgram.get(_position).getNamaProgram());
-                Log.i("test :", listProgram.get(_position).getMulai());
-                Log.i("test :", listProgram.get(_position).getAkhir());
-                Log.i("test :", listProgram.get(_position).getSupervisor());
-                Log.i("test :", listProgram.get(_position).getDeskripsi());
-                Log.i("test :", listProgram.get(_position).getLokasiProgram());
-                Log.i("test :", listProgram.get(_position).getLatitude());
-                Log.i("test :", listProgram.get(_position).getLongitude());
-                Log.i("test :", listProgram.get(_position).getKeterangan());*/
             }
         });
 

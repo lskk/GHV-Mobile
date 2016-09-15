@@ -39,33 +39,23 @@ import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
  * Created by GIGABYTE on 15/06/2016.
  */
 public class ApprovalRelawan extends AppCompatActivity {
-    private ListView lv,lv2;
+    private ListView lv;
     private ArrayList<DataUser> listDataUser;
-    private ArrayList<DataUser2> listDataUser2;
 
-    private ProgressDialog pDialog,pDialog2;
+    private ProgressDialog pDialog;
     private Context applicationContext;
-    private Dialog addingClassDialog;
-    private EditText inputCode;
     private LRB_costumAdapter mAdapter;
-    private LRS_costumAdapter mAdapter2;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String LEVEL_ID = "roleId";
-    public static final String BSTS_ID = "userId";
-    public static final String USER_ID="UsErId";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.approval_relawan_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Request");
+        getSupportActionBar().setTitle("GHV Mobile");
         applicationContext = getApplicationContext();
         lv=(ListView) findViewById(R.id.lv_belum_diapprove);
-        lv2=(ListView) findViewById(R.id.lv_sudah_diapprove);
         listDataUser = new ArrayList<DataUser>();
-        listDataUser2 = new ArrayList<DataUser2>();
 
     //    CollectingMateri(this);
 
@@ -98,11 +88,11 @@ public class ApprovalRelawan extends AppCompatActivity {
                                     d.setIdUser(abc.getInt("id_user"));
                                     d.setEmail(abc.getString("email"));
                                     d.setNamaLengkap(abc.getString("nama_lengkap"));
+                                    String[] splitdate=abc.getString("created_at").split("\\s+");
+                                    d.set_joindate(splitdate[0].toString());
                                     listDataUser.add(d);
                                     //  Log.i("idberita",abc.getString("id_program"));
                                 }
-
-
                                 mAdapter = new LRB_costumAdapter(ar, listDataUser);
                                 lv.setAdapter(null);
                                 lv.setAdapter(mAdapter);
@@ -159,61 +149,29 @@ public class ApprovalRelawan extends AppCompatActivity {
                 });
 
     }
+
+
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_approval_relawan, menu);
-        return true;
+    protected void onDestroy() {
+        super.onDestroy();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()){
             case android.R.id.home:
-                checkRoleToBackup();
-                return true;
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
+                intent = new Intent(applicationContext, Admin.class);
                 startActivity(intent);
                 finish();
-                return true;
-            case R.id.dissaprovelist:
-                intent = new Intent(applicationContext, DisapprovRelawan.class);
-                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-    private void checkRoleToBackup() {
-        Intent intent;
-        GetRole g=new GetRole(this);
-        String roleid=g.getrole();
-        if (roleid.contains("2")){
-            intent = new Intent(applicationContext, RelawanMenu.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, GuestListProgram.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("1")) {
-            intent = new Intent(applicationContext, Admin.class);
-            startActivity(intent);
-            finish();
-        }
-        finish();
-    }
-
     @Override
     protected void onResume(){
         super.onResume();

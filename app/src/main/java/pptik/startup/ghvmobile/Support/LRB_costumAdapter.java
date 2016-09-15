@@ -54,6 +54,8 @@ public class LRB_costumAdapter extends BaseAdapter {
             // 1) The view has not yet been created - we need to initialize the YouTubeThumbnailView.
             view = inflater.inflate(R.layout.lv_list_relawan, parent, false);
         }
+        TextView joindate = (TextView) view.findViewById(R.id.lv_relawan_join_date);
+        joindate.setText("Join Date :"+ listDataUser.get(_position).get_joindate());
 
         TextView nama = (TextView) view.findViewById(R.id.lv_relawn_name);
         nama.setText(listDataUser.get(_position).getNamaLengkap());
@@ -67,15 +69,7 @@ public class LRB_costumAdapter extends BaseAdapter {
                 intent.putExtra("detail", listDataUser.get(_position));
                 intent.putExtra("status",2);
                 context.startActivity(intent);
-               /* Log.i("test :", listProgram.get(_position).getNamaProgram());
-                Log.i("test :", listProgram.get(_position).getMulai());
-                Log.i("test :", listProgram.get(_position).getAkhir());
-                Log.i("test :", listProgram.get(_position).getSupervisor());
-                Log.i("test :", listProgram.get(_position).getDeskripsi());
-                Log.i("test :", listProgram.get(_position).getLokasiProgram());
-                Log.i("test :", listProgram.get(_position).getLatitude());
-                Log.i("test :", listProgram.get(_position).getLongitude());
-                Log.i("test :", listProgram.get(_position).getKeterangan());*/
+
             }
         });
 

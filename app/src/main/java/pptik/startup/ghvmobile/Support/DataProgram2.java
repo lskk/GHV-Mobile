@@ -7,6 +7,22 @@ import java.io.Serializable;
 public class DataProgram2 implements Serializable {
     private String _nama_program, _lokasi_program;
     private int _id_program;
+    private String _tanggal,_supervisor;
+
+    public String get_supervisor() {
+        return _supervisor;
+    }
+    public void set_supervisor(String _supervisor) {
+        this._supervisor = _supervisor;
+    }
+
+
+    public String get_tanggal() {
+        return _tanggal;
+    }
+    public void set_tanggal(String _tanggal) {
+        this._tanggal = _tanggal;
+    }
 
     public String getNamaProgram() {
         return _nama_program;

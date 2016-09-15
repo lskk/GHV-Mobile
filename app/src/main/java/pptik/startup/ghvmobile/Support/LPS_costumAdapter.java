@@ -19,11 +19,11 @@ import pptik.startup.ghvmobile.R;
  */
 public class LPS_costumAdapter extends BaseAdapter {
 
-    ArrayList<DataProgram2> listDataProgram2;
+    ArrayList<DataProgram> listDataProgram2;
     Context context;
     private static LayoutInflater inflater=null;
-    public LPS_costumAdapter(DisapprovProgram ap, ArrayList<DataProgram2> data) {
-        listDataProgram2 = new ArrayList<DataProgram2>();
+    public LPS_costumAdapter(DisapprovProgram ap, ArrayList<DataProgram> data) {
+        listDataProgram2 = new ArrayList<DataProgram>();
         listDataProgram2 = data;
         context= ap;
         inflater = ( LayoutInflater )context.
@@ -54,6 +54,11 @@ public class LPS_costumAdapter extends BaseAdapter {
             // 1) The view has not yet been created - we need to initialize the YouTubeThumbnailView.
             view = inflater.inflate(R.layout.lv_list_program, parent, false);
         }
+        TextView tanggal=(TextView)view.findViewById(R.id.fragment_program_start);
+        tanggal.setText(listDataProgram2.get(_position).get_tanggal());
+
+        TextView supervisor=(TextView)view.findViewById(R.id.fragment_program_supervisor);
+        supervisor.setText(listDataProgram2.get(_position).get_supervisor());
 
         TextView nama = (TextView) view.findViewById(R.id.lv_program_name);
         nama.setText(listDataProgram2.get(_position).getNamaProgram());
@@ -66,7 +71,7 @@ public class LPS_costumAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, ApprovalProgramDetail.class);
                 intent.putExtra("detail", listDataProgram2.get(_position));
                 //sudah di approve jadi di dissaporve
-                intent.putExtra("status",2);
+                intent.putExtra("status",1);
                 context.startActivity(intent);
             }
         });

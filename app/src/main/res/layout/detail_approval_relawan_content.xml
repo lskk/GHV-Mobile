@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="5dp"
-    android:background="@color/gray1"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/detail_approval_relawan_activity"
     tools:context=".User_Admin.ApprovalRelawanDetail">
@@ -24,8 +24,33 @@
             android:orientation="vertical"
             android:id="@+id/linearLayout"
             android:layout_centerHorizontal="true">
+            <ImageView
+                android:layout_marginBottom="20dp"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:id="@+id/picture_path_aspirasi"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:background="@drawable/rounderd_border"
+                />
 
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/cornerradius"
+            android:layout_marginBottom="10dp"
+            android:weightSum="1">
 
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="BIODATA"
+                android:id="@+id/textView7"
+                android:textStyle="bold" />
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -36,19 +61,28 @@
             android:layout_marginBottom="5dp"
             android:layout_centerHorizontal="true">
             <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/textviewdetailrelawan"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textviewtitle"
-                android:text="Nama Lengkap : "
+                android:text="Nama Lengkap "
                 android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/actorange"
                 android:layout_gravity="left" />
+            <View
+                android:id="@+id/v_grid"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:background="@android:color/darker_gray"/>
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/textviewtitle"
                 android:text=""
+
                 android:textColor="@color/black"
                 android:layout_gravity="left"
                 android:id="@+id/nama_lengkap"/>
@@ -64,16 +98,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Nama Panggilan : "
+                    android:text="Nama Panggilan "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
@@ -92,16 +133,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Jenis Kelamin : "
+                    android:text="Jenis Kelamin "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
@@ -120,16 +168,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Gol Darah : "
+                    android:text="Gol Darah "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
@@ -148,16 +203,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Tempat Lahir : "
+                    android:text="Tempat Lahir  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
@@ -176,17 +238,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Tanggal Lahir : "
+                    android:text="Tanggal Lahir "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -204,17 +272,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Agama : "
+                    android:text="Agama  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -232,17 +306,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Status Pernikahan : "
+                    android:text="Status Pernikahan  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -260,17 +340,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Jumlah Anak : "
+                    android:text="Jumlah Anak  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -288,17 +374,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Jenis Identitas : "
+                    android:text="Jenis Identitas  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -316,17 +408,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Nomor Identitas : "
+                    android:text="Nomor Identitas  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -344,19 +442,25 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Kewarganegaraan : "
+                    android:text="Kewarganegaraan"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text=""
+                    android:text="-"
                     android:textColor="@color/black"
                     android:layout_gravity="left"
                     android:id="@+id/kewarganegaraan"/>
@@ -372,17 +476,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Alamat : "
+                    android:text="Alamat  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -400,17 +510,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Kota : "
+                    android:text="Kota "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -427,17 +543,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Provinsi : "
+                    android:text="Provinsi  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -454,17 +576,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Kode Pos : "
+                    android:text="Kode Pos  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -481,17 +609,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Telepon Rumah : "
+                    android:text="Telepon Rumah  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -508,17 +642,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Handphone : "
+                    android:text="Handphone  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -535,23 +675,46 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Aktivitas/pekerjaan : "
+                    android:text="Aktivitas/pekerjaan  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
                     android:layout_gravity="left"
                     android:id="@+id/aktivitas_pekerjaan"/>
             </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/cornerradius"
+            android:layout_marginBottom="10dp">
+
+
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="DATA KERABAT"
+                android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -562,17 +725,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Nama Kerabat : "
+                    android:text="Nama Kerabat  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp" android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -589,23 +758,45 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="No hp Kerabat : "
+                    android:text="No hp Kerabat  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
                     android:layout_gravity="left"
                     android:id="@+id/hp_kerabat"/>
             </LinearLayout>
+            </LinearLayout>
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/cornerradius"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="PENDIDIKAN DAN ORGANISASI"
+                android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -616,17 +807,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Pendidikan Terakhir:"
+                    android:text="Pendidikan Terakhir"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -643,17 +840,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Minat/Hobi : "
+                    android:text="Minat/Hobi "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"   android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -670,17 +873,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Keahlian : "
+                    android:text="Keahlian  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -697,17 +906,23 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Pengalaman Organisasi : "
+                    android:text="Pengalaman Organisasi  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"   android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
@@ -727,22 +942,29 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true">
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/textviewdetailrelawan"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
-                    android:text="Motivasi : "
+                    android:text="Motivasi  "
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/actorange"
                     android:layout_gravity="left" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:background="@android:color/darker_gray"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"  android:layout_height="wrap_content"
                     android:textSize="@dimen/textviewtitle"
                     android:text=""
                     android:textColor="@color/black"
                     android:layout_gravity="left"
                     android:id="@+id/motifasi"/>
+            </LinearLayout>
             </LinearLayout>
             <Button
                 android:layout_width="match_parent"

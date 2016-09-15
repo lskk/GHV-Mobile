@@ -451,6 +451,7 @@ public class RelawanMenu extends AppCompatActivity implements
         marker.setPosition(startPoint);
         try {
             info.put("type", type);
+            info.put("levelaksesuser","2");
         } catch (JSONException e) {
             e.printStackTrace();
         }

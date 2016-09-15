@@ -119,6 +119,8 @@ public class Admin extends AppCompatActivity implements
     private FragmentManager fragmentManager;
     private LinearLayout pinDetail;
     private Toolbar toolbar;
+
+
     protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.admin_menu_activity);
@@ -424,7 +426,7 @@ public class Admin extends AppCompatActivity implements
         totalRequest += 1;
         Log.i(TAG_MAP_VIEW, "----------------------- Request no "+totalRequest+" ------------------------");
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(ApplicationConstants.API_GET_MAP_VIEW,
+        client.get(ApplicationConstants.API_GET_MAP_VIEW_ADMIN,
                 new AsyncHttpResponseHandler() {
                     // When the response returned by REST has Http
                     // response code '200'
@@ -515,6 +517,7 @@ public class Admin extends AppCompatActivity implements
         marker.setPosition(startPoint);
         try {
             info.put("type", type);
+            info.put("levelaksesuser","1");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -566,10 +569,7 @@ public class Admin extends AppCompatActivity implements
             hidebutton();
             MarkerUserFragment fragment = new MarkerUserFragment();
             fragment.setData(obj);
-            pinDetail.setVisibility(View.VISIBLE);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
-            Log.i("asdasdads","fuck");
-            //    toolbar_bottom.setVisibility(View.INVISIBLE);
         }else if (obj.optInt("type")==ApplicationConstants.MARKER_PROGRAM){
             hidebutton();
             MarkerProgramFragment fragment=new MarkerProgramFragment();

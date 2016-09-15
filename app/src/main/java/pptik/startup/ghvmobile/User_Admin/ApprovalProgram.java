@@ -83,6 +83,8 @@ private  Intent intent;
                                     d.setIdProgram(abc.getInt("id_program"));
                                     d.setNamaProgram(abc.getString("nama_program"));
                                     d.setLokasiProgram(abc.getString("lokasi_program"));
+                                    d.set_supervisor(abc.getString("supervisor"));
+                                    d.set_tanggal(abc.getString("mulai"));
                                     listDataProgram.add(d);
                                     //  Log.i("idberita",abc.getString("id_program"));
                                 }
@@ -152,21 +154,12 @@ private  Intent intent;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Intent intent;
         switch (item.getItemId()){
             case android.R.id.home:
-                finish();
-                return true;
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
+                intent = new Intent(applicationContext, Admin.class);
                 startActivity(intent);
                 finish();
-                return true;
-            case R.id.dissaprovelist:
-                intent = new Intent(applicationContext, DisapprovProgram.class);
-                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

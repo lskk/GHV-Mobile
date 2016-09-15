@@ -53,6 +53,11 @@ public class LPB_costumAdapter extends BaseAdapter {
             // 1) The view has not yet been created - we need to initialize the YouTubeThumbnailView.
             view = inflater.inflate(R.layout.lv_list_program, parent, false);
         }
+        TextView tanggal=(TextView)view.findViewById(R.id.fragment_program_start);
+        tanggal.setText(listDataProgram.get(_position).get_tanggal());
+
+        TextView supervisor=(TextView)view.findViewById(R.id.fragment_program_supervisor);
+        supervisor.setText(listDataProgram.get(_position).get_supervisor());
 
         TextView nama = (TextView) view.findViewById(R.id.lv_program_name);
         nama.setText(listDataProgram.get(_position).getNamaProgram());
@@ -65,7 +70,7 @@ public class LPB_costumAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, ApprovalProgramDetail.class);
                 intent.putExtra("detail", listDataProgram.get(_position));
                 //belum di approve jadi harus di approve
-                intent.putExtra("status",1);
+                intent.putExtra("status",2);
                 context.startActivity(intent);
             }
         });

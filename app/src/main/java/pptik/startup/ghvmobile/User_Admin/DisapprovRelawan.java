@@ -87,6 +87,8 @@ public class DisapprovRelawan extends AppCompatActivity {
                                     d.setIdUser(abc.getInt("id_user"));
                                     d.setEmail(abc.getString("email"));
                                     d.setNamaLengkap(abc.getString("nama_lengkap"));
+                                    String[] splitdate=abc.getString("created_at").split("\\s+");
+                                    d.set_joindate(splitdate[0].toString());
                                     listDataUser2.add(d);
                                     //  Log.i("idberita",abc.getString("id_program"));
                                 }
@@ -159,12 +161,7 @@ public class DisapprovRelawan extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()){
             case android.R.id.home:
-                finish();
-                return true;
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
+                intent = new Intent(applicationContext, Admin.class);
                 startActivity(intent);
                 finish();
                 return true;

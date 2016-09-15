@@ -35,6 +35,7 @@ public interface ApplicationConstants {
     static final String API_APPROVAL_BERITA = HTTP_URL+ "beritaact/approveberita/";
     static final String API_DELETE_BERITA =HTTP_URL+ "beritaact/deleteberitabyid/";
     static final String API_GET_MAP_VIEW = HTTP_URL+ "useract/locationanddetail";
+  static final String API_GET_MAP_VIEW_ADMIN = HTTP_URL+ "useract/locationanddetailadmin";
     static final String API_UPDATE_CURRENT_LOCATION = "useract/updatecurrentlocation/";
 
 

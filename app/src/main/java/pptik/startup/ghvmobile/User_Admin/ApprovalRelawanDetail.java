@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
 
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataUser;
@@ -37,16 +43,11 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
     agama,statuspernikahan,jumlahanak,jenisidentitas,nomoridentitas,kewarganegaraan,alamat,kota,provinsi,
     kodepos,teleponrumah,handphone,aktivitaspekerjaan,namakerabat,nohpkerabat,pendidikanterakhir,minat,
     keahlian,pengalamanorganisasi,motivasi;
-    private Context applicationContext;
-    private String roleid;
     private int id_user;
     private int status;
+    private ImageView fotoProfile;
+    private String pathfoto;
 
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String BSTS_ID  = "bStsID";
-    public static final String USER_ID    = "UsErId";
-    public static final String LEVEL_ID = "roleId";
     SharedPreferences prefs;
     private ProgressDialog pDialog;
 
@@ -58,11 +59,9 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Detail Relawan");
-        applicationContext = getApplicationContext();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-        roleid = prefs.getString(LEVEL_ID, "");
-
+        fotoProfile=(ImageView)findViewById(R.id.picture_path_aspirasi);
         namalengkap=(TextView) findViewById(R.id.nama_lengkap);
         namapanggilan=(TextView) findViewById(R.id.nama_panggilan);
         jeniskelamin=(TextView) findViewById(R.id.jenis_kelamin);
@@ -207,6 +206,9 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
 
                                 for (int i=0;i<berita.length();i++){
                                     JSONObject abc=berita.getJSONObject(i);
+                                    pathfoto=abc.getString("path_foto");
+                                    new DownloadImageTask(fotoProfile)
+                                            .execute(pathfoto);
                                     namalengkap.setText(abc.getString("nama_lengkap"));
                                     namapanggilan.setText(abc.getString("nama_panggilan"));
                                     if (abc.getInt("jk")==1){
@@ -325,6 +327,31 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            fotoProfile.setImageBitmap(result);
+
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

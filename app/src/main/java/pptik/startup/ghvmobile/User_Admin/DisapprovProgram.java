@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.Support.DataProgram2;
+import pptik.startup.ghvmobile.Support.DataProgram;
 import pptik.startup.ghvmobile.Support.LPS_costumAdapter;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
@@ -35,18 +35,14 @@ import pptik.startup.ghvmobile.Setup.ApplicationConstants;
  */
 public class DisapprovProgram extends AppCompatActivity {
     private ListView lv,lv2;
-    private ArrayList<DataProgram2> listDataProgram2;
+    private ArrayList<DataProgram> listDataProgram2;
 
     private ProgressDialog pDialog,pDialog2;
     private Context applicationContext;
     private Dialog addingClassDialog;
     private EditText inputCode;
     private LPS_costumAdapter mAdapter2;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String LEVEL_ID = "roleId";
-    public static final String BSTS_ID = "userId";
-    public static final String USER_ID="UsErId";
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +52,7 @@ public class DisapprovProgram extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         applicationContext = getApplicationContext();
         lv2=(ListView) findViewById(R.id.lv_program_sudah_diapprove);
-        listDataProgram2 = new ArrayList<DataProgram2>();
+        listDataProgram2 = new ArrayList<DataProgram>();
 
 
      //   CollectingMateri2(this);
@@ -83,10 +79,12 @@ public class DisapprovProgram extends AppCompatActivity {
 
                                 for (int i=0;i<listuser.length();i++){
                                     JSONObject abc=listuser.getJSONObject(i);
-                                    DataProgram2 d = new DataProgram2();
+                                    DataProgram d = new DataProgram();
                                     d.setIdProgram(abc.getInt("id_program"));
                                     d.setNamaProgram(abc.getString("nama_program"));
                                     d.setLokasiProgram(abc.getString("lokasi_program"));
+                                    d.set_supervisor(abc.getString("supervisor"));
+                                    d.set_tanggal(abc.getString("mulai"));
                                     listDataProgram2.add(d);
                                     //  Log.i("idberita",abc.getString("id_program"));
                                 }
@@ -160,12 +158,7 @@ public class DisapprovProgram extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()){
             case android.R.id.home:
-                finish();
-                return true;
-            case R.id.logout:
-                getSharedPreferences("UserDetails",
-                        Context.MODE_PRIVATE).edit().clear().commit();
-                intent = new Intent(applicationContext, Login.class);
+                intent = new Intent(applicationContext, Admin.class);
                 startActivity(intent);
                 finish();
                 return true;
