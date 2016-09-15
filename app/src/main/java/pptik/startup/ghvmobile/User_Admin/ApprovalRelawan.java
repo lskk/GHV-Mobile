@@ -40,7 +40,7 @@ import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
  */
 public class ApprovalRelawan extends AppCompatActivity {
     private ListView lv;
-    private ArrayList<DataUser> listDataUser;
+    private ArrayList<DataUser2> listDataUser;
 
     private ProgressDialog pDialog;
     private Context applicationContext;
@@ -55,7 +55,7 @@ public class ApprovalRelawan extends AppCompatActivity {
         getSupportActionBar().setTitle("GHV Mobile");
         applicationContext = getApplicationContext();
         lv=(ListView) findViewById(R.id.lv_belum_diapprove);
-        listDataUser = new ArrayList<DataUser>();
+        listDataUser = new ArrayList<DataUser2>();
 
     //    CollectingMateri(this);
 
@@ -81,10 +81,9 @@ public class ApprovalRelawan extends AppCompatActivity {
                             boolean status = jObj.getBoolean("status");
                             if (status) {
                                 JSONArray listuser= jObj.getJSONArray("listuser");
-
-                                for (int i=0;i<listuser.length();i++){
+                                  for (int i=0;i<listuser.length();i++){
                                     JSONObject abc=listuser.getJSONObject(i);
-                                    DataUser d = new DataUser();
+                                    DataUser2 d = new DataUser2();
                                     d.setIdUser(abc.getInt("id_user"));
                                     d.setEmail(abc.getString("email"));
                                     d.setNamaLengkap(abc.getString("nama_lengkap"));

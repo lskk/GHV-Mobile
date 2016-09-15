@@ -96,22 +96,22 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
         }
 
         btnApprove = (Button) findViewById(R.id.btnapproverelawan);
-        if (status==2){
+        if (status==1){
             du= (DataUser) extras.getSerializable("detail");
             id_user=du.getIdUser();
-            btnApprove.setText("Approve");
+            btnApprove.setText("DisApprove");
             btnApprove.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    approverelawan(2);
+                    approverelawan(3);
                 }
             });
         }else {
             du2= (DataUser2) extras.getSerializable("detail");
             id_user=du2.getIdUser();
-            btnApprove.setText("DisApprove");
+            btnApprove.setText("Approve");
             btnApprove.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    approverelawan(3);
+                    approverelawan(2);
                 }
             });
         }

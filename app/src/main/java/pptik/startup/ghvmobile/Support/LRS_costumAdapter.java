@@ -19,11 +19,11 @@ import pptik.startup.ghvmobile.R;
  */
 public class LRS_costumAdapter extends BaseAdapter {
 
-    ArrayList<DataUser2> listDataUser2;
+    ArrayList<DataUser> listDataUser2;
     Context context;
     private static LayoutInflater inflater=null;
-    public LRS_costumAdapter(DisapprovRelawan ar, ArrayList<DataUser2> data) {
-        listDataUser2 = new ArrayList<DataUser2>();
+    public LRS_costumAdapter(DisapprovRelawan ar, ArrayList<DataUser> data) {
+        listDataUser2 = new ArrayList<DataUser>();
         listDataUser2 = data;
         context= ar;
         inflater = ( LayoutInflater )context.

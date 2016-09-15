@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.Support.DataUser2;
+import pptik.startup.ghvmobile.Support.DataUser;
 import pptik.startup.ghvmobile.Support.LRS_costumAdapter;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
@@ -35,18 +35,12 @@ import pptik.startup.ghvmobile.Setup.ApplicationConstants;
  */
 public class DisapprovRelawan extends AppCompatActivity {
     private ListView lv2;
-   private ArrayList<DataUser2> listDataUser2;
+   private ArrayList<DataUser> listDataUser2;
 
     private ProgressDialog pDialog2;
     private Context applicationContext;
-    private Dialog addingClassDialog;
-    private EditText inputCode;
-   private LRS_costumAdapter mAdapter2;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String LEVEL_ID = "roleId";
-    public static final String BSTS_ID = "userId";
-    public static final String USER_ID="UsErId";
+    private LRS_costumAdapter mAdapter2;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dissaprove_relawan_activity);
@@ -56,7 +50,7 @@ public class DisapprovRelawan extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         applicationContext = getApplicationContext();
         lv2=(ListView) findViewById(R.id.lv_sudah_diapprove);
-       listDataUser2 = new ArrayList<DataUser2>();
+       listDataUser2 = new ArrayList<DataUser>();
 
      //   CollectingMateri2(this);
     }
@@ -83,7 +77,7 @@ public class DisapprovRelawan extends AppCompatActivity {
 
                                 for (int i=0;i<listuser.length();i++){
                                     JSONObject abc=listuser.getJSONObject(i);
-                                    DataUser2 d = new DataUser2();
+                                    DataUser d = new DataUser();
                                     d.setIdUser(abc.getInt("id_user"));
                                     d.setEmail(abc.getString("email"));
                                     d.setNamaLengkap(abc.getString("nama_lengkap"));

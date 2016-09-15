@@ -2,6 +2,7 @@ package pptik.startup.ghvmobile.Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,9 +20,14 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Support.DataUser;
+import pptik.startup.ghvmobile.Support.DataUser2;
+import pptik.startup.ghvmobile.User_Admin.ApprovalProgramDetail;
+import pptik.startup.ghvmobile.User_Admin.ApprovalRelawanDetail;
 
 /**
  * Created by hynra on 8/18/16.
@@ -32,7 +38,8 @@ public class MarkerUserFragment extends Fragment implements View.OnClickListener
     private Button BTN_detail;
     private ImageView thumbnail;
     private String pathfoto=null;
-
+    private ArrayList<DataUser> listDataUser;
+    private ArrayList<DataUser2> listDataUser2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SharedPreferences prefs;
@@ -54,6 +61,38 @@ public class MarkerUserFragment extends Fragment implements View.OnClickListener
         if (Integer.parseInt(role) !=1){
             BTN_detail.setVisibility(View.INVISIBLE);
         }
+        BTN_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                if (data.optInt("persetujuan")==1 && data.optInt("level")==2 ){
+                    listDataUser = new ArrayList<DataUser>();
+                    DataUser p=new DataUser();
+                    p.setIdUser(data.optInt("id_user"));
+                    p.setEmail(data.optString("email"));
+                    p.setNamaLengkap(data.optString("nama_lengkap"));
+                    listDataUser.add(p);
+                    intent = new Intent(getActivity().getApplicationContext(), ApprovalRelawanDetail.class);
+                    intent.putExtra("detail", listDataUser.get(0));
+                    intent.putExtra("status",1);
+                    startActivity(intent);
+                }else {
+                    listDataUser2 = new ArrayList<DataUser2>();
+                    DataUser2 p=new DataUser2();
+                    p.setIdUser(data.optInt("id_user"));
+                    p.setEmail(data.optString("email"));
+                    p.setNamaLengkap(data.optString("nama_lengkap"));
+                    listDataUser2.add(p);
+                    intent = new Intent(getActivity().getApplicationContext(), ApprovalRelawanDetail.class);
+                    intent.putExtra("detail", listDataUser2.get(0));
+                    intent.putExtra("status",2);
+                    startActivity(intent);
+                }
+
+
+
+            }
+        });
         return view;
     }
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
