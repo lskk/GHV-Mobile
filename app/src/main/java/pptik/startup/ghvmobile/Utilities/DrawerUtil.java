@@ -136,7 +136,7 @@ public class DrawerUtil {
 
 
 
-        AccountHeader headerResult = new AccountHeaderBuilder()
+        headerResult = new AccountHeaderBuilder()
                 .withActivity((Activity) context)
                 .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.actlighorange)))
                 .withHeightDp(250)
@@ -159,7 +159,7 @@ public class DrawerUtil {
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
                         registerRelawan = new PrimaryDrawerItem().withName("Register Volunteer").withIcon(GoogleMaterial.Icon.gmd_pan_tool).withIdentifier(1),
-                        listProgramIssue = new PrimaryDrawerItem().withName("Daftar Program dan Issue").withIcon(GoogleMaterial.Icon.gmd_view_headline).withIdentifier(2),
+                        listProgramIssue = new PrimaryDrawerItem().withName("Daftar Program dan Issue").withIcon(GoogleMaterial.Icon.gmd_event_available).withIdentifier(2),
                         tentangKami = new PrimaryDrawerItem().withName("About Us").withIcon(GoogleMaterial.Icon.gmd_info).withIdentifier(3),
                         logout = new PrimaryDrawerItem().withName("Log Out").withIcon(GoogleMaterial.Icon.gmd_exit_to_app).withIdentifier(4)
 
@@ -216,7 +216,7 @@ public class DrawerUtil {
 
 
 
-        AccountHeader headerResult = new AccountHeaderBuilder()
+        headerResult = new AccountHeaderBuilder()
                 .withActivity((Activity) context)
                 .withHeaderBackground(new ColorDrawable(context.getResources().getColor(R.color.actlighorange)))
                 .withHeightDp(250)
@@ -241,7 +241,7 @@ public class DrawerUtil {
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
                         profileRelawan = new PrimaryDrawerItem().withName("Profile").withIcon(GoogleMaterial.Icon.gmd_face).withIdentifier(1),
-                        listProgramIssue = new PrimaryDrawerItem().withName("Daftar Program dan Issue").withIcon(GoogleMaterial.Icon.gmd_view_headline).withIdentifier(2),
+                        listProgramIssue = new PrimaryDrawerItem().withName("Daftar Program dan Issue").withIcon(GoogleMaterial.Icon.gmd_event_available).withIdentifier(2),
                         submittedProgram = new PrimaryDrawerItem().withName("Submitted Program").withIcon(GoogleMaterial.Icon.gmd_view_headline).withIdentifier(3),
                         tentangKami = new PrimaryDrawerItem().withName("About Us").withIcon(GoogleMaterial.Icon.gmd_info).withIdentifier(4),
                         logout = new PrimaryDrawerItem().withName("Log Out").withIcon(GoogleMaterial.Icon.gmd_exit_to_app).withIdentifier(5)

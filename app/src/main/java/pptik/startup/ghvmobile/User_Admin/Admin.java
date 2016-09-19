@@ -1,9 +1,8 @@
 package pptik.startup.ghvmobile.User_Admin;
 
-import android.app.Dialog;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,16 +18,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +50,6 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -65,12 +57,9 @@ import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.Fragments.MarkerProgramFragment;
 import pptik.startup.ghvmobile.Fragments.MarkerUserFragment;
-import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.SubmitProgram;
-import pptik.startup.ghvmobile.Support.CustomAdapter;
-import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 
@@ -104,11 +93,9 @@ public class Admin extends AppCompatActivity implements
     private String pathfotoRef,email;
     //keperluan marker
     private Loading loadingPin;
-    private Timer timer,timer2;
-    private RequestRest mapReq;
+    private Timer timer2;
     private String TAG_MAP_VIEW = "Map View";
     private int totalRequest = 0;
-    private boolean isSuccess = false;
     private ImageButton closeFragment;
 
     private Drawer mainDrawer;
@@ -116,7 +103,6 @@ public class Admin extends AppCompatActivity implements
     DrawerUtil drawerUtil;
     ImageView headerAva;
     private TextView headername;
-    private FragmentManager fragmentManager;
     private LinearLayout pinDetail;
     private Toolbar toolbar;
 
@@ -169,7 +155,6 @@ public class Admin extends AppCompatActivity implements
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                //Log.e("Error get image", e.getMessage());
                 e.printStackTrace();
             }
             return mIcon11;
@@ -259,10 +244,8 @@ public class Admin extends AppCompatActivity implements
             updateCurrentLocation();
             mapController.setZoom(25);
             mapController.animateTo(currentPoint);
-            //  mapController.setCenter(currentPoint);
             mapset.invalidate();
-           /* curMarker.setPosition(currentPoint);
-            mapset.getOverlays().add(curMarker);*/
+
         } catch (Throwable e) {
             Toast.makeText(this, "Location not Detected, Please Turn On GPS", Toast.LENGTH_SHORT).show();
         }
@@ -279,16 +262,11 @@ public class Admin extends AppCompatActivity implements
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
-            // MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION is an
-            // app-defined int constant. The callback method gets the
-            // result of the request.
-
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
-            Toast.makeText(this, "Location Detected "+mLocation.getLatitude()+" "+
-                    mLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location Detected "/*+mLocation.getLatitude()+" "+
+                    mLocation.getLongitude()*/, Toast.LENGTH_SHORT).show();
             currentLatitude = mLocation.getLatitude();
             currentLongitude = mLocation.getLongitude();
             currentPoint = new GeoPoint(currentLatitude, currentLongitude);
@@ -322,14 +300,12 @@ public class Admin extends AppCompatActivity implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Connection Suspended");
         mGoogleApiClient.connect();
 
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
     }
 
     @Override
@@ -424,7 +400,6 @@ public class Admin extends AppCompatActivity implements
     private void updateMap(){
         Admin.this.showLoadingPin();
         totalRequest += 1;
-        Log.i(TAG_MAP_VIEW, "----------------------- Request no "+totalRequest+" ------------------------");
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(ApplicationConstants.API_GET_MAP_VIEW_ADMIN,
                 new AsyncHttpResponseHandler() {
@@ -432,7 +407,6 @@ public class Admin extends AppCompatActivity implements
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i(TAG_MAP_VIEW, response);
                         hideLoadingPin();
 
                         try {
@@ -442,7 +416,7 @@ public class Admin extends AppCompatActivity implements
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            addMarker(ApplicationConstants.MARKER_ME, currentLatitude, currentLongitude, json );
+                            addMarker(ApplicationConstants.MARKER_ME, currentLatitude, currentLongitude, json,1 );
 
                             JSONObject jObj = new JSONObject(response);
                             boolean status = jObj.getBoolean("status");
@@ -451,17 +425,17 @@ public class Admin extends AppCompatActivity implements
                                 JSONArray jsonArray= jObj.getJSONArray("admin");
                                 for(int i = 0; i < jsonArray.length(); i++){
                                     JSONObject childObject = jsonArray.getJSONObject(i);
-                                    addMarker(ApplicationConstants.MARKER_ADMIN, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                    addMarker(ApplicationConstants.MARKER_ADMIN, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject,childObject.getInt("level"));
                                 }
                                 JSONArray jsonArray2= jObj.getJSONArray("relawan");
                                 for(int i = 0; i < jsonArray2.length(); i++){
                                     JSONObject childObject = jsonArray2.getJSONObject(i);
-                                    addMarker(ApplicationConstants.MARKER_USER, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                    addMarker(ApplicationConstants.MARKER_USER, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject,childObject.getInt("level"));
                                 }
                                 JSONArray jsonArray3= jObj.getJSONArray("program");
                                 for(int i = 0; i < jsonArray3.length(); i++){
                                     JSONObject childObject = jsonArray3.getJSONObject(i);
-                                    addMarker(ApplicationConstants.MARKER_PROGRAM, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject);
+                                    addMarker(ApplicationConstants.MARKER_PROGRAM, childObject.optDouble("latitude"), childObject.optDouble("longitude"), childObject,childObject.getInt("status"));
                                 }
 
 
@@ -471,37 +445,25 @@ public class Admin extends AppCompatActivity implements
                         }
 
                         mapset.invalidate();
-                        // Hide Progress Dialog
+
 
                     }
 
-                    // When the response returned by REST has Http
-                    // response code other than '200' such as '404',
-                    // '500' or '403' etc
+
                     @Override
                     public void onFailure(int statusCode, Throwable error,
                                           String content) {
-                        // Hide Progress Dialog
+
                         hideLoadingPin();
-                        // When Http response code is '404'
+
                         if (statusCode == 404) {
-                           /* Toast.makeText(getApplicationContext(),
-                                    "Requested resource not found",
-                                    Toast.LENGTH_LONG).show();*/
-                        }
-                        // When Http response code is '500'
+                          }
                         else if (statusCode == 500) {
-                           /* Toast.makeText(getApplicationContext(),
-                                    "Something went wrong at server end",
-                                    Toast.LENGTH_LONG).show();*/
+
                         }
-                        // When Http response code other than 404, 500
+
                         else {
-                           /* Toast.makeText(
-                                    getApplicationContext(),
-                                    "Unexpected Error occcured! [Most common Error: Device might "
-                                            + "not be connected to Internet or remote server is not up and running], check for other errors as well",
-                                    Toast.LENGTH_LONG).show();*/
+
                         }
                     }
                 });
@@ -510,11 +472,11 @@ public class Admin extends AppCompatActivity implements
 
 
     //------------------------ ADD MARKER
-    private void addMarker(int type, double Latitude, double Longitude, JSONObject info){
+    private void addMarker(int type, double Latitude, double Longitude, JSONObject info,int status){
         GeoPoint startPoint = new GeoPoint(Latitude, Longitude);
-
         Marker marker = new Marker(mapset);
         marker.setPosition(startPoint);
+
         try {
             info.put("type", type);
             info.put("levelaksesuser","1");
@@ -530,28 +492,38 @@ public class Admin extends AppCompatActivity implements
                         .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
-                Log.i("admin : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
-                break;
+                 break;
             case ApplicationConstants.MARKER_USER:
-                marker.setIcon(new IconicsDrawable(this)
-                        .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
-                        .color(context.getResources().getColor(R.color.actorange))
-                        .sizeDp(48));
-                Log.i("user : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+                if (status==3){
+                    marker.setIcon(new IconicsDrawable(this)
+                            .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
+                            .color(context.getResources().getColor(R.color.red_200))
+                            .sizeDp(48));
+                }else {
+                    marker.setIcon(new IconicsDrawable(this)
+                            .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
+                            .color(context.getResources().getColor(R.color.actorange))
+                            .sizeDp(48));
+                }
                 break;
             case ApplicationConstants.MARKER_PROGRAM:
-                marker.setIcon(new IconicsDrawable(this)
-                        .icon(GoogleMaterial.Icon.gmd_beenhere)
-                        .color(context.getResources().getColor(R.color.red))
-                        .sizeDp(48));
-                Log.i("program : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+                if (status==1) {
+                    marker.setIcon(new IconicsDrawable(this)
+                            .icon(GoogleMaterial.Icon.gmd_beenhere)
+                            .color(context.getResources().getColor(R.color.green_200))
+                            .sizeDp(48));
+                }else {
+                    marker.setIcon(new IconicsDrawable(this)
+                            .icon(GoogleMaterial.Icon.gmd_beenhere)
+                            .color(context.getResources().getColor(R.color.red))
+                            .sizeDp(48));
+                }
                 break;
             case ApplicationConstants.MARKER_ME:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_android_pin)
                         .color(context.getResources().getColor(R.color.colorPrimary))
                         .sizeDp(48));
-                Log.i("me : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
         }
 
@@ -576,7 +548,10 @@ public class Admin extends AppCompatActivity implements
             fragment.setData(obj);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
         }else if (obj.optInt("type")==ApplicationConstants.MARKER_ME){
-
+            hidebutton();
+            MarkerUserFragment fragment = new MarkerUserFragment();
+            fragment.setData(obj);
+            fragmentTransaction.replace(R.id.pinDetail, fragment);
         }
         fragmentTransaction.commit();
         return true;
@@ -596,24 +571,21 @@ public class Admin extends AppCompatActivity implements
         RequestRest req = new RequestRest(Admin.this, new IConnectionResponseHandler(){
             @Override
             public void OnSuccessArray(JSONArray result){
-                Log.i("result", result.toString());
 
             }
             @Override
             public void onSuccessJSONObject(String result){
                 try {
                     JSONObject obj = new JSONObject(result);
-                    Log.i("Test", result);
+
                 } catch (JSONException e){
                 }
             }
             @Override
             public void onFailure(String e){
-                Log.i("Test", e);
             }
             @Override
             public void onSuccessJSONArray(String result){
-                Log.i("Test", result);
             }
         });
 

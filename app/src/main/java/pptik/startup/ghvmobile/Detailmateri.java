@@ -58,45 +58,29 @@ public class Detailmateri  extends AppCompatActivity {
             awal.setText(p.getMulai());
             akhir.setText(p.getAkhir());
             if (p.getStatus()==1){
-                status.setText("Status : verified");
+                status.setText("Verified");
             }else {
-                status.setText("Status : unverified");
+                status.setText("Unverified");
             }
-            supervisor.setText("Supervisor : "+p.getSupervisor());
-            lokasi.setText("Lokasi : "+p.getLokasiProgram());
-            keterangan.setText("Keterangan : "+p.getKeterangan());
-            deskripsi.setText("Deskripsi : \n"+p.getDeskripsi());
+            supervisor.setText(p.getSupervisor());
+            lokasi.setText(p.getLokasiProgram());
+            keterangan.setText(p.getKeterangan());
+            deskripsi.setText(p.getDeskripsi());
             getSupportActionBar().setTitle(p.getNamaProgram());
         }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()){
             case android.R.id.home:
-                checkRoleToBack();
+                finish();
 
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    private void checkRoleToBack() {
-        Intent intent;
-        if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan_Program.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, GuestListProgram.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("1")) {
-            intent = new Intent(applicationContext, Admin.class);
-            startActivity(intent);
-            finish();
-        }
     }
 
     @Override

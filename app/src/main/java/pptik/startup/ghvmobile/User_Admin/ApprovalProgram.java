@@ -68,7 +68,6 @@ private  Intent intent;
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response data : ", response);
                         listDataProgram.clear();
 
                         try {
@@ -86,7 +85,6 @@ private  Intent intent;
                                     d.set_supervisor(abc.getString("supervisor"));
                                     d.set_tanggal(abc.getString("mulai"));
                                     listDataProgram.add(d);
-                                    //  Log.i("idberita",abc.getString("id_program"));
                                 }
 
                                 mAdapter = new LPB_costumAdapter(ap, listDataProgram);

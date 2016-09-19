@@ -129,8 +129,6 @@ public class MarkerUserFragment extends Fragment implements View.OnClickListener
     }
     @Override
     public void onClick(View v) {
-       /* Intent intent = new Intent(getActivity().getApplicationContext(), CctvPlayerActivity.class);
-        intent.putExtra("urlStr", data.optString("Video"));
-        startActivity(intent);*/
+
     }
 }

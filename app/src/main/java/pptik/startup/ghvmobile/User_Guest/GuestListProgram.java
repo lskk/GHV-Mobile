@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -47,11 +48,7 @@ public class GuestListProgram extends AppCompatActivity {
     private EditText inputCode;
     private CustomAdapter mAdapter;
     private Button bt;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String LEVEL_ID = "roleId";
-    public static final String BSTS_ID = "userId";
-    public static final String USER_ID="UsErId";
+
     SharedPreferences prefs;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +60,8 @@ public class GuestListProgram extends AppCompatActivity {
         applicationContext = getApplicationContext();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-        String registrationId = prefs.getString(REG_ID, "");
-        String theRole = prefs.getString(LEVEL_ID, "");
-        int user_ID=prefs.getInt(USER_ID,0);
         lv=(ListView) findViewById(R.id.listView_program);
         listProgram = new ArrayList<Program>();
-        new DrawerUtil(this, toolbar, 0).initDrawerGuest();
         CollectingMateri(this);
 
     }
@@ -109,7 +102,6 @@ public class GuestListProgram extends AppCompatActivity {
                                     p.setLongitude(abc.getString("longitude"));
                                     p.setKeterangan(abc.getString("keterangan"));
                                     listProgram.add(p);
-                                  //  Log.i("idberita",abc.getString("id_program"));
                                 }
 
                                 mAdapter = new CustomAdapter(guestListProgram, listProgram);
@@ -175,26 +167,23 @@ public class GuestListProgram extends AppCompatActivity {
         super.onDestroy();
     }
     public void onBackPressed() {
-        checkRoleToBack();
-
-    }
-
-    private void checkRoleToBack() {
         Intent intent;
-        GetRole g=new GetRole(this);
-        String roleid=g.getrole();
-        if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan_Program.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, GuestMenu.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("1")) {
-            intent = new Intent(applicationContext, Admin.class);
-            startActivity(intent);
-            finish();
+        intent = new Intent(applicationContext, GuestMenu.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case android.R.id.home:
+                intent = new Intent(applicationContext, GuestMenu.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+
     }
 }

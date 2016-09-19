@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,6 +25,7 @@ import java.util.Calendar;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
+import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
@@ -59,6 +61,8 @@ public class SubmitProgram extends AppCompatActivity {
         setContentView(R.layout.submit_issue_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Submit Program");
         applicationContext = getApplicationContext();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
@@ -244,6 +248,18 @@ public class SubmitProgram extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                checkRoleToBack();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }
 

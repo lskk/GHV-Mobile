@@ -30,12 +30,8 @@ public class GCMNotificationIntentService extends IntentService {
     public static final int notifyID = 9001;
     NotificationCompat.Builder builder;
     SharedPreferences prefs;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String ROLE_ID = "roleId";
-    public static final String BSTS_ID = "userId";
+
     private  String theRole;
-    private  String idojek;
     public GCMNotificationIntentService() {
         super("GcmIntentService");
     }
@@ -46,10 +42,7 @@ public class GCMNotificationIntentService extends IntentService {
 
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-        theRole = prefs.getString(ROLE_ID, "1");
-        idojek = prefs.getString(BSTS_ID, "0");
-        Log.i("Service", idojek);
-        Log.i("role : ", theRole);
+        theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "1");
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
@@ -77,15 +70,13 @@ public class GCMNotificationIntentService extends IntentService {
     }
 
     private void sendNotification(String msg) {
-
-        Log.e("Service msg", msg);
         try {
             JSONObject jObj = new JSONObject(msg);
             String buat=jObj.getString("for");
             String judul="Selamat Bergabung";
             String content;
             if (buat.contains("1")){
-                content="Status Relawan Anda Sudah DI Approve";
+                content="Status Relawan Anda Sudah Di Approve";
                 notifToRelawan(msg,1,judul,content);
             }else if (buat.contains("2"))  {
                 content="Ada Issue atau Program Baru disubmit";
@@ -99,9 +90,7 @@ public class GCMNotificationIntentService extends IntentService {
         }
     }
     private void notifToRelawan(String msg,int i,String judul,String content){
-        Log.e("Print", msg);
-
-        if (i==1){
+         if (i==1){
             Intent resultIntent = new Intent(this, Relawan_Program.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                     resultIntent, PendingIntent.FLAG_ONE_SHOT);

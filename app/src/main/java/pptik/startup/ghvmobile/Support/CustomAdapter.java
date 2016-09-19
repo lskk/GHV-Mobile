@@ -83,7 +83,6 @@ public class CustomAdapter extends BaseAdapter{
         supervisor.setText("Supervisor : "+listProgram.get(_position).getSupervisor());
 
         TextView verified = ((TextView) view.findViewById(R.id.lv_program_verified));
-        //// TODO: 7/12/16 : remove verified textview, ngabisin space list item 
         verified.setVisibility(View.GONE);
         if (listProgram.get(_position).getStatus()==1){
             tanggal.setText(tanggal.getText().toString()+" | Status : Verified");

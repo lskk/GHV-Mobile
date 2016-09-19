@@ -127,7 +127,6 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
 
                         try {
                             JSONObject jObj = new JSONObject(response);
@@ -196,7 +195,6 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
 
                         try {
                             JSONObject jObj = new JSONObject(response);
@@ -342,8 +340,7 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+                 e.printStackTrace();
             }
             return mIcon11;
         }

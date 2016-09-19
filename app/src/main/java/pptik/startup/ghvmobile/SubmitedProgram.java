@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -53,6 +54,8 @@ public class SubmitedProgram extends AppCompatActivity {
         setContentView(R.layout.submited_program_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Issue Yang Sudah Di Submit");
         applicationContext = getApplicationContext();
         lv=(ListView) findViewById(R.id.listView_submitedprogram);
         listProgram = new ArrayList<Program>();
@@ -108,7 +111,7 @@ public class SubmitedProgram extends AppCompatActivity {
                                 pDialog.dismiss();
                             } else {
                                 pDialog.dismiss();
-                                String errorMsg = jObj.getString("msg");
+                                String errorMsg = "Tidak ada data";
                                 Toast.makeText(getApplicationContext(),
                                         errorMsg, Toast.LENGTH_LONG).show();
                             }
@@ -183,6 +186,32 @@ public class SubmitedProgram extends AppCompatActivity {
             intent = new Intent(applicationContext, Admin.class);
             startActivity(intent);
             finish();
+        }
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case android.R.id.home:
+                GetRole g=new GetRole(this);
+                String roleid=g.getrole();
+                if (roleid.contains("2")){
+                    intent = new Intent(applicationContext, RelawanMenu.class);
+                    startActivity(intent);
+                    finish();
+                }else if (roleid.contains("3")){
+                    intent = new Intent(applicationContext, GuestMenu.class);
+                    startActivity(intent);
+                    finish();
+                }else if (roleid.contains("1")) {
+                    intent = new Intent(applicationContext, Admin.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
     }

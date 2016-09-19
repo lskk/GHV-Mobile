@@ -73,7 +73,6 @@ public class ApprovalRelawan extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
                         listDataUser.clear();
 
                         try {
@@ -90,7 +89,6 @@ public class ApprovalRelawan extends AppCompatActivity {
                                     String[] splitdate=abc.getString("created_at").split("\\s+");
                                     d.set_joindate(splitdate[0].toString());
                                     listDataUser.add(d);
-                                    //  Log.i("idberita",abc.getString("id_program"));
                                 }
                                 mAdapter = new LRB_costumAdapter(ar, listDataUser);
                                 lv.setAdapter(null);

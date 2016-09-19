@@ -38,42 +38,32 @@ public class RequestRest extends ConnectionHandler {
 
     public void testConnection(){
         RequestParams params = new RequestParams();
-        //mClient.addHeader("x-ami-dt", TimeTools.getCurrentTime());
-        mClient.addHeader("x-ami-cc", "MOBILE");
+       mClient.addHeader("x-ami-cc", "MOBILE");
         System.setProperty("http.keepAlive", "false");
         get("network.json", params, new JsonHttpResponseHandler() {
-
-         //   ProgressDialog dialog;
 
             @Override
             public void onStart() {
                 super.onStart();
-                Log.i(TAG_TESTCON, "Sending request");
-             //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
-
             }
 
             @Override
             public void onSuccess(JSONObject response) {
                 super.onSuccess(response);
-                Log.i(TAG_TESTCON, "Success");
-                responseHandler.onSuccessJSONObject(response.toString());
+                 responseHandler.onSuccessJSONObject(response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers,
                                   String responseBody, Throwable e) {
                 super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_TESTCON, "Failed");
-                responseHandler.onFailure(responseBody);//e.getMessage());
+                responseHandler.onFailure(responseBody);
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                Log.i(TAG_TESTCON, "Disconnected");
-             //   dialog.dismiss();
-            }
+             }
 
         }, mClient);
     }
@@ -85,28 +75,18 @@ public class RequestRest extends ConnectionHandler {
         params.put("password", password);
         params.put("gcm_id", regId);
 
-
-        Log.i("email", email);
-        Log.i("password", password);
-        Log.i("gcm_id", regId);
-
-
-
         post("useract/store", params, new JsonHttpResponseHandler() {
 
-            //   ProgressDialog dialog;
 
             @Override
             public void onStart() {
                 super.onStart();
-                Log.i(TAG_SIGNUP, "Sending request");
                 //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
             }
 
             @Override
             public void onSuccess(JSONObject status) {
                 super.onSuccess(status);
-                Log.i(TAG_SIGNUP, "Success");
                 responseHandler.onSuccessJSONObject(status.toString());
             }
 
@@ -114,15 +94,13 @@ public class RequestRest extends ConnectionHandler {
             public void onFailure(int statusCode, Header[] headers,
                                   String responseBody, Throwable e) {
                 super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_SIGNUP, "Failed");
                 responseHandler.onFailure(e.toString());//e.getMessage());
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                Log.i(TAG_SIGNUP, "Disconnected");
-                //   dialog.dismiss();
+                 //   dialog.dismiss();
             }
 
         }, mClient);
@@ -179,19 +157,15 @@ public class RequestRest extends ConnectionHandler {
         Log.i("param",params.toString());
         post("useract/storerelawan/"+email, params, new JsonHttpResponseHandler() {
 
-            //   ProgressDialog dialog;
 
             @Override
             public void onStart() {
                 super.onStart();
-                Log.i(TAG_DAFTAR_RELAWAN, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
             }
 
             @Override
             public void onSuccess(JSONObject status) {
                 super.onSuccess(status);
-                Log.i(TAG_DAFTAR_RELAWAN, "Success");
                 responseHandler.onSuccessJSONObject(status.toString());
             }
 
@@ -199,15 +173,12 @@ public class RequestRest extends ConnectionHandler {
             public void onFailure(int statusCode, Header[] headers,
                                   String responseBody, Throwable e) {
                 super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_DAFTAR_RELAWAN, "Failed");
                 responseHandler.onFailure(e.toString());//e.getMessage());
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                Log.i(TAG_DAFTAR_RELAWAN, "Disconnected");
-                //   dialog.dismiss();
             }
 
         }, mClient);
@@ -229,19 +200,14 @@ public class RequestRest extends ConnectionHandler {
 
         post("beritaact/store", params, new JsonHttpResponseHandler() {
 
-            //   ProgressDialog dialog;
-
-            @Override
+             @Override
             public void onStart() {
                 super.onStart();
-                Log.i(TAG_DAFTAR_RELAWAN, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
-            }
+              }
 
             @Override
             public void onSuccess(JSONObject status) {
                 super.onSuccess(status);
-                Log.i(TAG_DAFTAR_RELAWAN, "Success");
                 responseHandler.onSuccessJSONObject(status.toString());
             }
 
@@ -249,15 +215,12 @@ public class RequestRest extends ConnectionHandler {
             public void onFailure(int statusCode, Header[] headers,
                                   String responseBody, Throwable e) {
                 super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_DAFTAR_RELAWAN, "Failed");
                 responseHandler.onFailure(e.toString());//e.getMessage());
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                Log.i(TAG_DAFTAR_RELAWAN, "Disconnected");
-                //   dialog.dismiss();
             }
 
         }, mClient);
@@ -268,19 +231,15 @@ public class RequestRest extends ConnectionHandler {
 
         get(ApplicationConstants.API_UPDATE_CURRENT_LOCATION+id_user+"/"+latitude+"/"+longitude, params, new JsonHttpResponseHandler() {
 
-            //   ProgressDialog dialog;
 
             @Override
             public void onStart() {
                 super.onStart();
-                Log.i(TAG_UPDATE_CURRENT_LOCATION, "Sending request");
-                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
             }
 
             @Override
             public void onSuccess(JSONObject status) {
                 super.onSuccess(status);
-                Log.i(TAG_UPDATE_CURRENT_LOCATION, "Success");
                 responseHandler.onSuccessJSONObject(status.toString());
             }
 
@@ -288,15 +247,13 @@ public class RequestRest extends ConnectionHandler {
             public void onFailure(int statusCode, Header[] headers,
                                   String responseBody, Throwable e) {
                 super.onFailure(statusCode, headers, responseBody, e);
-                Log.e(TAG_UPDATE_CURRENT_LOCATION, "Failed");
-                responseHandler.onFailure(e.toString());//e.getMessage());
+                 responseHandler.onFailure(e.toString());//e.getMessage());
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                Log.i(TAG_UPDATE_CURRENT_LOCATION, "Disconnected");
-                //   dialog.dismiss();
+
             }
 
         }, mClient);

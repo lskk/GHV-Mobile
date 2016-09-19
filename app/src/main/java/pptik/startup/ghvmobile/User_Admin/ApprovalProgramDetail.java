@@ -101,7 +101,6 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
 
                         try {
                             JSONObject jObj = new JSONObject(response);
@@ -169,8 +168,6 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
-
                         try {
                             JSONObject jObj = new JSONObject(response);
                             boolean status = jObj.getBoolean("status");
@@ -238,7 +235,6 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
 
                         try {
                             JSONObject jObj = new JSONObject(response);

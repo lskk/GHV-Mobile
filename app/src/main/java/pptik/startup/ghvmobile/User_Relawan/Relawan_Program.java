@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -56,7 +57,6 @@ public class Relawan_Program extends AppCompatActivity {
         listProgram = new ArrayList<Program>();
 
         CollectingMateri(this);
-        new DrawerUtil(this, toolbar, 0).initDrawerRelawan();
     }
 
     private void CollectingMateri(final Relawan_Program relawan) {
@@ -152,35 +152,29 @@ public class Relawan_Program extends AppCompatActivity {
 
 
     }
-
-
-
-    private void checkRoleToBack() {
-        Intent intent;
-        GetRole g=new GetRole(this);
-        String roleid=g.getrole();
-        if (roleid.contains("2")){
-            intent = new Intent(applicationContext, RelawanMenu.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, GuestMenu.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("1")) {
-            intent = new Intent(applicationContext, Admin.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
-    public void onBackPressed() {
-        checkRoleToBack();
 
+    public void onBackPressed() {
+        Intent intent;
+        intent = new Intent(applicationContext, RelawanMenu.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case android.R.id.home:
+                intent = new Intent(applicationContext, RelawanMenu.class);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 

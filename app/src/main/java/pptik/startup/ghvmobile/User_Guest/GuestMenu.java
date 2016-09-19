@@ -8,7 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -18,7 +21,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,8 +33,11 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.Drawer;
 
 import net.qiujuer.genius.ui.widget.Loading;
 
@@ -42,6 +50,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.io.InputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -85,6 +94,14 @@ public class GuestMenu extends AppCompatActivity implements
     Marker curMarker;
     IMapController mapController;
 
+    private Drawer mainDrawer;
+    private AccountHeader mainHeader;
+    DrawerUtil drawerUtil;
+    ImageView headerAva;
+    private TextView headername;
+    Toolbar toolbar;
+    private String pathfotoRef,email;
+
     //keperluan marker
     private Loading loadingPin;
     private Timer timer2;
@@ -95,7 +112,7 @@ public class GuestMenu extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guest_menu_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = this;
         permissionCheck = ContextCompat.checkSelfPermission(this,
@@ -106,12 +123,49 @@ public class GuestMenu extends AppCompatActivity implements
         prefs = getSharedPreferences(ApplicationConstants.USER_PREFS_NAME,
                 Context.MODE_PRIVATE);
         id_user=prefs.getInt(ApplicationConstants.USER_ID,0);
-        String registrationId = prefs.getString(ApplicationConstants.REG_ID, "");
-        String theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
-        new DrawerUtil(this, toolbar, 0).initDrawerGuest();
+        email = prefs.getString(ApplicationConstants.EMAIL_ID, "");
+        pathfotoRef=prefs.getString(ApplicationConstants.PATH_FOTO_USER,"");
+        initNavigationDrawer();
         updateMap();
         timer2 = new Timer();
         setAndRunTimer();
+    }
+    public void initNavigationDrawer(){
+        drawerUtil = new DrawerUtil(this, toolbar,0);
+        drawerUtil.initDrawerGuest();
+        mainDrawer = drawerUtil.getDrawer();
+        mainHeader = drawerUtil.getDrawerHeader();
+        headername=(TextView)mainHeader.getView().findViewById(R.id.Headername);
+        headerAva = (ImageView)mainHeader.getView().findViewById(R.id.mainHeaderAva);
+        new DownloadImageTask(headerAva)
+                .execute(pathfotoRef);
+        headername.setText(email.toString());
+
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                //Log.e("Error get image", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            headerAva.setImageBitmap(result);
+
+        }
     }
 
 
@@ -221,6 +275,10 @@ public class GuestMenu extends AppCompatActivity implements
             }
         });
         closeFragment=(ImageButton)findViewById(R.id.closeFragment);
+        closeFragment.setImageDrawable(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_keyboard_arrow_down)
+                .color(context.getResources().getColor(R.color.white))
+                .sizeDp(24));
         closeFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -281,8 +339,8 @@ public class GuestMenu extends AppCompatActivity implements
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation != null) {
-            Toast.makeText(this, "Location Detected "+mLocation.getLatitude()+" "+
-                    mLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location Detected "/*+mLocation.getLatitude()+" "+
+                    mLocation.getLongitude()*/, Toast.LENGTH_SHORT).show();
             currentLatitude = mLocation.getLatitude();
             currentLongitude = mLocation.getLongitude();
             currentPoint = new GeoPoint(currentLatitude, currentLongitude);
@@ -513,32 +571,26 @@ public class GuestMenu extends AppCompatActivity implements
         switch (type){
             case ApplicationConstants.MARKER_ADMIN:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_hand)
+                        .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
                 Log.i("admin : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
             case ApplicationConstants.MARKER_USER:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_hand)
+                        .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
                 Log.i("user : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
             case ApplicationConstants.MARKER_PROGRAM:
                 marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_ios_lightbulb)
-                        .color(context.getResources().getColor(R.color.red))
+                        .icon(GoogleMaterial.Icon.gmd_beenhere)
+                        .color(context.getResources().getColor(R.color.green_200))
                         .sizeDp(48));
                 Log.i("program : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
                 break;
-            case ApplicationConstants.MARKER_ME:
-                marker.setIcon(new IconicsDrawable(this)
-                        .icon(Ionicons.Icon.ion_android_pin)
-                        .color(context.getResources().getColor(R.color.colorPrimary))
-                        .sizeDp(48));
-                Log.i("me : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
-                break;
+
         }
 
         mapset.getOverlays().add(marker);
@@ -555,16 +607,20 @@ public class GuestMenu extends AppCompatActivity implements
             MarkerUserFragment fragment = new MarkerUserFragment();
             fragment.setData(obj);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
+            fragmentTransaction.commit();
             //    toolbar_bottom.setVisibility(View.INVISIBLE);
         }else if (obj.optInt("type")==ApplicationConstants.MARKER_PROGRAM){
             hidebutton();
             MarkerProgramFragment fragment=new MarkerProgramFragment();
             fragment.setData(obj);
             fragmentTransaction.replace(R.id.pinDetail, fragment);
+            fragmentTransaction.commit();
         }else if (obj.optInt("type")==ApplicationConstants.MARKER_ME){
-
+            Toast.makeText(context,
+                    "Lokasi Saya",
+                    Toast.LENGTH_LONG).show();
         }
-        fragmentTransaction.commit();
+
         return true;
     }
     private void hidebutton(){

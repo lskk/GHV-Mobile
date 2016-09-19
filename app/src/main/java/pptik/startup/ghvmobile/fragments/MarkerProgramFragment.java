@@ -99,8 +99,6 @@ public class MarkerProgramFragment extends Fragment implements View.OnClickListe
     }
     @Override
     public void onClick(View v) {
-       /* Intent intent = new Intent(getActivity().getApplicationContext(), CctvPlayerActivity.class);
-        intent.putExtra("urlStr", data.optString("Video"));
-        startActivity(intent);*/
+
     }
 }
