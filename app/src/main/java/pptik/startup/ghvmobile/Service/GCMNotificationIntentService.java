@@ -19,9 +19,11 @@ import org.json.JSONObject;
 import java.util.Random;
 
 
+import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Admin.ApprovalProgram;
 import pptik.startup.ghvmobile.User_Admin.ApprovalRelawan;
 import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
@@ -79,7 +81,7 @@ public class GCMNotificationIntentService extends IntentService {
                 content="Status Relawan Anda Sudah Di Approve";
                 notifToRelawan(msg,1,judul,content);
             }else if (buat.contains("2"))  {
-                content="Ada Issue atau Program Baru disubmit";
+                content="Ada Relawan atau Program Baru disubmit";
                 notifToRelawan(msg,2,judul,content);
             }else if (buat.contains("3"))  {
                 content="Ada Relawan Baru Mendaftar";
@@ -91,7 +93,7 @@ public class GCMNotificationIntentService extends IntentService {
     }
     private void notifToRelawan(String msg,int i,String judul,String content){
          if (i==1){
-            Intent resultIntent = new Intent(this, Relawan_Program.class);
+            Intent resultIntent = new Intent(this, RelawanMenu.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                     resultIntent, PendingIntent.FLAG_ONE_SHOT);
             NotificationCompat.Builder mNotifyBuilder;
@@ -101,7 +103,7 @@ public class GCMNotificationIntentService extends IntentService {
             mNotifyBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle(judul)
                     .setContentText(content)
-                    .setSmallIcon(R.drawable.logo_act);
+                    .setSmallIcon(R.drawable.logo_ic);
             // Set pending intent
             mNotifyBuilder.setContentIntent(resultPendingIntent);
             int defaults = 0;
@@ -119,7 +121,7 @@ public class GCMNotificationIntentService extends IntentService {
             int m = random.nextInt(9999 - 1000) + 1000;
             mNotificationManager.notify(notifyID, mNotifyBuilder.build());
         }else if (i==2){
-            Intent resultIntent = new Intent(this, ApprovalProgram.class);
+            Intent resultIntent = new Intent(this, Admin.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                     resultIntent, PendingIntent.FLAG_ONE_SHOT);
             NotificationCompat.Builder mNotifyBuilder;
@@ -129,7 +131,7 @@ public class GCMNotificationIntentService extends IntentService {
             mNotifyBuilder = new NotificationCompat.Builder(this)
                     .setContentTitle(judul)
                     .setContentText(content)
-                    .setSmallIcon(R.drawable.logo_act);
+                    .setSmallIcon(R.drawable.logo_ic);
             // Set pending intent
             mNotifyBuilder.setContentIntent(resultPendingIntent);
             int defaults = 0;
@@ -166,7 +168,7 @@ public class GCMNotificationIntentService extends IntentService {
                 content="Ada Relawan Baru Mendaftar";
                 notifToApproveRelawan(msg,1,judul,content);
             }else if (buat.contains("2"))  {
-                content="Ada Issue atau Program Baru disubmit";
+                content="Ada Relawan atau Program Baru disubmit";
                 notifToApproveRelawan(msg,2,judul,content);
             }else if (buat.contains("3"))  {
                 content="Ada Relawan Baru Mendaftar";
@@ -212,7 +214,7 @@ public class GCMNotificationIntentService extends IntentService {
             int m = random.nextInt(9999 - 1000) + 1000;
             mNotificationManager.notify(notifyID, mNotifyBuilder.build());
         }else if (i==2){
-           Intent resultIntent = new Intent(this, ApprovalProgram.class);
+           Intent resultIntent = new Intent(this, Admin.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                     resultIntent, PendingIntent.FLAG_ONE_SHOT);
             NotificationCompat.Builder mNotifyBuilder;

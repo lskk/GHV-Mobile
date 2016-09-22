@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
 import pptik.startup.ghvmobile.Support.Program;
@@ -20,13 +21,7 @@ import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 public class Detailmateri  extends AppCompatActivity {
     private Program p;
     private TextView nama,awal,akhir,status,supervisor,lokasi,keterangan,deskripsi;
-    private Context applicationContext;
-    private String roleid;
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-    public static final String BSTS_ID  = "bStsID";
-    public static final String USER_ID    = "UsErId";
-    public static final String LEVEL_ID = "roleId";
+
     SharedPreferences prefs;
 
     @Override
@@ -37,10 +32,8 @@ public class Detailmateri  extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        applicationContext = getApplicationContext();
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-        roleid = prefs.getString(LEVEL_ID, "");
 
         nama = (TextView) findViewById(R.id.detail_program_nama);
         awal = (TextView) findViewById(R.id.detail_program_awal);

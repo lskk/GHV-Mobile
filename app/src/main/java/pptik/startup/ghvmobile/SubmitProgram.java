@@ -196,9 +196,9 @@ public class SubmitProgram extends AppCompatActivity {
                 public void onDateSet(DatePicker view, int _year, int _monthOfYear, int _dayOfMonth)
                 {
                     mulaiyear = _year;
-                    mulaimonth = _monthOfYear;
+                    mulaimonth = _monthOfYear+1;
                     mulaiday = _dayOfMonth;
-                    mulai.setText(_year+"-"+_monthOfYear+"-"+_dayOfMonth);
+                    mulai.setText(mulaiyear+"-"+mulaimonth+"-"+mulaiday);
                 }};
 
             DatePickerDialog dpDialog=new DatePickerDialog(this, listener, mulaiyear, mulaimonth, mulaiday);
@@ -213,9 +213,9 @@ public class SubmitProgram extends AppCompatActivity {
                 public void onDateSet(DatePicker view, int _year, int _monthOfYear, int _dayOfMonth)
                 {
                     akhiryear = _year;
-                    akhirmonth = _monthOfYear;
+                    akhirmonth = _monthOfYear+1;
                     akhirday = _dayOfMonth;
-                    akhir.setText(_year+"-"+_monthOfYear+"-"+_dayOfMonth);
+                    akhir.setText(akhiryear+"-"+akhirmonth+"-"+akhirday);
                 }};
 
             DatePickerDialog dpDialog=new DatePickerDialog(this, listener, akhiryear, akhirmonth, akhirday);

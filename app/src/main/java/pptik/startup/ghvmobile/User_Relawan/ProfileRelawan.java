@@ -351,10 +351,9 @@ public class ProfileRelawan extends AppCompatActivity {
             public void onDateSet(DatePicker view, int _year, int _monthOfYear, int _dayOfMonth)
             {
                 year = _year;
-                month = _monthOfYear;
+                month = _monthOfYear+1;
                 day = _dayOfMonth;
-                tanggallahir.setText(_year+"-"+_monthOfYear+"-"+_dayOfMonth);
-            }};
+                tanggallahir.setText(year+"-"+month+"-"+day);  }};
 
         DatePickerDialog dpDialog=new DatePickerDialog(this, listener, year, month, day);
         dpDialog.show();
