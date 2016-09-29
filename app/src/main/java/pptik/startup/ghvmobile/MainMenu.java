@@ -1,8 +1,10 @@
 package pptik.startup.ghvmobile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -10,9 +12,21 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -26,6 +40,9 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+
+import java.util.HashMap;
+
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 
@@ -33,206 +50,98 @@ import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
  * Created by GIGABYTE on 05/08/2016.
  */
 public class MainMenu extends AppCompatActivity
-        implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        implements BaseSliderView.OnSliderClickListener,
+        ViewPagerEx.OnPageChangeListener
+         {
+             private SliderLayout mDemoSlider;
 
-    MapView mapset;
-    GeoPoint currentPoint;
-    Marker curMarker;
-    IMapController mapController;
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    private Location mLocation;
-    private String TAG = this.getClass().getSimpleName();
-    private double currentLatitude;
-    private double currentLongitude;
-    private Context context;
-    private FloatingActionButton fabMyLoc, fabAdd;
-    private boolean isFirstZoom = false;
-    private Toolbar toolbar;
-    int permissionCheck =0;
-    private static final int INITIAL_REQUEST=1337;
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION=INITIAL_REQUEST+1;
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_menu_activity);
+             private Context context;
+             private Toolbar toolbar;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        context = this;
-        permissionCheck = ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION);
-        initMap();
-        setLocationBuilder();
-        bindingXml();
-        new DrawerUtil(context, toolbar, 0).initDrawer();
-        }
-    private void setLocationBuilder(){
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+           protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.main_menu_activity);
+                toolbar = (Toolbar) findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
+                context = this;
 
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)
-                .setFastestInterval(1 * 1000);
-    }
-
-    private void bindingXml(){
-        fabMyLoc = (FloatingActionButton)findViewById(R.id.fab_myloc);
-        fabAdd = (FloatingActionButton)findViewById(R.id.fab_add);
-        fabMyLoc.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
-                .icon(Ionicons.Icon.ion_android_locate)
-                .color(context.getResources().getColor(R.color.colorPrimary))
-                .sizeDp(60)));
-        fabAdd.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
-                .icon(Ionicons.Icon.ion_android_add)
-                .color(context.getResources().getColor(R.color.actlighorange))
-                .sizeDp(60)));
-
-        //--- Click Listeners
-        fabMyLoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                zoomMapToCurrent();
-            }
-        });
-    }
-
-    private void initMap() {
-        mapset = (MapView) findViewById(R.id.mainMap);
-        mapset.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
-        mapset.setMultiTouchControls(true);
-        mapController = mapset.getController();
-
-        curMarker = new Marker(mapset);
-        curMarker.setTitle("My Location");
-        curMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        curMarker.setIcon(new IconicsDrawable(this)
-                .icon(Ionicons.Icon.ion_android_pin)
-                .color(context.getResources().getColor(R.color.colorPrimary))
-                .sizeDp(48));
-
-    }
-
-    private void zoomMapToCurrent(){
-        mapController.setZoom(25);
-        mapController.animateTo(currentPoint);
-        //  mapController.setCenter(currentPoint);
-        mapset.invalidate();
-        curMarker.setPosition(currentPoint);
-        mapset.getOverlays().add(curMarker);
-    }
-
-
-
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
-            // MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION is an
-            // app-defined int constant. The callback method gets the
-            // result of the request.
-
-        }
-        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLocation != null) {
-            Toast.makeText(this, "Location Detected "+mLocation.getLatitude()+" "+
-                    mLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-            currentLatitude = mLocation.getLatitude();
-            currentLongitude = mLocation.getLongitude();
-            currentPoint = new GeoPoint(currentLatitude, currentLongitude);
-            zoomMapToCurrent();
-            isFirstZoom = true;
-        } else {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
-        }
-
-
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the task you need to do.
-
-                } else {
-
-                    // permission denied, boo! Disable the functionality that depends on this permission.
+                bindingXml();
+               sliderInit();
                 }
-                return;
+
+
+            private void bindingXml(){
+                mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+
             }
-        }
-    }
 
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Connection Suspended");
-        mGoogleApiClient.connect();
+             private void  sliderInit(){
+                 HashMap<String,String> url_maps = new HashMap<String, String>();
+                 url_maps.put("Hannibal", "http://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Ribbons-and-Banners-PNG/Orange_Transparent_Banner_PNG_Clipart.png?m=1399672800");
+                 url_maps.put("Big Bang Theory", "http://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Ribbons-and-Banners-PNG/Orange_Transparent_Banner_PNG_Clipart.png?m=1399672800");
+                 url_maps.put("House of Cards", "http://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Ribbons-and-Banners-PNG/Orange_Transparent_Banner_PNG_Clipart.png?m=1399672800");
+                 url_maps.put("Game of Thrones", "http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg");
 
-    }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
-    }
+                 for(String name : url_maps.keySet()){
+                     TextSliderView textSliderView = new TextSliderView(this);
+                     // initialize a SliderLayout
+                     textSliderView
+                             .description(name)
+                             .image(url_maps.get(name))
+                             .setScaleType(BaseSliderView.ScaleType.Fit)
+                             .setOnSliderClickListener(this);
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
+                     //add your extra information
+                     textSliderView.bundle(new Bundle());
+                     textSliderView.getBundle()
+                             .putString("extra",name);
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-    }
+                     mDemoSlider.addSlider(textSliderView);
+                 }
+                 mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                 mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                 mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+                 mDemoSlider.setDuration(4000);
+                 mDemoSlider.addOnPageChangeListener(this);
 
-    @Override
-    public void onLocationChanged(Location location) {
-        currentLatitude = location.getLatitude();
-        currentLongitude = location.getLongitude();
-        currentPoint = new GeoPoint(currentLatitude, currentLongitude);
-        if(isFirstZoom == false){
-            zoomMapToCurrent();
-            isFirstZoom = true;
-        }
-    }
+             }
+             @Override
+             protected void onStop() {
+                 // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+                 mDemoSlider.stopAutoCycle();
+                 super.onStop();
+             }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //Now lets connect to the API
-        if(mGoogleApiClient.isConnected() == false)
-            mGoogleApiClient.connect();
-    }
+             @Override
+             public void onSliderClick(BaseSliderView slider) {
+                 Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+             }
 
-    @Override
-    protected  void onDestroy(){
-        super.onDestroy();
-        if(mGoogleApiClient.isConnected()){
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-            mGoogleApiClient.disconnect();
-        }
-        //
-    }
+             @Override
+             public boolean onCreateOptionsMenu(Menu menu) {
+                 MenuInflater menuInflater = getMenuInflater();
+                // menuInflater.inflate(R.menu.main,menu);
+                 return super.onCreateOptionsMenu(menu);
+             }
+
+             @Override
+             public boolean onOptionsItemSelected(MenuItem item) {
+                 switch (item.getItemId()){
+
+                 }
+                 return super.onOptionsItemSelected(item);
+             }
+
+             @Override
+             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+             @Override
+             public void onPageSelected(int position) {
+                 Log.d("Slider Demo", "Page Changed: " + position);
+             }
+
+             @Override
+             public void onPageScrollStateChanged(int state) {}
+
 }

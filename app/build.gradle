@@ -80,5 +80,11 @@ dependencies {
     }
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile "com.android.support:support-v4:+"
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

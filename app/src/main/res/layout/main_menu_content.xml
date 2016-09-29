@@ -30,6 +30,16 @@
         android:paddingRight="5dp"
         android:textAlignment="center"/>
 
+    <com.daimajia.slider.library.SliderLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@id/textView9"
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
+
     <LinearLayout
         android:id="@+id/layout_1"
         android:background="@drawable/bg_main_menu_button_orange"
@@ -40,7 +50,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView9"
+        android:layout_below="@+id/slider"
         android:layout_centerHorizontal="true">
         <LinearLayout
             android:gravity="center_horizontal|center_vertical"
@@ -155,7 +165,6 @@
             android:layout_width="75dp"
             android:layout_height="75dp">
             <ImageView
-
                 android:src="@drawable/ic_myloc"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
