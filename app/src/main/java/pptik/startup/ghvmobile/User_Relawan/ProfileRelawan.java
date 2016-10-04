@@ -47,6 +47,7 @@ import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
+import pptik.startup.ghvmobile.User_Guest.DaftarRelawan;
 import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.PhotoManager;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
@@ -97,6 +98,8 @@ public class ProfileRelawan extends AppCompatActivity {
     String pathfoto__="";
     //variable untuk foto
     protected final int CAMERA_REQUEST = 100;
+
+    protected final int SELECT_PICTURE = 200;
     private PhotoManager photoManager;
     private String rootPhotoDirectory = "", finalPhotoPath = "";
 
@@ -325,9 +328,16 @@ public class ProfileRelawan extends AppCompatActivity {
         uploadFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog dialog = new AlertDialog.Builder(ProfileRelawan.this).create();
-                dialog.setMessage("Silahkan Langsung Ambil Foto Terbaru");
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Camera", new DialogInterface.OnClickListener() {
+                android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(ProfileRelawan.this).create();
+                dialog.setMessage("Please Choose Picture Method :");
+                dialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "Gallery", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, SELECT_PICTURE);
+                    }
+                });
+
+                dialog.setButton(android.app.AlertDialog.BUTTON_POSITIVE, "Take Photo", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(cameraIntent, CAMERA_REQUEST);
@@ -640,6 +650,7 @@ public class ProfileRelawan extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
+            result=Bitmap.createScaledBitmap(result,(int)(result.getWidth()*0.5), (int)(result.getHeight()*0.5), true);
             picture_path.setImageBitmap(result);
 
         }
@@ -658,10 +669,39 @@ public class ProfileRelawan extends AppCompatActivity {
             //takePictures.setImageBitmap(photo);
             //picture_path.setText(fullPhotoPath);
             finalPhotoPath = fullPhotoPath;
-            picture_path.setImageBitmap(photo);
+            Bitmap resizedimage=Bitmap.createScaledBitmap(photo,(int)(photo.getWidth()*0.5), (int)(photo.getHeight()*0.5), true);
+            picture_path.setImageBitmap(resizedimage);
             savebitmap(photo, fullPhotoPath);
+        }else if(requestCode == SELECT_PICTURE && resultCode==RESULT_OK && data!=null){
+            Uri selectedImage = data.getData();
+            String path = getPath(selectedImage);
+            //takePictures.setImageBitmap(BitmapFactory.decodeFile(path));
+            //File source = new File(path);
+            //SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            //File destination = new File(rootPhotoDirectory+File.separator+sd.format(new Date())+".png");
+            finalPhotoPath = path;
+            Bitmap decode=BitmapFactory.decodeFile(path);
+            Bitmap resizedimage=Bitmap.createScaledBitmap(decode,(int)(decode.getWidth()*0.5), (int)(decode.getHeight()*0.5), true);
+            picture_path.setImageBitmap(resizedimage);
+            //picture_path.setText(destination.getAbsolutePath());
+            //if(photoManager.copyPhotoFromGallery(source, destination)){
+            //    Log.d("Succes","Success Copy File");
+            //}else{
+            //    Log.d("Failed", "Failde Copy File");
+            //}
         }
     }
+
+    private String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String picturepath = cursor.getString(column_index);
+        cursor.close();
+        return picturepath;
+    }
+
 
 
     private File savebitmap(Bitmap bmp, String path) {

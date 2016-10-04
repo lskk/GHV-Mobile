@@ -1,6 +1,8 @@
 package pptik.startup.ghvmobile.Connection;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -147,7 +149,9 @@ public class RequestRest extends ConnectionHandler {
         if (pathfoto.isEmpty() || pathfoto==null){
             params.put("img_profil_relawan", false);
         }else {
+
             File photo = new File(pathfoto);
+
             try {
                 params.put("img_profil_relawan", photo);
             } catch (FileNotFoundException e) {
@@ -202,6 +206,7 @@ public class RequestRest extends ConnectionHandler {
             params.put("main_image", false);
         }else {
             File photo = new File(pathfoto);
+
             try {
                 params.put("main_image", photo);
             } catch (FileNotFoundException e) {

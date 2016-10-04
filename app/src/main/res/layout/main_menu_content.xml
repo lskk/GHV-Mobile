@@ -66,7 +66,6 @@
             <ImageButton
                 android:background="@null"
                 android:id="@+id/mainmenu_icon_relawan"
-                android:src="@drawable/ic_myloc"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
         </LinearLayout>
@@ -123,7 +122,6 @@
             <ImageButton
                 android:background="@null"
                 android:id="@+id/mainmenu_icon_program"
-                android:src="@drawable/ic_myloc"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
         </LinearLayout>

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,6 +39,7 @@ import java.util.Date;
 import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.SubmitProgram;
 import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
@@ -322,9 +324,16 @@ public class DaftarRelawan extends AppCompatActivity {
         uploadFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog dialog = new AlertDialog.Builder(DaftarRelawan.this).create();
-                dialog.setMessage("Silahkan Langsung Ambil Foto Terbaru");
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Camera", new DialogInterface.OnClickListener() {
+                android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(DaftarRelawan.this).create();
+                dialog.setMessage("Please Choose Picture Method :");
+                dialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "Gallery", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, SELECT_PICTURE);
+                    }
+                });
+
+                dialog.setButton(android.app.AlertDialog.BUTTON_POSITIVE, "Take Photo", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(cameraIntent, CAMERA_REQUEST);
@@ -427,8 +436,26 @@ public class DaftarRelawan extends AppCompatActivity {
             //takePictures.setImageBitmap(photo);
             //picture_path.setText(fullPhotoPath);
             finalPhotoPath = fullPhotoPath;
-            picture_path.setImageBitmap(photo);
+            Bitmap resizedimage=Bitmap.createScaledBitmap(photo,(int)(photo.getWidth()*0.5), (int)(photo.getHeight()*0.5), true);
+            picture_path.setImageBitmap(resizedimage);
             savebitmap(photo, fullPhotoPath);
+        }else if(requestCode == SELECT_PICTURE && resultCode==RESULT_OK && data!=null){
+            Uri selectedImage = data.getData();
+            String path = getPath(selectedImage);
+            //takePictures.setImageBitmap(BitmapFactory.decodeFile(path));
+            //File source = new File(path);
+            //SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            //File destination = new File(rootPhotoDirectory+File.separator+sd.format(new Date())+".png");
+            finalPhotoPath = path;
+            Bitmap decode=BitmapFactory.decodeFile(path);
+            Bitmap resizedimage=Bitmap.createScaledBitmap(decode,(int)(decode.getWidth()*0.5), (int)(decode.getHeight()*0.5), true);
+            picture_path.setImageBitmap(resizedimage);
+            //picture_path.setText(destination.getAbsolutePath());
+            //if(photoManager.copyPhotoFromGallery(source, destination)){
+            //    Log.d("Succes","Success Copy File");
+            //}else{
+            //    Log.d("Failed", "Failde Copy File");
+            //}
         }
     }
 

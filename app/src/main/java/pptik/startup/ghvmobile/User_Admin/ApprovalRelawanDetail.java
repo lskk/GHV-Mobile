@@ -346,6 +346,8 @@ public class ApprovalRelawanDetail extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
+            result=Bitmap.createScaledBitmap(result,(int)(result.getWidth()*0.5), (int)(result.getHeight()*0.5), true);
+
             fotoProfile.setImageBitmap(result);
 
         }

@@ -191,7 +191,8 @@ public class SubmitProgram extends AppCompatActivity {
             //takePictures.setImageBitmap(photo);
             //picture_path.setText(fullPhotoPath);
             finalPhotoPath = fullPhotoPath;
-            picture_path.setImageBitmap(photo);
+            Bitmap resizedimage=Bitmap.createScaledBitmap(photo,(int)(photo.getWidth()*0.5), (int)(photo.getHeight()*0.5), true);
+            picture_path.setImageBitmap(resizedimage);
             savebitmap(photo, fullPhotoPath);
         }else if(requestCode == SELECT_PICTURE && resultCode==RESULT_OK && data!=null){
             Uri selectedImage = data.getData();
@@ -201,7 +202,9 @@ public class SubmitProgram extends AppCompatActivity {
             //SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
             //File destination = new File(rootPhotoDirectory+File.separator+sd.format(new Date())+".png");
             finalPhotoPath = path;
-            picture_path.setImageBitmap(BitmapFactory.decodeFile(path));
+            Bitmap decode=BitmapFactory.decodeFile(path);
+            Bitmap resizedimage=Bitmap.createScaledBitmap(decode,(int)(decode.getWidth()*0.5), (int)(decode.getHeight()*0.5), true);
+            picture_path.setImageBitmap(resizedimage);
             //picture_path.setText(destination.getAbsolutePath());
             //if(photoManager.copyPhotoFromGallery(source, destination)){
             //    Log.d("Succes","Success Copy File");
