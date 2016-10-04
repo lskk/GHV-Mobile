@@ -1,13 +1,20 @@
 package pptik.startup.ghvmobile;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +26,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,39 +39,87 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Support.PhotoManager;
 import pptik.startup.ghvmobile.Support.Program;
-
+import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
+import pptik.startup.ghvmobile.User_Guest.GuestMenu;
+import pptik.startup.ghvmobile.User_Relawan.ProfileRelawan;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
+import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
+import android.view.View;
 /**
  * Created by GIGABYTE on 05/08/2016.
  */
 public class MainMenu extends AppCompatActivity
         implements BaseSliderView.OnSliderClickListener,
-        ViewPagerEx.OnPageChangeListener
+        ViewPagerEx.OnPageChangeListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener
          {
              private ArrayList<Program> listProgram;
              private SliderLayout mDemoSlider;
-             private Context context;
              private Toolbar toolbar;
              private LinearLayout L_volunteer,L_program,L_map;
+             private String theRole;
+             private SharedPreferences prefs;
+             private TextView v_text,v_desc;
+             private ImageButton icon_relawan,icon_program,icon_map;
 
+
+             //keperluan map
+             private FloatingActionButton fabMyLoc,fabAddProgram;
+             private boolean isFirstZoom = false;
+             int permissionCheck =0;
+             private static final int INITIAL_REQUEST=1337;
+             private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION=INITIAL_REQUEST+1;
+             private GoogleApiClient mGoogleApiClient;
+             private LocationRequest mLocationRequest;
+             private Location mLocation;
+             private String TAG = this.getClass().getSimpleName();
+             private double currentLatitude;
+             private double currentLongitude;
+             private int id_user;
+             private Context context;
+             MapView mapset;
+             GeoPoint currentPoint;
+             Marker curMarker;
+             IMapController mapController;
            protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.main_menu_activity);
                 toolbar = (Toolbar) findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
                 context = this;
-
+               prefs = getSharedPreferences("UserDetails",
+                       Context.MODE_PRIVATE);
+               theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
                 bindingXml();
+               setLocationBuilder();
                 getDataNews();
                 }
 
@@ -70,11 +127,206 @@ public class MainMenu extends AppCompatActivity
             private void bindingXml(){
                 mDemoSlider = (SliderLayout)findViewById(R.id.slider);
                 listProgram = new ArrayList<Program>();
+                v_text=(TextView)findViewById(R.id.mainmenu_volunteer_text);
+                v_desc=(TextView)findViewById(R.id.mainmenu_volunteer_description);
                 L_volunteer=(LinearLayout)findViewById(R.id.layout_1);
                 L_program=(LinearLayout)findViewById(R.id.layout_2);
                 L_map=(LinearLayout)findViewById(R.id.layout_3);
+                icon_relawan=(ImageButton) findViewById(R.id.mainmenu_icon_relawan);
+                icon_program=(ImageButton) findViewById(R.id.mainmenu_icon_program);
+                icon_map=(ImageButton) findViewById(R.id.mainmenu_map);
+                icon_relawan.setImageDrawable(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_pan_tool)
+                        .color(context.getResources().getColor(R.color.white))
+                        .sizeDp(50));
+                icon_program.setImageDrawable(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_event_available)
+                        .color(context.getResources().getColor(R.color.white))
+                        .sizeDp(50));
+                icon_map.setImageDrawable(new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_pin_drop)
+                        .color(context.getResources().getColor(R.color.white))
+                        .sizeDp(50));
+                if (theRole.contains("2")){
+                    v_text.setText("You Have Become Volunteer");
+                    v_desc.setText("see your profile");
+                    icon_relawan.setImageDrawable(new IconicsDrawable(this)
+                            .icon(GoogleMaterial.Icon.gmd_face)
+                            .color(context.getResources().getColor(R.color.white))
+                            .sizeDp(50));
+                }
+
+                L_volunteer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i;
+                        if (theRole.contains("2")){
+                            i = new Intent(MainMenu.this, ProfileRelawan.class);
+                            startActivity(i);
+                            finish();
+                        }else {
+                            GuestMenu gm=new GuestMenu();
+                            gm.checkstatusdaftar(context);
+                        }
+                    }
+                });
+                L_program.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i;
+                        if (theRole.contains("2")){
+                            i = new Intent(MainMenu.this, Relawan_Program.class);
+                            startActivity(i);
+                            finish();
+                        }else {
+                            i = new Intent(MainMenu.this, GuestListProgram.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    }
+                });
+                L_map.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i;
+                        if (theRole.contains("2")){
+                            i = new Intent(MainMenu.this, RelawanMenu.class);
+                            startActivity(i);
+                            finish();
+                        }else {
+                            i = new Intent(MainMenu.this, GuestMenu.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    }
+                });
+
 
             }
+
+
+             private void setLocationBuilder(){
+                 mGoogleApiClient = new GoogleApiClient.Builder(this)
+                         .addConnectionCallbacks(this)
+                         .addOnConnectionFailedListener(this)
+                         .addApi(LocationServices.API)
+                         .build();
+
+                 mLocationRequest = LocationRequest.create()
+                         .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                         .setInterval(10 * 1000)
+                         .setFastestInterval(1 * 1000);
+             }
+             @Override
+             public void onConnected(Bundle bundle) {
+                 if (ContextCompat.checkSelfPermission(this,
+                         android.Manifest.permission.ACCESS_FINE_LOCATION)
+                         != PackageManager.PERMISSION_GRANTED) {
+
+                     ActivityCompat.requestPermissions(this,
+                             new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                             MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+                     // MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION is an
+                     // app-defined int constant. The callback method gets the
+                     // result of the request.
+
+                 }
+                 mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                 if (mLocation != null) {
+                      currentLatitude = mLocation.getLatitude();
+                     currentLongitude = mLocation.getLongitude();
+                     currentPoint = new GeoPoint(currentLatitude, currentLongitude);
+                     storeLastLocation(getApplicationContext(), String.valueOf(currentLatitude),String.valueOf(currentLongitude));
+                     isFirstZoom = true;
+                 } else {
+                     LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+                   //  Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
+                 }
+             }
+
+             @Override
+             public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+                 switch (requestCode) {
+                     case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                         // If request is cancelled, the result arrays are empty.
+                         if (grantResults.length > 0
+                                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                             // permission was granted, yay! Do the task you need to do.
+
+                         } else {
+
+                             // permission denied, boo! Disable the functionality that depends on this permission.
+                         }
+                         return;
+                     }
+                 }
+             }
+
+             @Override
+             public void onConnectionSuspended(int i) {
+                 Log.i(TAG, "Connection Suspended");
+                 mGoogleApiClient.connect();
+
+             }
+
+             @Override
+             public void onConnectionFailed(ConnectionResult connectionResult) {
+                 Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
+             }
+
+             @Override
+             protected void onStart() {
+                 super.onStart();
+                 try{
+                     mGoogleApiClient.connect();
+                 }catch (Exception e){
+                     Toast.makeText(this, "Location not Detected, Please Turn On GPS", Toast.LENGTH_SHORT).show();
+                 }
+
+             }
+
+
+
+             @Override
+             public void onLocationChanged(Location location) {
+                 currentLatitude = location.getLatitude();
+                 currentLongitude = location.getLongitude();
+                 currentPoint = new GeoPoint(currentLatitude, currentLongitude);
+                 storeLastLocation(getApplicationContext(), String.valueOf(currentLatitude),String.valueOf(currentLongitude));
+                 if(isFirstZoom == false){
+                     isFirstZoom = true;
+                 }
+             }
+
+             @Override
+             protected void onResume() {
+                 super.onResume();
+
+                 //Now lets connect to the API
+                 if(mGoogleApiClient.isConnected() == false)
+                     mGoogleApiClient.connect();
+
+             }
+
+             @Override
+             protected  void onDestroy(){
+                 super.onDestroy();
+                 if(mGoogleApiClient.isConnected()){
+                     LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+                     mGoogleApiClient.disconnect();
+                 }
+                 //
+             }
+             private void storeLastLocation(Context context, String latitude_,String longitude_) {
+
+                 SharedPreferences.Editor editor = prefs.edit();
+                 editor.putString(ApplicationConstants.USER_LATITUDE, latitude_);
+                 editor.putString(ApplicationConstants.USER_LONGITUDE, longitude_);
+                 editor.commit();
+             }
+
 
              private void  sliderInit(){
 
@@ -168,6 +420,9 @@ public class MainMenu extends AppCompatActivity
              protected void onStop() {
                  // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
                  mDemoSlider.stopAutoCycle();
+                 if (mGoogleApiClient.isConnected()) {
+                     mGoogleApiClient.disconnect();
+                 }
                  super.onStop();
              }
 
@@ -216,5 +471,9 @@ public class MainMenu extends AppCompatActivity
 
              @Override
              public void onPageScrollStateChanged(int state) {}
+             @Override
+             public void onBackPressed() {
 
+                 finish();
+             }
 }

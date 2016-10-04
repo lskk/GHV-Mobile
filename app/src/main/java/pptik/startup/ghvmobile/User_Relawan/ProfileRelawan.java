@@ -42,6 +42,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import pptik.startup.ghvmobile.GetRole;
+import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
@@ -698,11 +699,11 @@ public class ProfileRelawan extends AppCompatActivity {
         Intent intent;
 
         if (roleid.contains("2")){
-            intent = new Intent(applicationContext, RelawanMenu.class);
+            intent = new Intent(applicationContext, MainMenu.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, GuestMenu.class);
+            intent = new Intent(applicationContext, MainMenu.class);
             startActivity(intent);
             finish();
         }else if (roleid.contains("1")) {

@@ -43,7 +43,7 @@
         </activity>
         -->
         <activity
-            android:name=".MainMenu"
+            android:name=".Login"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -88,6 +88,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".SubmitProgram"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
@@ -134,6 +135,11 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".SubmitedProgram"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MainMenu"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>

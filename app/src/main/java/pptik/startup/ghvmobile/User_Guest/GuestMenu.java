@@ -57,8 +57,10 @@ import java.util.TimerTask;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.GetRole;
+import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.User_Relawan.ProfileRelawan;
 import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 import pptik.startup.ghvmobile.Fragments.MarkerProgramFragment;
 import pptik.startup.ghvmobile.Fragments.MarkerUserFragment;
@@ -446,6 +448,8 @@ public class GuestMenu extends AppCompatActivity implements
         if (timer2!=null){
             timer2.cancel();
         }
+        Intent intent = new Intent(GuestMenu.this, MainMenu.class);
+        startActivity(intent);
         finish();
     }
     //---------------- RELOAD MAP EVERY 0.5 SEC

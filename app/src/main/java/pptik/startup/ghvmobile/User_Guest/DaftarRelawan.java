@@ -36,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import pptik.startup.ghvmobile.GetRole;
+import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 import pptik.startup.ghvmobile.User_Admin.Admin;
@@ -462,16 +463,12 @@ public class DaftarRelawan extends AppCompatActivity {
         Intent intent;
         GetRole g=new GetRole(this);
         String roleid=g.getrole();
-        if (roleid.contains("2")){
-            intent = new Intent(applicationContext, Relawan_Program.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("3")){
-            intent = new Intent(applicationContext, GuestMenu.class);
-            startActivity(intent);
-            finish();
-        }else if (roleid.contains("1")) {
+        if (roleid.contains("1")) {
             intent = new Intent(applicationContext, Admin.class);
+            startActivity(intent);
+            finish();
+        }else {
+            intent = new Intent(applicationContext, MainMenu.class);
             startActivity(intent);
             finish();
         }

@@ -1,11 +1,18 @@
 package pptik.startup.ghvmobile;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,14 +21,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
+import pptik.startup.ghvmobile.Support.PhotoManager;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
@@ -54,8 +68,14 @@ public class SubmitProgram extends AppCompatActivity {
     private  int id_user;
 
     //lokasi
-    private String currentLatitude,currentLongitude;
-
+    private String currentLatitude,currentLongitude,pathfoto;
+    //upload image variable
+    private TextView upload_image;
+    protected final int CAMERA_REQUEST = 100;
+    protected final int SELECT_PICTURE = 200;
+    private ImageView picture_path;
+    private PhotoManager photoManager;
+    private String rootPhotoDirectory = "", finalPhotoPath = "";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.submit_issue_activity);
@@ -131,6 +151,90 @@ public class SubmitProgram extends AppCompatActivity {
                 }
             }
         });
+        picture_path=(ImageView)findViewById(R.id.picture_path_program);
+        upload_image=(TextView)findViewById(R.id.upload_photo_program);
+        upload_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = new AlertDialog.Builder(SubmitProgram.this).create();
+                dialog.setMessage("Please Choose Picture Method :");
+                dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Gallery", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, SELECT_PICTURE);
+                    }
+                });
+
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Take Photo", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    }
+                });
+                dialog.show();
+            }
+        });
+        photoManager  = new PhotoManager();
+        rootPhotoDirectory = photoManager.getNewPathAppsDirectory();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==CAMERA_REQUEST && resultCode==RESULT_OK){
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            String fileDest = sd.format(new Date())+".png";
+            File photoName = new File(fileDest);
+            String fullPhotoPath = rootPhotoDirectory+File.separator+photoName.toString();
+            //Bitmap bmp = photo.createScaledBitmap(photo, 400,400, true);
+            //Bitmap bmp = ImageScaleUtil.createScaledBitmap(photo, 400, 400, ImageScaleUtil.ScalingLogic.FIT);
+            //bmp.recycle();
+            //takePictures.setImageBitmap(photo);
+            //picture_path.setText(fullPhotoPath);
+            finalPhotoPath = fullPhotoPath;
+            picture_path.setImageBitmap(photo);
+            savebitmap(photo, fullPhotoPath);
+        }else if(requestCode == SELECT_PICTURE && resultCode==RESULT_OK && data!=null){
+            Uri selectedImage = data.getData();
+            String path = getPath(selectedImage);
+            //takePictures.setImageBitmap(BitmapFactory.decodeFile(path));
+            //File source = new File(path);
+            //SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+            //File destination = new File(rootPhotoDirectory+File.separator+sd.format(new Date())+".png");
+            finalPhotoPath = path;
+            picture_path.setImageBitmap(BitmapFactory.decodeFile(path));
+            //picture_path.setText(destination.getAbsolutePath());
+            //if(photoManager.copyPhotoFromGallery(source, destination)){
+            //    Log.d("Succes","Success Copy File");
+            //}else{
+            //    Log.d("Failed", "Failde Copy File");
+            //}
+        }
+    }
+
+    private String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String picturepath = cursor.getString(column_index);
+        cursor.close();
+        return picturepath;
+    }
+
+    private File savebitmap(Bitmap bmp, String path) {
+        try {
+            File photo = new File(path);
+            FileOutputStream fos = new FileOutputStream(photo);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+            Log.d("Success", "File Success Created");
+            Toast.makeText(SubmitProgram.this, path, Toast.LENGTH_LONG).show();
+            Log.d("Path", path);
+            return photo;
+        }catch (Exception e) {
+            Log.d("Failed","File Failed Created : "+e.getMessage());
+            return null;
+        }
     }
     private void submitProgram(String id_user,String nama_program
             ,String lokasi_program,String mulai,String akhir
@@ -186,7 +290,7 @@ public class SubmitProgram extends AppCompatActivity {
 
         req.submitProgram( id_user, nama_program
                 , lokasi_program, mulai, akhir
-                , supervisor, deskripsi, keterangan,currentLatitude,currentLongitude);
+                , supervisor, deskripsi, keterangan,currentLatitude,currentLongitude,finalPhotoPath);
     }
         public void DateMulai(){
 

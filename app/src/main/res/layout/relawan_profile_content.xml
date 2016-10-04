@@ -21,8 +21,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/linearLayout"
@@ -43,7 +43,6 @@
                 android:text="Upload Foto"
                 android:layout_marginLeft="7dp"
                 android:textColor="@color/black"
-                android:background="@color/white"
                 android:textStyle="bold"
                 android:padding="10dp"
                 android:id="@+id/upload_photo_edit_profil_relawan"

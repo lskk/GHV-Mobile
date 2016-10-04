@@ -89,19 +89,13 @@ public class Login extends AppCompatActivity {
         String theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
         int user_ID=prefs.getInt(ApplicationConstants.USER_ID,0);
         if (!TextUtils.isEmpty(registrationId)) {
-            if(theRole.contains("3")){
-                Intent i = new Intent(Login.this,GuestMenu.class);
-                i.putExtra("regId", registrationId);
-                startActivity(i);
-                finish();
-            }
-            else if(theRole.contains("2")){
-                Intent i = new Intent(Login.this, RelawanMenu.class);
-                i.putExtra("regId", registrationId);
-                startActivity(i);
-                finish();
-            }else if(theRole.contains("1")){
+           if(theRole.contains("1")){
                 Intent i = new Intent(Login.this, Admin.class);
+                i.putExtra("regId", registrationId);
+                startActivity(i);
+                finish();
+            }else {
+                Intent i = new Intent(Login.this, MainMenu.class);
                 i.putExtra("regId", registrationId);
                 startActivity(i);
                 finish();
@@ -303,26 +297,16 @@ public class Login extends AppCompatActivity {
                                 Log.i("Login role : ", Level);
                                 Log.i("Login role : ", String.valueOf(id_user));
 
-                                if(theRole.contains("3")){
-                                    Intent i = new Intent(getApplicationContext(),GuestMenu.class);
+                                if(theRole.contains("1")){
+                                    Intent i = new Intent(Login.this, Admin.class);
                                     i.putExtra("regId", gcmid);
                                     startActivity(i);
                                     finish();
-                                    Log.i("Ke halaman user : ", Level);
-                                }
-                                else if(theRole.contains("2")){
-                                    Intent i = new Intent(getApplicationContext(), RelawanMenu.class);
+                                }else {
+                                    Intent i = new Intent(Login.this, MainMenu.class);
                                     i.putExtra("regId", gcmid);
                                     startActivity(i);
                                     finish();
-                                    Log.i("Ke halaman admin : ", Level);
-                                }
-                                else if(theRole.contains("1")){
-                                    Intent i = new Intent(getApplicationContext(), Admin.class);
-                                    i.putExtra("regId", gcmid);
-                                    startActivity(i);
-                                    finish();
-                                    Log.i("Ke halaman admin : ", Level);
                                 }
 
                             } else {

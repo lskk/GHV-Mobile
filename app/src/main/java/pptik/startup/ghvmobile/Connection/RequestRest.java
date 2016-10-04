@@ -185,7 +185,7 @@ public class RequestRest extends ConnectionHandler {
     }
     public void submitProgram(String id_user,String nama_program
             ,String lokasi_program,String mulai,String akhir
-            ,String supervisor,String deskripsi,String keterangan,String latitude,String longitude){
+            ,String supervisor,String deskripsi,String keterangan,String latitude,String longitude,String pathfoto){
         RequestParams params = new RequestParams();
         params.put("id_user",id_user);
         params.put("nama_program",nama_program);
@@ -197,7 +197,17 @@ public class RequestRest extends ConnectionHandler {
         params.put("keterangan",keterangan);
         params.put("latitude",latitude);
         params.put("longitude",longitude);
+        Log.i("path foto request rest",pathfoto);
+        if (pathfoto.isEmpty() || pathfoto==null){
+            params.put("main_image", false);
+        }else {
+            File photo = new File(pathfoto);
+            try {
+                params.put("main_image", photo);
+            } catch (FileNotFoundException e) {
 
+            }
+        }
         post("beritaact/store", params, new JsonHttpResponseHandler() {
 
              @Override

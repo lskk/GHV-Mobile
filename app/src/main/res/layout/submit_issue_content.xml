@@ -18,13 +18,28 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/linearLayout"
             android:layout_centerHorizontal="true">
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/picture_path_program"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:background="@drawable/rounderd_border"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Foto"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:id="@+id/upload_photo_program"
+                android:layout_marginBottom="10dp"
+                android:textSize="25dp" />
             <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText

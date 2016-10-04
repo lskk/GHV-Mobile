@@ -54,6 +54,7 @@ import java.util.TimerTask;
 
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
+import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitProgram;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
@@ -388,6 +389,8 @@ public class RelawanMenu extends AppCompatActivity implements
         if (timer2!=null){
             timer2.cancel();
         }
+        Intent intent = new Intent(RelawanMenu.this, MainMenu.class);
+        startActivity(intent);
         finish();
     }
     //---------------- RELOAD MAP EVERY 0.5 SEC

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".User_Relawan.RelawanMenu"
     tools:showIn="@layout/main_menu_activity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +44,7 @@
         android:layout_below="@id/textView9"
         android:id="@+id/slider"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         />
 
     <LinearLayout
@@ -56,8 +63,9 @@
             android:gravity="center_horizontal|center_vertical"
             android:layout_width="75dp"
             android:layout_height="75dp">
-            <ImageView
-
+            <ImageButton
+                android:background="@null"
+                android:id="@+id/mainmenu_icon_relawan"
                 android:src="@drawable/ic_myloc"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
@@ -76,6 +84,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:id="@+id/mainmenu_volunteer_text"
         android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,6 +93,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
     <TextView
+        android:id="@+id/mainmenu_volunteer_description"
         android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,8 +120,9 @@
             android:gravity="center_horizontal|center_vertical"
             android:layout_width="75dp"
             android:layout_height="75dp">
-            <ImageView
-
+            <ImageButton
+                android:background="@null"
+                android:id="@+id/mainmenu_icon_program"
                 android:src="@drawable/ic_myloc"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
@@ -164,8 +175,9 @@
             android:gravity="center_horizontal|center_vertical"
             android:layout_width="75dp"
             android:layout_height="75dp">
-            <ImageView
-                android:src="@drawable/ic_myloc"
+            <ImageButton
+                android:background="@null"
+                android:id="@+id/mainmenu_map"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
         </LinearLayout>
@@ -202,3 +214,5 @@
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
+    </ScrollView>
+</LinearLayout>
