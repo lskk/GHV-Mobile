@@ -20,9 +20,9 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="15dp"
             android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/linearLayout"
@@ -43,6 +43,7 @@
                 android:text="Upload Foto"
                 android:layout_marginLeft="7dp"
                 android:textColor="@color/black"
+                android:background="@color/white"
                 android:textStyle="bold"
                 android:padding="10dp"
                 android:id="@+id/upload_photo_edit_profil_relawan"
@@ -176,6 +177,7 @@
                         android:layout_marginRight="10dp"
                         android:tag="3"/>
                     <RadioButton
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="AB"
@@ -472,7 +474,6 @@
                     android:id="@+id/profile_relawan_pendidikan_terakhir">
 
 
-
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -484,6 +485,7 @@
                         android:tag="1"/>
 
                     <RadioButton
+                        android:layout_toRightOf="@id/pt_sd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="SMP"
@@ -491,6 +493,7 @@
                         android:checked="false"
                         android:tag="2"/>
                     <RadioButton
+                        android:layout_toRightOf="@id/pt_smp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="SMA"
@@ -498,6 +501,8 @@
                         android:checked="false"
                         android:tag="3"/>
                     <RadioButton
+
+                        android:layout_below="@id/pt_sd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="S1"
@@ -505,19 +510,27 @@
                         android:checked="false"
                         android:tag="4"/>
                     <RadioButton
+                        android:layout_below="@id/pt_smp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="S2"
                         android:id="@+id/pt_s2"
                         android:checked="false"
-                        android:tag="5"/>
+                        android:tag="5"
+                        android:layout_toEndOf="@+id/pt_sd" />
                     <RadioButton
+                        android:layout_below="@id/pt_sma"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="S3"
                         android:id="@+id/pt_s3"
                         android:checked="false"
-                        android:tag="6"/>
+                        android:tag="6"
+                        android:layout_alignEnd="@+id/pt_sma"
+                        android:layout_toEndOf="@+id/pt_smp" />
+
+
+
                 </RadioGroup>
 
 

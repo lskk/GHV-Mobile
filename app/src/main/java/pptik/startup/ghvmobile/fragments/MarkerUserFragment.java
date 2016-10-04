@@ -116,6 +116,8 @@ public class MarkerUserFragment extends Fragment implements View.OnClickListener
         }
 
         protected void onPostExecute(Bitmap result) {
+            result=Bitmap.createScaledBitmap(result,(int)(result.getWidth()*0.5), (int)(result.getHeight()*0.5), true);
+
             thumbnail.setImageBitmap(result);
 
         }
