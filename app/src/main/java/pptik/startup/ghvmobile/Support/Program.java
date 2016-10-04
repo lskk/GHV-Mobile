@@ -6,8 +6,16 @@ import java.io.Serializable;
  * Created by edo on 6/12/2016.
  */
 public class Program implements Serializable {
-    private String _namaprogram, _lokasiprogram, _mulai, _akhir,_supervisor,_deskripsi,_keterangan,_latitude,_longitude;
+    private String _namaprogram, _lokasiprogram, _mulai, _akhir,_supervisor,_deskripsi,_keterangan,_latitude,_longitude,_pathfoto;
     private int _idprogram,_status;
+
+    public String getPathfoto() {
+        return _pathfoto;
+    }
+    public void setPathfoto(String _pathfoto) {
+        this._pathfoto = _pathfoto;
+    }
+
 
     public String getLongitude() {
         return _longitude;

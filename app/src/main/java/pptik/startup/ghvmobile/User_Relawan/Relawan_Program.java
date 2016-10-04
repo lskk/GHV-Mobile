@@ -5,10 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,14 +33,18 @@ import java.util.ArrayList;
 
 import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.SubmitProgram;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.CustomAdapter;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.Utilities.DrawerUtil;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 
 public class Relawan_Program extends AppCompatActivity {
+
+    private FloatingActionButton fabAddProgram;
     private ListView lv;
     private ArrayList<Program> listProgram;
     private ProgressDialog pDialog;
@@ -45,6 +53,7 @@ public class Relawan_Program extends AppCompatActivity {
     private EditText inputCode;
     private CustomAdapter mAdapter;
     private Button bt;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -57,6 +66,19 @@ public class Relawan_Program extends AppCompatActivity {
         listProgram = new ArrayList<Program>();
 
         CollectingMateri(this);
+        fabAddProgram=(FloatingActionButton)findViewById(R.id.fab_add_program);
+        fabAddProgram.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
+                .icon(Ionicons.Icon.ion_plus_circled)
+                .color(this.getResources().getColor(R.color.colorPrimary))
+                .sizeDp(60)));
+        fabAddProgram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SubmitProgram.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void CollectingMateri(final Relawan_Program relawan) {

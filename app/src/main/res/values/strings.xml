@@ -31,22 +31,7 @@
     <string name="prompt_keahlian">Keahlian atau Skill yang dimiliki</string>
     <string name="prompt_pengalaman">Pengalaman Organisasi</string>
     <string name="prompt_motivasi">Motivasi Bergabung</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <string name="title_activity_test123">Test123</string>
 
 
     <!-- Strings related to daftar rewalan end -->

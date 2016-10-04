@@ -9,7 +9,7 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '23.0.3'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "pptik.startup.ghvmobile"
@@ -29,11 +29,7 @@ android {
         }
     }
 
-    dexOptions {
-        incremental = true;
-        preDexLibraries = false
-        javaMaxHeapSize "2g"
-    }
+
     repositories {
         maven { url 'http://repo1.maven.org/maven2' }
         maven { url "https://jitpack.io" }
@@ -81,10 +77,15 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile "com.android.support:support-v4:+"
-    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+
+    //
+    compile 'com.marvinlabs:android-slideshow-widget:0.5.+@aar'
+    compile 'com.marvinlabs:android-slideshow-widget-picasso-plugin:0.5.+@aar'
+
 }
 apply plugin: 'com.google.gms.google-services'

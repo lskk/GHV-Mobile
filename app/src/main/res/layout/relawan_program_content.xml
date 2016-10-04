@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="5dp"
@@ -18,5 +19,17 @@
         android:padding="5dp"
         android:divider="@null"
         android:id="@+id/listView_program" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_program"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/white"
+        android:src="@android:drawable/ic_dialog_email"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_alignParentBottom="true" />
 
-</android.support.v7.widget.LinearLayoutCompat>
+</RelativeLayout>

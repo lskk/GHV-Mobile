@@ -40,8 +40,6 @@ public class SubmitedProgram extends AppCompatActivity {
     private ArrayList<Program> listProgram;
     private ProgressDialog pDialog;
     private Context applicationContext;
-    private Dialog addingClassDialog;
-    private EditText inputCode;
     private SubmitedAdapter mAdapter;
     private Button bt;
     private int iduser;
