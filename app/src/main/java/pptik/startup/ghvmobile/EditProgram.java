@@ -1,6 +1,7 @@
 package pptik.startup.ghvmobile;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,8 +35,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
+import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.Support.PhotoManager;
 import pptik.startup.ghvmobile.User_Admin.ApprovalProgramDetail;
@@ -46,7 +51,12 @@ public class EditProgram extends AppCompatActivity {
     Button submit;
     private int id_program;
     private ProgressDialog pDialog;
-
+    private int mulaiyear;
+    private int mulaimonth;
+    private int mulaiday;
+    private int akhiryear;
+    private int akhirmonth;
+    private int akhirday;
     //upload image variable
     private TextView upload_image;
     protected final int CAMERA_REQUEST = 100;
@@ -79,7 +89,6 @@ public class EditProgram extends AppCompatActivity {
         supervisor=(EditText)findViewById(R.id.submit_program_supervisor);
         deskripsi=(EditText)findViewById(R.id.submit_program_deskripsi);
         keterangan=(EditText)findViewById(R.id.submit_program_keterangan);
-        submit=(Button)findViewById(R.id.submit_program_btnsubmit);
 
 
         upload_image=(TextView)findViewById(R.id.upload_photo_program);
@@ -106,6 +115,93 @@ public class EditProgram extends AppCompatActivity {
         });
         photoManager  = new PhotoManager();
         rootPhotoDirectory = photoManager.getNewPathAppsDirectory();
+        final Calendar c = Calendar.getInstance();
+        mulaiyear  = c.get(Calendar.YEAR);
+        mulaimonth = c.get(Calendar.MONTH);
+        mulaiday   = c.get(Calendar.DAY_OF_MONTH);
+
+        mulai.setFocusable(false);
+        mulai.setFocusableInTouchMode(false);
+        mulai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // On button click show datepicker dialog
+                DateMulai();
+            }
+        });
+        akhiryear  = c.get(Calendar.YEAR);
+        akhirmonth = c.get(Calendar.MONTH);
+        akhirday   = c.get(Calendar.DAY_OF_MONTH);
+
+        akhir.setFocusable(false);
+        akhir.setFocusableInTouchMode(false);
+        akhir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // On button click show datepicker dialog
+                DateAkhir();
+            }
+        });
+        submit=(Button)findViewById(R.id.submit_program_btnsubmit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String tanggalmulai = mulaiyear + "-" + mulaimonth + "-" + mulaiday;
+                String tanggalakhir =akhiryear + "-" + akhirmonth + "-" + akhirday;
+                if (!nama.getText().toString().isEmpty()&&
+                        !lokasi.getText().toString().isEmpty()&&
+                        !supervisor.getText().toString().isEmpty()&&
+                        !deskripsi.getText().toString().isEmpty()){
+
+                    updateProgram(String.valueOf(id_program),
+                            nama.getText().toString(),
+                            lokasi.getText().toString(),
+                            tanggalmulai,tanggalakhir,
+                            supervisor.getText().toString(),
+                            deskripsi.getText().toString(),
+                            keterangan.getText().toString());
+
+                }   else {
+                    Toast.makeText(getApplicationContext(),
+                            "Silahkan Lengkapi data", Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+        });
+    }
+
+    public void DateMulai(){
+
+        DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int _year, int _monthOfYear, int _dayOfMonth)
+            {
+                mulaiyear = _year;
+                mulaimonth = _monthOfYear+1;
+                mulaiday = _dayOfMonth;
+                mulai.setText(mulaiyear+"-"+mulaimonth+"-"+mulaiday);
+            }};
+
+        DatePickerDialog dpDialog=new DatePickerDialog(this, listener, mulaiyear, mulaimonth, mulaiday);
+        dpDialog.show();
+
+    }
+    public void DateAkhir (){
+
+        DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int _year, int _monthOfYear, int _dayOfMonth)
+            {
+                akhiryear = _year;
+                akhirmonth = _monthOfYear+1;
+                akhirday = _dayOfMonth;
+                akhir.setText(akhiryear+"-"+akhirmonth+"-"+akhirday);
+            }};
+
+        DatePickerDialog dpDialog=new DatePickerDialog(this, listener, akhiryear, akhirmonth, akhirday);
+        dpDialog.show();
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -189,7 +285,41 @@ public class EditProgram extends AppCompatActivity {
                                     JSONObject abc=berita.getJSONObject(i);
                                     nama.setText(abc.getString("nama_program"));
                                     mulai.setText(abc.getString("mulai"));
+                                    String tempMulai=abc.getString("mulai");
+                                    String[] data=tempMulai.split("-");
+                                    for (i=0;i<data.length;i++){
+                                        if (i==0){
+                                            try{
+                                                mulaiyear = Integer.parseInt(data[i]);
+                                            } catch (NumberFormatException e) {
+                                                mulaiyear = 2016;
+                                            }
+
+                                        }else if (i==1){
+                                            mulaimonth=Integer.parseInt(data[i]);
+                                        }else if (i==2){
+                                            mulaiday=Integer.parseInt(data[i]);
+                                        }
+                                    }
+
                                     akhir.setText(abc.getString("akhir"));
+                                    String tempAkhir=abc.getString("akhir");
+                                    String[] data2=tempAkhir.split("-");
+                                    for (i=0;i<data2.length;i++){
+                                        if (i==0){
+                                            try{
+                                                akhiryear = Integer.parseInt(data[i]);
+                                            } catch (NumberFormatException e) {
+                                                akhiryear = 2016;
+                                            }
+
+                                        }else if (i==1){
+                                            akhirmonth=Integer.parseInt(data[i]);
+                                        }else if (i==2){
+                                            akhirday=Integer.parseInt(data[i]);
+                                        }
+                                    }
+
                                     supervisor.setText(abc.getString("supervisor"));
                                     lokasi.setText(abc.getString("lokasi_program"));
                                     keterangan.setText(abc.getString("keterangan"));
@@ -255,6 +385,53 @@ public class EditProgram extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private void updateProgram(String id_program,String nama_program
+            ,String lokasi_program,String mulai,String akhir
+            ,String supervisor,String deskripsi,String keterangan) {
+        final ProgressDialog dialog = ProgressDialog.show(EditProgram.this, "Connecting", "Send Data", true);
+        RequestRest req = new RequestRest(EditProgram.this, new IConnectionResponseHandler(){
+            @Override
+            public void OnSuccessArray(JSONArray result){
+                Log.i("result", result.toString());
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSuccessJSONObject(String result){
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    Log.i("Test", result);
+                    dialog.dismiss();
+                    Toast.makeText(EditProgram.this, "Update Success", Toast.LENGTH_LONG).show();
+                    finish();
+
+
+
+                } catch (JSONException e){
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(String e){
+                Log.i("Test", e);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSuccessJSONArray(String result){
+                Log.i("Test", result);
+                dialog.dismiss();
+            }
+        });
+
+
+        req.updateProgram( id_program, nama_program
+                , lokasi_program, mulai, akhir
+                , supervisor, deskripsi, keterangan,finalPhotoPath);
     }
 
 }

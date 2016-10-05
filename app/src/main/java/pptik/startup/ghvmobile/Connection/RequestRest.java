@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Switch;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -269,6 +270,57 @@ public class RequestRest extends ConnectionHandler {
             public void onFinish() {
                 super.onFinish();
 
+            }
+
+        }, mClient);
+    }
+
+    public void updateProgram(String id_program, String nama_program
+            , String lokasi_program, String mulai, String akhir
+            , String supervisor, String deskripsi, String keterangan, String pathfoto){
+        RequestParams params = new RequestParams();
+        params.put("nama_program",nama_program);
+        params.put("lokasi_program",lokasi_program);
+        params.put("mulai",mulai);
+        params.put("akhir",akhir);
+        params.put("supervisor",supervisor);
+        params.put("deskripsi",deskripsi);
+        params.put("keterangan",keterangan);
+        Log.i("path foto request rest",pathfoto);
+        if (pathfoto.isEmpty() || pathfoto==null){
+            params.put("main_image", false);
+        }else {
+            File photo = new File(pathfoto);
+
+            try {
+                params.put("main_image", photo);
+            } catch (FileNotFoundException e) {
+
+            }
+        }
+        post("beritaact/update/"+id_program, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onSuccess(JSONObject status) {
+                super.onSuccess(status);
+                responseHandler.onSuccessJSONObject(status.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseBody, Throwable e) {
+                super.onFailure(statusCode, headers, responseBody, e);
+                responseHandler.onFailure(e.toString());//e.getMessage());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
             }
 
         }, mClient);

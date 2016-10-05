@@ -38,6 +38,8 @@ public interface ApplicationConstants {
     static final String API_GET_MAP_VIEW_ADMIN = HTTP_URL+ "useract/locationanddetailadmin";
     static final String API_UPDATE_CURRENT_LOCATION = "useract/updatecurrentlocation/";
     static final String API_GET_URGENT_NEWS = HTTP_URL+ "beritaact/urgentnews";
+  static final String API_UPDATE_PROGRAM_BY_ID = HTTP_URL+ "beritaact/update/";
+
 
   static final String FINE_REQUEST="FinERequest";
   static final String REG_ID = "regId";
