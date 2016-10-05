@@ -101,6 +101,7 @@ public class GuestListProgram extends AppCompatActivity {
                                     p.setLatitude(abc.getString("latitude"));
                                     p.setLongitude(abc.getString("longitude"));
                                     p.setKeterangan(abc.getString("keterangan"));
+                                    p.setPathfoto(abc.getString("main_image"));
                                     listProgram.add(p);
                                 }
 

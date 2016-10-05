@@ -6,7 +6,15 @@ import java.io.Serializable;
 public class DataProgram implements Serializable {
     private String _nama_program, _lokasi_program;
     private int _id_program;
-    private String _tanggal,_supervisor;
+    private String _tanggal,_supervisor,_pathfoto;
+
+    public String get_pathfoto() {
+        return _pathfoto;
+    }
+    public void set_pathfoto(String _pathfoto) {
+        this._pathfoto = _pathfoto;
+    }
+
 
     public String get_supervisor() {
         return _supervisor;

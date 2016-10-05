@@ -111,7 +111,7 @@ public class Signup extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             inputPassword.setError(getString(R.string.error_invalid_password));
             focusView = inputPassword;
             cancel = true;
@@ -146,7 +146,10 @@ public class Signup extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        if (password.length()<=4){
+            return false;
+        }
+        return true;
     }
 
     private void storeRegIdinSharedPref(Context context, String regId,

@@ -84,6 +84,7 @@ private  Intent intent;
                                     d.setLokasiProgram(abc.getString("lokasi_program"));
                                     d.set_supervisor(abc.getString("supervisor"));
                                     d.set_tanggal(abc.getString("mulai"));
+                                    d.set_pathfoto("main");
                                     listDataProgram.add(d);
                                 }
 

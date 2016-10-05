@@ -17,7 +17,7 @@ public interface ApplicationConstants {
   //  static final String MSG_KEY_USER_OJEK = "g";
     // http url
   //  static final String HTTP_URL = "http://svc-bsts.lskk.ee.itb.ac.id/dev/api/";
-    static final String HTTP_URL = "http://167.205.7.228:8087/v1/";
+    static final String HTTP_URL = "http://167.205.7.226:60327/v1/";
     static final String API_REGISTRATION = "http://bsts-svc.lskk.ee.itb.ac.id/dev/api/opank/daftaropank/";
     static final String API_LOGIN =HTTP_URL+ "useract/authenticate";
     static final String API_GET_START_PROGRAM = HTTP_URL+ "beritaact/showstart";

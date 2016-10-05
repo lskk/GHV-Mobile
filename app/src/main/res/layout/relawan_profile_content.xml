@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/relawan_profile_activity"
     tools:context=".User_Relawan.ProfileRelawan">
@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="2dp"
             android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/linearLayout"
@@ -461,77 +461,19 @@
                     android:layout_height="wrap_content"
                     android:text="Pendidikan Terakhir"
                     android:id="@+id/textView6"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:gravity="left"
                     android:paddingTop="10dp"
                     android:paddingLeft="5dp" />
 
-                <RadioGroup
-                    android:gravity="left"
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:id="@+id/profile_relawan_pendidikan_terakhir">
 
+                <Spinner
+                    style="@style/spinner_style"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/pendidikan_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SD"
-                        android:id="@+id/pt_sd"
-                        android:checked="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="1dp"
-                        android:tag="1"/>
-
-                    <RadioButton
-                        android:layout_toRightOf="@id/pt_sd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SMP"
-                        android:id="@+id/pt_smp"
-                        android:checked="false"
-                        android:tag="2"/>
-                    <RadioButton
-                        android:layout_toRightOf="@id/pt_smp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SMA"
-                        android:id="@+id/pt_sma"
-                        android:checked="false"
-                        android:tag="3"/>
-                    <RadioButton
-
-                        android:layout_below="@id/pt_sd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="S1"
-                        android:id="@+id/pt_s1"
-                        android:checked="false"
-                        android:tag="4"/>
-                    <RadioButton
-                        android:layout_below="@id/pt_smp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="S2"
-                        android:id="@+id/pt_s2"
-                        android:checked="false"
-                        android:tag="5"
-                        android:layout_toEndOf="@+id/pt_sd" />
-                    <RadioButton
-                        android:layout_below="@id/pt_sma"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="S3"
-                        android:id="@+id/pt_s3"
-                        android:checked="false"
-                        android:tag="6"
-                        android:layout_alignEnd="@+id/pt_sma"
-                        android:layout_toEndOf="@+id/pt_smp" />
-
-
-
-                </RadioGroup>
 
 
 

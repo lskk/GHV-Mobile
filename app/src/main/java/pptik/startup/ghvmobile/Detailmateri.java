@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.User_Admin.Admin;
@@ -21,6 +24,7 @@ import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 public class Detailmateri  extends AppCompatActivity {
     private Program p;
     private TextView nama,awal,akhir,status,supervisor,lokasi,keterangan,deskripsi;
+    private ImageView mainimage;
 
     SharedPreferences prefs;
 
@@ -34,7 +38,7 @@ public class Detailmateri  extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-
+        mainimage=(ImageView)findViewById(R.id.detailmateri_mainimage);
         nama = (TextView) findViewById(R.id.detail_program_nama);
         awal = (TextView) findViewById(R.id.detail_program_awal);
         akhir=(TextView) findViewById(R.id.detail_program_akhir);
@@ -60,6 +64,12 @@ public class Detailmateri  extends AppCompatActivity {
             keterangan.setText(p.getKeterangan());
             deskripsi.setText(p.getDeskripsi());
             getSupportActionBar().setTitle(p.getNamaProgram());
+            if (p.getPathfoto()!="" || p.getPathfoto().isEmpty()){
+                Picasso.with(this)
+                        .load(p.getPathfoto())
+                        .fit()
+                        .into(mainimage);
+            }
         }
     }
     @Override

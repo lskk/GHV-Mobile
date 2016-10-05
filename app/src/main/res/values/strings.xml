@@ -34,6 +34,15 @@
     <string name="title_activity_test123">Test123</string>
 
 
+    <string-array name="pendidikan_array">
+        <item>--Not Selected--</item>
+        <item>Sekolah Dasar</item>
+        <item>Sekolah Menengah Pertama</item>
+        <item>Sekolah Menengah Atas</item>
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+    </string-array>
     <!-- Strings related to daftar rewalan end -->
 
 

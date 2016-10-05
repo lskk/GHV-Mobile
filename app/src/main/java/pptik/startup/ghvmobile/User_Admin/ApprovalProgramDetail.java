@@ -11,11 +11,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +36,7 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
     private DataProgram2 dp2;
     private int id_program,status_program;
     private TextView nama,awal,akhir,status,supervisor,lokasi,keterangan,deskripsi;
-
+    private ImageView imageView;
     private Button btnApprove,btnDelete;
 
     SharedPreferences prefs;
@@ -57,6 +59,7 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
         lokasi=(TextView) findViewById(R.id.detail_program_lokasi);
         keterangan=(TextView) findViewById(R.id.detail_program_keterangan);
         deskripsi=(TextView) findViewById(R.id.detail_program_deskripsi);
+        imageView=(ImageView)findViewById(R.id.detailmateri_mainimage);
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
@@ -251,7 +254,10 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                                     lokasi.setText(abc.getString("lokasi_program"));
                                     keterangan.setText(abc.getString("keterangan"));
                                     deskripsi.setText(abc.getString("deskripsi"));
-
+                                    Picasso.with(ApprovalProgramDetail.this)
+                                            .load(abc.getString("main_image"))
+                                            .fit()
+                                            .into(imageView);
                                 }
 
 

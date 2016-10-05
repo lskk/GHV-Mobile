@@ -17,12 +17,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +54,7 @@ import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 /**
  * Created by edo on 6/12/2016.
  */
-public class DaftarRelawan extends AppCompatActivity {
+public class DaftarRelawan extends AppCompatActivity implements AdapterView.OnItemSelectedListener  {
 
     Context applicationContext;
 
@@ -79,8 +82,8 @@ public class DaftarRelawan extends AppCompatActivity {
     private RadioButton inputkewarganegaraan;
     private EditText alamat;
     private EditText kota,provinsi,kodepos,telprumah,hp,aktivitas,namakerabat,hpkerabat;
-    private RadioGroup pendidikanterakhir;
-    private RadioButton inputpendidikanterakhir;
+    private String pendidikanterakhir;
+    private Spinner s_pendidikan;
     private EditText minat,keahlian,pengalaman,motivasi;
 
 
@@ -221,7 +224,12 @@ public class DaftarRelawan extends AppCompatActivity {
                 }
             }
         });
-
+        s_pendidikan=(Spinner)findViewById(R.id.pendidikan_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.pendidikan_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s_pendidikan.setAdapter(adapter);
+        s_pendidikan.setOnItemSelectedListener(this);
         alamat=(EditText)findViewById(R.id.daftar_relawan_alamat);
         kota=(EditText)findViewById(R.id.daftar_relawan_kota);
         provinsi=(EditText)findViewById(R.id.daftar_relawan_prov);
@@ -232,40 +240,7 @@ public class DaftarRelawan extends AppCompatActivity {
         namakerabat=(EditText)findViewById(R.id.daftar_relawan_nama_kerabat);
         hpkerabat=(EditText)findViewById(R.id.daftar_relawan_hp_kerabat);
 
-        pendidikanterakhir = (RadioGroup) findViewById(R.id.daftar_relawan_pendidikan_terakhir);
-        inputpendidikanterakhir = (RadioButton)findViewById(R.id.pt_sd);
-        pendidikanterakhir.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.pt_sd:
-                        // do operations specific to this selection
-                        inputpendidikanterakhir = (RadioButton)findViewById(R.id.pt_sd);
-                        break;
-                    case R.id.pt_smp:
-                        // do operations specific to this selection
-                        inputpendidikanterakhir = (RadioButton)findViewById(R.id.pt_smp);
-                        break;
-                    case R.id.pt_sma:
-                        // do operations specific to this selection
-                        inputpendidikanterakhir = (RadioButton)findViewById(R.id.pt_sma);
-                        break;
-                    case R.id.pt_s1:
-                        // do operations specific to this selection
-                        inputpendidikanterakhir = (RadioButton)findViewById(R.id.pt_s1);
-                        break;
-                    case R.id.pt_s2:
-                        // do operations specific to this selection
-                        inputpendidikanterakhir = (RadioButton)findViewById(R.id.pt_s2);
-                        break;
-                    case R.id.pt_s3:
-                        // do operations specific to this selection
-                        inputpendidikanterakhir = (RadioButton)findViewById(R.id.pt_s3);
-                        break;
 
-
-                }
-            }
-        });
         minat=(EditText)findViewById(R.id.daftar_relawan_minat);
         keahlian=(EditText)findViewById(R.id.daftar_relawan_keahlian);
         pengalaman=(EditText)findViewById(R.id.daftar_relawan_pengalaman);
@@ -294,7 +269,8 @@ public class DaftarRelawan extends AppCompatActivity {
                         !minat.getText().toString().isEmpty()&&
                         !keahlian.getText().toString().isEmpty()&&
                         !pengalaman.getText().toString().isEmpty()&&
-                        !motivasi.getText().toString().isEmpty()/*&& !finalPhotoPath.isEmpty() && finalPhotoPath != null*/){
+                        !motivasi.getText().toString().isEmpty()&&
+                    !pendidikanterakhir.contains("0")/*&& !finalPhotoPath.isEmpty() && finalPhotoPath != null*/){
 
                     registerUser( emailID,   namalengkap.getText().toString(),  namapanggilan.getText().toString(),
                             inputgender.getTag().toString(),  inputgoldarah.getTag().toString(),  tempatlahir.getText().toString(),
@@ -304,7 +280,7 @@ public class DaftarRelawan extends AppCompatActivity {
                             kodepos.getText().toString(),
                             telprumah.getText().toString(),  hp.getText().toString(),  aktivitas.getText().toString(),
                             namakerabat.getText().toString(),
-                            hpkerabat.getText().toString(),  inputpendidikanterakhir.getTag().toString(),  minat.getText().toString(),
+                            hpkerabat.getText().toString(),  pendidikanterakhir,  minat.getText().toString(),
                             keahlian.getText().toString(),  pengalaman.getText().toString(),  motivasi.getText().toString());
 
                 }else if (finalPhotoPath.isEmpty() || finalPhotoPath == null){
@@ -346,7 +322,15 @@ public class DaftarRelawan extends AppCompatActivity {
         photoManager  = new PhotoManager();
         rootPhotoDirectory = photoManager.getNewPathAppsDirectory();
     }
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        pendidikanterakhir=String.valueOf(parent.getSelectedItemId()) ;
 
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
     public void DateDialog(){
 
         DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
