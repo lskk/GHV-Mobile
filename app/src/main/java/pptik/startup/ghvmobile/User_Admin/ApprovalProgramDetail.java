@@ -8,21 +8,27 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pptik.startup.ghvmobile.EditProgram;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataProgram;
 import pptik.startup.ghvmobile.Support.DataProgram2;
@@ -37,7 +43,6 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
     private int id_program,status_program;
     private TextView nama,awal,akhir,status,supervisor,lokasi,keterangan,deskripsi;
     private ImageView imageView;
-    private Button btnApprove,btnDelete;
 
     SharedPreferences prefs;
     private ProgressDialog pDialog;
@@ -59,7 +64,7 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
         lokasi=(TextView) findViewById(R.id.detail_program_lokasi);
         keterangan=(TextView) findViewById(R.id.detail_program_keterangan);
         deskripsi=(TextView) findViewById(R.id.detail_program_deskripsi);
-        imageView=(ImageView)findViewById(R.id.detailmateri_mainimage);
+        imageView=(ImageView)findViewById(R.id.detailapprovalimageview);
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
@@ -67,32 +72,16 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
 
         }
 
-        btnApprove = (Button) findViewById(R.id.btn_approval_program);
          if (status_program==1){
             dp= (DataProgram) extras.getSerializable("detail");
             id_program=dp.getIdProgram();
-            btnApprove.setText("Disapprove");
-            btnApprove.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    approveprogram(2);
-                }
-            });
+
         }else {
             dp= (DataProgram) extras.getSerializable("detail");
             id_program=dp.getIdProgram();
-            btnApprove.setText("Approve");
-            btnApprove.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    approveprogram(1);
-                }
-            });
+
         }
-        btnDelete=(Button)findViewById(R.id.btn_delete_program);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                    deleteprogram();
-            }
-        });
+
         ambildataprogram();
     }
     private void deleteprogram(){
@@ -162,7 +151,7 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                     }
                 });
     }
-    private void approveprogram(int no){
+    private void approveprogram(final int no){
         pDialog = ProgressDialog.show(ApprovalProgramDetail.this, "Mengirim Data", "Harap Tunggu");
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(ApplicationConstants.API_APPROVAL_BERITA+id_program+"/"+no,
@@ -176,6 +165,17 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                             boolean status = jObj.getBoolean("status");
                             if (status) {
                                 pDialog.dismiss();
+                                Intent i;
+                                if (no==2){
+                                    i = new Intent(ApprovalProgramDetail.this, DisapprovProgram.class);
+                                    startActivity(i);
+
+                                }else{
+                                    i = new Intent(ApprovalProgramDetail.this, ApprovalProgram.class);
+                                    startActivity(i);
+
+                                }
+
                                 finish();
                             } else {
                                 pDialog.dismiss();
@@ -254,10 +254,13 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                                     lokasi.setText(abc.getString("lokasi_program"));
                                     keterangan.setText(abc.getString("keterangan"));
                                     deskripsi.setText(abc.getString("deskripsi"));
-                                    Picasso.with(ApprovalProgramDetail.this)
-                                            .load(abc.getString("main_image"))
-                                            .fit()
-                                            .into(imageView);
+                                    if (!abc.getString("main_image").isEmpty() ||abc.getString("main_image")!=null){
+                                        Picasso.with(ApprovalProgramDetail.this)
+                                                .load(abc.getString("main_image"))
+                                                .fit()
+                                                .into(imageView);
+                                    }
+
                                 }
 
 
@@ -314,17 +317,67 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
                 });
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
 
-                return true;
+        if (status_program==1){
+            MenuItem approve=menu.add(Menu.NONE,1,1,"Disapprove");
+            approve.setIcon(new IconicsDrawable(this)
+                    .icon(GoogleMaterial.Icon.gmd_pin_drop)
+                    .color(ApprovalProgramDetail.this.getResources().getColor(R.color.black))
+                    .sizeDp(5));
+
+            approve.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+        }else {
+            MenuItem approve=menu.add(Menu.NONE,2,1,"Approve");
+            approve.setIcon(new IconicsDrawable(this)
+                    .icon(GoogleMaterial.Icon.gmd_pin_drop)
+                    .color(ApprovalProgramDetail.this.getResources().getColor(R.color.black))
+                    .sizeDp(5));
+            approve.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        }
+        MenuItem edit=menu.add(Menu.NONE,3,2,"Edit");
+        edit.setIcon(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_pin_drop)
+                .color(ApprovalProgramDetail.this.getResources().getColor(R.color.black))
+                .sizeDp(5));
+        edit.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+        MenuItem delete=menu.add(Menu.NONE,4,3,"Delete");
+        delete.setIcon(new IconicsDrawable(this)
+                .icon(GoogleMaterial.Icon.gmd_pin_drop)
+                .color(ApprovalProgramDetail.this.getResources().getColor(R.color.black))
+                .sizeDp(5));
+
+        delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        Intent intent;
+        switch(id){
+            case 1:approveprogram(2) ;
+                break;
+            case 2: approveprogram(1) ;
+                break;
+            case 3:  intent = new Intent(ApprovalProgramDetail.this, EditProgram.class);
+                intent.putExtra("id_program",id_program);
+                startActivity(intent);
+                finish();
+                break;
+            case 4:deleteprogram();
+
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
 
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

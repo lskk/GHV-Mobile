@@ -43,6 +43,7 @@
         <item>S2</item>
         <item>S3</item>
     </string-array>
+    <string name="title_activity_edit_program">EditProgram</string>
     <!-- Strings related to daftar rewalan end -->
 
 
