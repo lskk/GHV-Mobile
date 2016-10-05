@@ -526,28 +526,28 @@ public class RelawanMenu extends AppCompatActivity implements
                         .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
-                Log.i("admin : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+
                 break;
             case ApplicationConstants.MARKER_USER:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(GoogleMaterial.Icon.gmd_person_pin_circle)
                         .color(context.getResources().getColor(R.color.actorange))
                         .sizeDp(48));
-                Log.i("user : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+
                 break;
             case ApplicationConstants.MARKER_PROGRAM:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(GoogleMaterial.Icon.gmd_beenhere)
                         .color(context.getResources().getColor(R.color.red))
                         .sizeDp(48));
-                Log.i("program : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+
                 break;
             case ApplicationConstants.MARKER_ME:
                 marker.setIcon(new IconicsDrawable(this)
                         .icon(Ionicons.Icon.ion_android_pin)
                         .color(context.getResources().getColor(R.color.colorPrimary))
                         .sizeDp(48));
-                Log.i("me : ",String.valueOf(Latitude)+" "+String.valueOf(Longitude));
+
                 break;
         }
 
@@ -596,14 +596,14 @@ public class RelawanMenu extends AppCompatActivity implements
         RequestRest req = new RequestRest(RelawanMenu.this, new IConnectionResponseHandler(){
             @Override
             public void OnSuccessArray(JSONArray result){
-                Log.i("result", result.toString());
+
 
             }
             @Override
             public void onSuccessJSONObject(String result){
                 try {
                     JSONObject obj = new JSONObject(result);
-                    Log.i("Test", result);
+
                 } catch (JSONException e){
                 }
             }

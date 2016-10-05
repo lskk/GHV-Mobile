@@ -277,7 +277,8 @@ public class RequestRest extends ConnectionHandler {
 
     public void updateProgram(String id_program, String nama_program
             , String lokasi_program, String mulai, String akhir
-            , String supervisor, String deskripsi, String keterangan, String pathfoto){
+            , String supervisor, String deskripsi, String keterangan, String pathfoto
+    ,int urgent){
         RequestParams params = new RequestParams();
         params.put("nama_program",nama_program);
         params.put("lokasi_program",lokasi_program);
@@ -286,6 +287,7 @@ public class RequestRest extends ConnectionHandler {
         params.put("supervisor",supervisor);
         params.put("deskripsi",deskripsi);
         params.put("keterangan",keterangan);
+        params.put("urgent",String.valueOf(urgent));
         Log.i("path foto request rest",pathfoto);
         if (pathfoto.isEmpty() || pathfoto==null){
             params.put("main_image", false);

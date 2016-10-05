@@ -123,7 +123,7 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
         finalLongitude=prefs.getString(ApplicationConstants.USER_LONGITUDE,"0");
         final String emailID = prefs.getString(EMAIL_ID, "");
         int user_ID=prefs.getInt(USER_ID,0);
-        Log.i("userid",String.valueOf(user_ID));
+
         GetRole g=new GetRole(this);
         roleid=g.getrole();
 
@@ -365,7 +365,7 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
 
-        Log.i("iduser",ApplicationConstants.API_GET_RELAWAN_BY_ID+id_user);
+
 
         client.get(ApplicationConstants.API_GET_RELAWAN_BY_ID+id_user,
                 new AsyncHttpResponseHandler() {
@@ -373,7 +373,7 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
+
 
                         try {
                             JSONObject jObj = new JSONObject(response);
@@ -540,7 +540,7 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
         RequestRest req = new RequestRest(ProfileRelawan.this, new IConnectionResponseHandler(){
             @Override
             public void OnSuccessArray(JSONArray result){
-                Log.i("result", result.toString());
+
                 dialog.dismiss();
             }
 
@@ -548,7 +548,7 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
             public void onSuccessJSONObject(String result){
                 try {
                     JSONObject obj = new JSONObject(result);
-                    Log.i("Test", result);
+
                     dialog.dismiss();
                     Toast.makeText(ProfileRelawan.this, "Data Berhasil DI UPDATE", Toast.LENGTH_LONG).show();
                     Intent intent;
@@ -577,13 +577,13 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
 
             @Override
             public void onFailure(String e){
-                Log.i("Test", e);
+
                 dialog.dismiss();
             }
 
             @Override
             public void onSuccessJSONArray(String result){
-                Log.i("Test", result);
+
                 dialog.dismiss();
             }
         });

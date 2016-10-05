@@ -61,7 +61,7 @@ public class GCMNotificationIntentService extends IntentService {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
                     .equals(messageType)) {
                 if(theRole.contains("2")) {
-                    Log.i("Service", extras.toString());
+
                     sendNotification("" + extras.get(ApplicationConstants.MSG_KEY));
                 } else if (theRole.contains("1")){
                     sendNotification2("" + extras.get(ApplicationConstants.MSG_KEY));
@@ -158,7 +158,7 @@ public class GCMNotificationIntentService extends IntentService {
 
     private void sendNotification2(String msg) {
 
-        Log.e("Service msg", msg);
+
         try {
             JSONObject jObj = new JSONObject(msg);
             String buat=jObj.getString("for");
@@ -183,7 +183,7 @@ public class GCMNotificationIntentService extends IntentService {
     }
 
     private void notifToApproveRelawan(String msg,int i,String judul,String content){
-        Log.e("Print", msg);
+
 
         if (i==1){
           Intent resultIntent = new Intent(this, ApprovalRelawan.class);

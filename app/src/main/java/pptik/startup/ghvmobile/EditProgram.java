@@ -18,9 +18,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,9 @@ public class EditProgram extends AppCompatActivity {
     private int akhiryear;
     private int akhirmonth;
     private int akhirday;
+
+    private Switch aSwitch1;
+    private int urgent;
     //upload image variable
     private TextView upload_image;
     protected final int CAMERA_REQUEST = 100;
@@ -142,6 +147,21 @@ public class EditProgram extends AppCompatActivity {
                 DateAkhir();
             }
         });
+        aSwitch1=(Switch)findViewById(R.id.switch1);
+        aSwitch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                if(isChecked){
+                    urgent=1;
+                }else{
+                    urgent=0;
+                }
+
+            }
+        });
         submit=(Button)findViewById(R.id.submit_program_btnsubmit);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -158,7 +178,7 @@ public class EditProgram extends AppCompatActivity {
                             tanggalmulai,tanggalakhir,
                             supervisor.getText().toString(),
                             deskripsi.getText().toString(),
-                            keterangan.getText().toString());
+                            keterangan.getText().toString(),urgent);
 
                 }   else {
                     Toast.makeText(getApplicationContext(),
@@ -167,6 +187,8 @@ public class EditProgram extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     public void DateMulai(){
@@ -331,6 +353,14 @@ public class EditProgram extends AppCompatActivity {
                                                 .into(mainimage);
                                     }
 
+                                    if (abc.getInt("urgent")==1){
+                                        aSwitch1.setChecked(true);
+                                        urgent=1;
+                                    }else {
+                                        aSwitch1.setChecked(false);
+                                        urgent=0;
+                                    }
+
                                 }
 
 
@@ -388,7 +418,7 @@ public class EditProgram extends AppCompatActivity {
     }
     private void updateProgram(String id_program,String nama_program
             ,String lokasi_program,String mulai,String akhir
-            ,String supervisor,String deskripsi,String keterangan) {
+            ,String supervisor,String deskripsi,String keterangan,int   urgent) {
         final ProgressDialog dialog = ProgressDialog.show(EditProgram.this, "Connecting", "Send Data", true);
         RequestRest req = new RequestRest(EditProgram.this, new IConnectionResponseHandler(){
             @Override
@@ -431,7 +461,7 @@ public class EditProgram extends AppCompatActivity {
 
         req.updateProgram( id_program, nama_program
                 , lokasi_program, mulai, akhir
-                , supervisor, deskripsi, keterangan,finalPhotoPath);
+                , supervisor, deskripsi, keterangan,finalPhotoPath,urgent);
     }
 
 }
