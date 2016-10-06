@@ -12,9 +12,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -85,8 +87,8 @@ public class DaftarRelawan extends AppCompatActivity implements AdapterView.OnIt
     private String pendidikanterakhir;
     private Spinner s_pendidikan;
     private EditText minat,keahlian,pengalaman,motivasi;
-
-
+    private int jumlah_anak=0;
+    private TextInputLayout jumlahanaklayout;
     SharedPreferences prefs;
 
     //variable untuk foto
@@ -179,9 +181,15 @@ public class DaftarRelawan extends AppCompatActivity implements AdapterView.OnIt
                 switch (checkedId) {
                     case R.id.s_menikah:
                         // do operations specific to this selection
+                        jumlahanaklayout.setVisibility(View.VISIBLE);
+                        jumlahanak.setEnabled(true);
+                        jumlahanak.setVisibility(View.VISIBLE);
                         inputstatuskawin = (RadioButton)findViewById(R.id.s_menikah);
                         break;
                     case R.id.s_b_menikah:
+                        jumlahanaklayout.setVisibility(View.INVISIBLE);
+                        jumlahanak.setEnabled(false);
+                        jumlahanak.setVisibility(View.INVISIBLE);
                         inputstatuskawin = (RadioButton)findViewById(R.id.s_b_menikah);
                         break;
 
@@ -190,6 +198,7 @@ public class DaftarRelawan extends AppCompatActivity implements AdapterView.OnIt
         });
 
         jumlahanak=(EditText)findViewById(R.id.daftar_relawan_jumlahanak);
+        jumlahanaklayout=(TextInputLayout)findViewById(R.id.textinputlayout_jumlahanak);
 
         jidentitas = (RadioGroup) findViewById(R.id.daftar_relawan_jidentitas);
         inputjidentitas = (RadioButton)findViewById(R.id.ji_ktp);
@@ -250,49 +259,39 @@ public class DaftarRelawan extends AppCompatActivity implements AdapterView.OnIt
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String bd = year + "-" + month + "-" + day;
-                if (!namalengkap.getText().toString().isEmpty()&&
-                        !namapanggilan.getText().toString().isEmpty()&&
-                        !tempatlahir.getText().toString().isEmpty()&&
-                        !bd.isEmpty()&&
-                        !agama.getText().toString().isEmpty()&&
-                        !jumlahanak.getText().toString().isEmpty()&&
-                        !noidentitas.getText().toString().isEmpty()&&
-                        !alamat.getText().toString().isEmpty()&&
-                        !kota.getText().toString().isEmpty()&&
-                        !provinsi.getText().toString().isEmpty()&&
-                        !kodepos.getText().toString().isEmpty()&&
-                        !telprumah.getText().toString().isEmpty()&&
-                        !hp.getText().toString().isEmpty()&&
-                        !aktivitas.getText().toString().isEmpty()&&
-                        !namakerabat.getText().toString().isEmpty()&&
-                        !hpkerabat.getText().toString().isEmpty()&&
-                        !minat.getText().toString().isEmpty()&&
-                        !keahlian.getText().toString().isEmpty()&&
-                        !pengalaman.getText().toString().isEmpty()&&
-                        !motivasi.getText().toString().isEmpty()&&
-                    !pendidikanterakhir.contains("0")/*&& !finalPhotoPath.isEmpty() && finalPhotoPath != null*/){
-
-                    registerUser( emailID,   namalengkap.getText().toString(),  namapanggilan.getText().toString(),
-                            inputgender.getTag().toString(),  inputgoldarah.getTag().toString(),  tempatlahir.getText().toString(),
-                            bd,  agama.getText().toString(),  inputstatuskawin.getTag().toString(),
-                            jumlahanak.getText().toString(),  inputjidentitas.getTag().toString(),  noidentitas.getText().toString(),
-                            inputkewarganegaraan.getTag().toString(),  alamat.getText().toString(),  kota.getText().toString(), provinsi.getText().toString(),
-                            kodepos.getText().toString(),
-                            telprumah.getText().toString(),  hp.getText().toString(),  aktivitas.getText().toString(),
-                            namakerabat.getText().toString(),
-                            hpkerabat.getText().toString(),  pendidikanterakhir,  minat.getText().toString(),
-                            keahlian.getText().toString(),  pengalaman.getText().toString(),  motivasi.getText().toString());
-
-                }else if (finalPhotoPath.isEmpty() || finalPhotoPath == null){
-                    Toast.makeText(getApplicationContext(),
-                            "Jangan Lupa Ambil Foto Terbaru Anda", Toast.LENGTH_LONG)
-                            .show();
+                if (!TextUtils.isEmpty(jumlahanak.getText().toString()) && jumlahanak.getText().toString()!=null){
+                    jumlah_anak=Integer.parseInt(jumlahanak.getText().toString());
                 }
-                else {
-                Toast.makeText(getApplicationContext(),
-                        "Silahkan Lengkapi data anda", Toast.LENGTH_LONG)
-                        .show();
-            }
+                if (!checkBeforSubmit()){
+                    Toast.makeText(getApplicationContext(),
+                            "Please Fill Required Form", Toast.LENGTH_LONG)
+                            .show();
+                }else {
+                    if (finalPhotoPath.isEmpty() || finalPhotoPath == null) {
+                        Toast.makeText(getApplicationContext(),
+                                "Please Upload Photo", Toast.LENGTH_LONG)
+                                .show();
+                    }else if(pendidikanterakhir.contains("0")){
+                        Toast.makeText(getApplicationContext(),
+                                "Please Choose your Education Background", Toast.LENGTH_LONG)
+                                .show();
+
+                    } else {
+                        registerUser(emailID, namalengkap.getText().toString(), namapanggilan.getText().toString(),
+                                inputgender.getTag().toString(), inputgoldarah.getTag().toString(), tempatlahir.getText().toString(),
+                                bd, agama.getText().toString(), inputstatuskawin.getTag().toString(),
+                                String.valueOf(jumlah_anak), inputjidentitas.getTag().toString(), noidentitas.getText().toString(),
+                                inputkewarganegaraan.getTag().toString(), alamat.getText().toString(), kota.getText().toString(), provinsi.getText().toString(),
+                                kodepos.getText().toString(),
+                                telprumah.getText().toString(), hp.getText().toString(), aktivitas.getText().toString(),
+                                namakerabat.getText().toString(),
+                                hpkerabat.getText().toString(), pendidikanterakhir, minat.getText().toString(),
+                                keahlian.getText().toString(), pengalaman.getText().toString(), motivasi.getText().toString());
+
+                    }
+
+                }
+
             }
         });
 
@@ -321,6 +320,150 @@ public class DaftarRelawan extends AppCompatActivity implements AdapterView.OnIt
         picture_path = (ImageView)findViewById(R.id.picture_path_aspirasi);
         photoManager  = new PhotoManager();
         rootPhotoDirectory = photoManager.getNewPathAppsDirectory();
+    }
+    private boolean checkBeforSubmit(){
+
+        boolean cancel = false;
+        View focusView = null;
+        motivasi.setError(null);
+        String _motivasi=motivasi.getText().toString();
+        if (TextUtils.isEmpty(_motivasi)) {
+            motivasi.setError(getString(R.string.error_field_required));
+            focusView = motivasi;
+            cancel = true;
+        }
+
+        pengalaman.setError(null);
+        String _pengalaman=pengalaman.getText().toString();
+        if (TextUtils.isEmpty(_pengalaman)) {
+            pengalaman.setError(getString(R.string.error_field_required));
+            focusView = pengalaman;
+            cancel = true;
+        }
+
+        keahlian.setError(null);
+        String _keahlian=keahlian.getText().toString();
+        if (TextUtils.isEmpty(_keahlian)) {
+            keahlian.setError(getString(R.string.error_field_required));
+            focusView = keahlian;
+            cancel = true;
+        }
+
+        minat.setError(null);
+        String _minat=minat.getText().toString();
+        if (TextUtils.isEmpty(_minat)) {
+            minat.setError(getString(R.string.error_field_required));
+            focusView = minat;
+            cancel = true;
+        }
+
+        hpkerabat.setError(null);
+        String _hpkerabat=hpkerabat.getText().toString();
+        if (TextUtils.isEmpty(_hpkerabat)) {
+            hpkerabat.setError(getString(R.string.error_field_required));
+            focusView = hpkerabat;
+            cancel = true;
+        }
+
+        namakerabat.setError(null);
+        String _namakerabat=namakerabat.getText().toString();
+        if (TextUtils.isEmpty(_namakerabat)) {
+            namakerabat.setError(getString(R.string.error_field_required));
+            focusView = namakerabat;
+            cancel = true;
+        }
+
+        aktivitas.setError(null);
+        String _aktivitas=aktivitas.getText().toString();
+        if (TextUtils.isEmpty(_aktivitas)) {
+            aktivitas.setError(getString(R.string.error_field_required));
+            focusView = aktivitas;
+            cancel = true;
+        }
+        //telprumah.setError(null);
+        hp.setError(null);
+        String _hp=hp.getText().toString();
+        if (TextUtils.isEmpty(_hp)) {
+            hp.setError(getString(R.string.error_field_required));
+            focusView = hp;
+            cancel = true;
+        }
+
+        kodepos.setError(null);
+        String _kodepos=kodepos.getText().toString();
+        if (TextUtils.isEmpty(_kodepos)) {
+            kodepos.setError(getString(R.string.error_field_required));
+            focusView = kodepos;
+            cancel = true;
+        }
+        provinsi.setError(null);
+        String _provinsi=provinsi.getText().toString();
+        if (TextUtils.isEmpty(_provinsi)) {
+            provinsi.setError(getString(R.string.error_field_required));
+            focusView = provinsi;
+            cancel = true;
+        }
+        kota.setError(null);
+        String _kota=kota.getText().toString();
+        if (TextUtils.isEmpty(_kota)) {
+            kota.setError(getString(R.string.error_field_required));
+            focusView = kota;
+            cancel = true;
+        }
+        alamat.setError(null);
+        String _alamat=alamat.getText().toString();
+        if (TextUtils.isEmpty(_alamat)) {
+            alamat.setError(getString(R.string.error_field_required));
+            focusView = alamat;
+            cancel = true;
+        }
+        noidentitas.setError(null);
+        String _noid=noidentitas.getText().toString();
+        if (TextUtils.isEmpty(_noid)) {
+            noidentitas.setError(getString(R.string.error_field_required));
+            focusView = noidentitas;
+            cancel = true;
+        }
+        agama.setError(null);
+        String _agama=agama.getText().toString();
+        if (TextUtils.isEmpty(_agama)) {
+            agama.setError(getString(R.string.error_field_required));
+            focusView = agama;
+            cancel = true;
+        }
+        tanggallahir.setError(null);
+        String _tanggallahir=tanggallahir.getText().toString();
+        if (TextUtils.isEmpty(_tanggallahir)) {
+            tanggallahir.setError(getString(R.string.error_field_required));
+            focusView = tanggallahir;
+            cancel = true;
+        }
+        tempatlahir.setError(null);
+        String _tempatlahir=tempatlahir.getText().toString();
+        if (TextUtils.isEmpty(_tempatlahir)) {
+            tempatlahir.setError(getString(R.string.error_field_required));
+            focusView = tempatlahir;
+            cancel = true;
+        }
+        namapanggilan.setError(null);
+        String _namapanggilan=namapanggilan.getText().toString();
+        if (TextUtils.isEmpty(_namapanggilan)) {
+            namapanggilan.setError(getString(R.string.error_field_required));
+            focusView = namapanggilan;
+            cancel = true;
+        }
+        namalengkap.setError(null);
+        String _namalengkap=namalengkap.getText().toString();
+        if (TextUtils.isEmpty(_namalengkap)) {
+            namalengkap.setError(getString(R.string.error_field_required));
+            focusView = namalengkap;
+            cancel = true;
+        }
+        if (cancel) {
+            focusView.requestFocus();
+            return false;
+        }
+        return true;
     }
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
