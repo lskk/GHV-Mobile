@@ -267,7 +267,9 @@ public class ImageGallery extends AppCompatActivity {
                                     image.set_iduser(abc.getInt("id_user"));
                                     image.set_namaimage(abc.getString("nama_image"));
                                     image.set_pathimage(abc.getString("path_image"));
-                                    image.set_createdat(abc.getString("created_at"));
+                                    image.set_namauser(abc.getString("nama_lengkap"));
+                                    String[] splited = abc.getString("created_at").split("\\s+");
+                                    image.set_createdat(splited[0]);
                                     images.add(image);
                                 }
 
@@ -315,11 +317,11 @@ public class ImageGallery extends AppCompatActivity {
                         }
                         // When Http response code other than 404, 500
                         else {
-                            Toast.makeText(
+                           /* Toast.makeText(
                                     getApplicationContext(),
                                     "Unexpected Error occcured! [Most common Error: Device might "
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG).show();*/
                         }
                     }
                 });

@@ -27,7 +27,7 @@ public class SlideshowDialogFragment extends DialogFragment {
     private ArrayList<Image> images;
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private TextView lblCount, lblTitle, lblDate;
+    private TextView lblCount, lblnama, lblDate;
     private int selectedPosition = 0;
 
     static SlideshowDialogFragment newInstance() {
@@ -41,7 +41,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.fragment_image_slider, container, false);
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
         lblCount = (TextView) v.findViewById(R.id.lbl_count);
-        lblTitle = (TextView) v.findViewById(R.id.title);
+        lblnama = (TextView) v.findViewById(R.id.lbl_nama_user);
         lblDate = (TextView) v.findViewById(R.id.date);
 
         images = (ArrayList<Image>) getArguments().getSerializable("images");
@@ -87,7 +87,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         lblCount.setText((position + 1) + " of " + images.size());
 
         Image image = images.get(position);
-        lblTitle.setText(image.get_namaimage());
+        lblnama.setText("Image by : "+image.get_namauser());
         lblDate.setText(image.get_createdat());
     }
 

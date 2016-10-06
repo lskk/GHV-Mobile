@@ -8,7 +8,14 @@ import java.io.Serializable;
 
 public class Image implements Serializable {
     private int _idimage,_idprogram,_iduser;
-    private String _namaimage,_pathimage,_createdat;
+    private String _namaimage,_pathimage,_createdat,_namauser;
+
+    public String get_namauser() {
+        return _namauser;
+    }
+    public void set_namauser(String _namauser) {
+        this._namauser = _namauser;
+    }
 
     public String get_createdat() {
         return _createdat;

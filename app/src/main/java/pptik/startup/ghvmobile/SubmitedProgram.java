@@ -149,11 +149,11 @@ public class SubmitedProgram extends AppCompatActivity {
                         }
                         // When Http response code other than 404, 500
                         else {
-                            Toast.makeText(
+                            /*Toast.makeText(
                                     getApplicationContext(),
                                     "Unexpected Error occcured! [Most common Error: Device might "
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG).show();*/
                         }
                     }
                 });

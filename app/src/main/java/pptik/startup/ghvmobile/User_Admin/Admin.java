@@ -161,8 +161,12 @@ public class Admin extends AppCompatActivity implements
         }
 
         protected void onPostExecute(Bitmap result) {
-            result=Bitmap.createScaledBitmap(result,(int)(result.getWidth()*0.5), (int)(result.getHeight()*0.5), true);
+            try {
+                result=Bitmap.createScaledBitmap(result,(int)(result.getWidth()*0.5), (int)(result.getHeight()*0.5), true);
 
+            }catch (Exception e){
+                Log.d("e",e.toString());
+            }
             headerAva.setImageBitmap(result);
 
         }

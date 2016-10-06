@@ -668,11 +668,11 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
                         }
                         // When Http response code other than 404, 500
                         else {
-                            Toast.makeText(
+                           /* Toast.makeText(
                                     getApplicationContext(),
                                     "Unexpected Error occcured! [Most common Error: Device might "
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG).show();*/
                         }
                     }
                 });
@@ -772,8 +772,12 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
         }
 
         protected void onPostExecute(Bitmap result) {
-            result=Bitmap.createScaledBitmap(result,(int)(result.getWidth()*0.5), (int)(result.getHeight()*0.5), true);
-            picture_path.setImageBitmap(result);
+            try {
+                result=Bitmap.createScaledBitmap(result,(int)(result.getWidth()*0.5), (int)(result.getHeight()*0.5), true);
+
+            }catch (Exception e){
+                Log.d("e",e.toString());
+            } picture_path.setImageBitmap(result);
 
         }
     }
