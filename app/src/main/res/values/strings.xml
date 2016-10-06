@@ -44,6 +44,7 @@
         <item>S3</item>
     </string-array>
     <string name="title_activity_edit_program">EditProgram</string>
+    <string name="title_activity_image_gallery">ImageGallery</string>
     <!-- Strings related to daftar rewalan end -->
 
 

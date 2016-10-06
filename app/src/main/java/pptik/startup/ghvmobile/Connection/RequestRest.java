@@ -327,4 +327,51 @@ public class RequestRest extends ConnectionHandler {
 
         }, mClient);
     }
+
+    public void storeImageToGallery( String id_program,  String id_user, String pathfoto){
+        RequestParams params = new RequestParams();
+        params.put("id_program", id_program);
+        params.put("id_user", id_user);
+        Log.i("path foto request rest",pathfoto);
+        if (pathfoto.isEmpty() || pathfoto==null){
+            params.put("main_image", false);
+        }else {
+            File photo = new File(pathfoto);
+
+            try {
+                params.put("main_image", photo);
+            } catch (FileNotFoundException e) {
+
+            }
+        }
+        post("beritaact/storeimagetogallery", params, new JsonHttpResponseHandler() {
+
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
+            }
+
+            @Override
+            public void onSuccess(JSONObject status) {
+                super.onSuccess(status);
+                responseHandler.onSuccessJSONObject(status.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseBody, Throwable e) {
+                super.onFailure(statusCode, headers, responseBody, e);
+                responseHandler.onFailure(e.toString());//e.getMessage());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                //   dialog.dismiss();
+            }
+
+        }, mClient);
+    }
 }

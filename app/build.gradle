@@ -87,5 +87,7 @@ dependencies {
     compile 'com.marvinlabs:android-slideshow-widget:0.5.+@aar'
     compile 'com.marvinlabs:android-slideshow-widget-picasso-plugin:0.5.+@aar'
 
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

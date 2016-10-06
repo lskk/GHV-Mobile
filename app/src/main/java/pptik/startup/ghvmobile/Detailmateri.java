@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 import com.squareup.picasso.Picasso;
 
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
@@ -17,6 +21,7 @@ import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
 import pptik.startup.ghvmobile.Support.Program;
 import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
+import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 
 /**
  * Created by edo on 6/12/2016.
@@ -25,6 +30,8 @@ public class Detailmateri  extends AppCompatActivity {
     private Program p;
     private TextView nama,awal,akhir,status,supervisor,lokasi,keterangan,deskripsi;
     private ImageView mainimage;
+    private FloatingActionButton fabGallery;
+    private int id_program;
 
     SharedPreferences prefs;
 
@@ -47,10 +54,13 @@ public class Detailmateri  extends AppCompatActivity {
         lokasi=(TextView) findViewById(R.id.detail_program_lokasi);
         keterangan=(TextView) findViewById(R.id.detail_program_keterangan);
         deskripsi=(TextView) findViewById(R.id.detail_program_deskripsi);
+        fabGallery=(FloatingActionButton)findViewById(R.id.fabGallery);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
             p= (Program) extras.getSerializable("program");
+            id_program=p.getIdProgram();
             nama.setText(p.getNamaProgram());
             awal.setText(p.getMulai());
             akhir.setText(p.getAkhir());
@@ -70,7 +80,24 @@ public class Detailmateri  extends AppCompatActivity {
                         .fit()
                         .into(mainimage);
             }
+
+            fabGallery.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
+                    .icon(Ionicons.Icon.ion_images)
+                    .color(this.getResources().getColor(R.color.white))
+                    .sizeDp(60)));
+            fabGallery.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i;
+                    i = new Intent(Detailmateri.this, ImageGallery.class);
+                    i.putExtra("id_program",id_program);
+                    startActivity(i);
+                    finish();
+                }
+            });
         }
+
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
