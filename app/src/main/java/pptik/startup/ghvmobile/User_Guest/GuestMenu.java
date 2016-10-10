@@ -255,6 +255,7 @@ public class GuestMenu extends AppCompatActivity implements
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
                                     Toast.LENGTH_LONG).show();
                         }*/
+                        //tes
                     }
                 });
     }
