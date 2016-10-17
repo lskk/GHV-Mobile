@@ -177,11 +177,11 @@ public class Login extends AppCompatActivity {
                     //    storeRegIdinSharedPref(applicationContext, regId, email);
                     prgDialog.dismiss();
                     //    registerUser(name, email, gender, birth, phone, password, role, ojegNumber, idktp, regId);
-                   Log.i("GCM id",regId);
+
                     attemptLogin();
                     //    Toast.makeText(applicationContext, "Registered with GCM Server successfully.\n\n" + msg, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Login.this, "Reg ID Creation Failed.\n\nEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time." + msg, Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this, "Login Failed.\nPlease Check Your Internet Connection", Toast.LENGTH_LONG).show();
                     prgDialog.dismiss();
                 }
             }
@@ -198,13 +198,13 @@ public class Login extends AppCompatActivity {
             } else {
                 Toast.makeText(
                         Login.this,
-                        "Maaf, perangkat Anda tidak mendukung Play service",
+                        "Please Update Your Play Service",
                         Toast.LENGTH_LONG).show();
                 finish();
             }
             return false;
         } else {
-            Log.i("Gplay sERVICE", "Support Playservice");
+
         }
         return true;
     }
@@ -270,7 +270,6 @@ public class Login extends AppCompatActivity {
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i("response login : ", response);
 
                         try {
                             JSONObject jObj = new JSONObject(response);
@@ -288,8 +287,6 @@ public class Login extends AppCompatActivity {
                                 //store to sharedpreference
                                 storeRegIdinSharedPref(getApplicationContext(), gcmid, Email, Level,id_user,pathfoto );
                                 String theRole = Level;
-                                Log.i("Login role : ", Level);
-                                Log.i("Login role : ", String.valueOf(id_user));
 
                                 if(theRole.contains("1")){
                                     Intent i = new Intent(Login.this, Admin.class);

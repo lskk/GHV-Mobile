@@ -163,7 +163,6 @@ public class Signup extends AppCompatActivity {
         RequestRest req = new RequestRest(Signup.this, new IConnectionResponseHandler(){
             @Override
             public void OnSuccessArray(JSONArray result){
-                Log.i("result", result.toString());
                 dialog.dismiss();
             }
 
@@ -171,7 +170,6 @@ public class Signup extends AppCompatActivity {
             public void onSuccessJSONObject(String result){
                 try {
                     JSONObject obj = new JSONObject(result);
-                    Log.i("Test", result);
                     boolean status=obj.getBoolean("status");
                     dialog.dismiss();
                     if (status){
@@ -197,7 +195,6 @@ public class Signup extends AppCompatActivity {
 
             @Override
             public void onSuccessJSONArray(String result){
-                Log.i("Test", result);
                 dialog.dismiss();
             }
         });
