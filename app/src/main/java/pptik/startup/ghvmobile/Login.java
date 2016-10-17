@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.AsyncTask;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -40,8 +39,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.User_Guest.GuestMenu;
-import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 import  pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class Login extends AppCompatActivity {
@@ -53,7 +50,7 @@ public class Login extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
-    private View mLoginFormView;
+
     private ProgressDialog prgDialog;
     private RadioGroup role;
     private RadioButton inputRole;
@@ -73,8 +70,6 @@ public class Login extends AppCompatActivity {
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
        TextView fab = (TextView) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +137,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 

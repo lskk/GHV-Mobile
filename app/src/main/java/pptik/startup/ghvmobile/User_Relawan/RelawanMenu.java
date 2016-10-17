@@ -320,7 +320,6 @@ public class RelawanMenu extends AppCompatActivity implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Connection Suspended");
         mGoogleApiClient.connect();
 
     }
@@ -424,7 +423,6 @@ public class RelawanMenu extends AppCompatActivity implements
     private void updateMap(){
         RelawanMenu.this.showLoadingPin();
         totalRequest += 1;
-        Log.i(TAG_MAP_VIEW, "----------------------- Request no "+totalRequest+" ------------------------");
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(ApplicationConstants.API_GET_MAP_VIEW,
                 new AsyncHttpResponseHandler() {
@@ -432,7 +430,6 @@ public class RelawanMenu extends AppCompatActivity implements
                     // response code '200'
                     @Override
                     public void onSuccess(String response) {
-                        Log.i(TAG_MAP_VIEW, response);
                         hideLoadingPin();
 
                         try {
@@ -617,7 +614,7 @@ public class RelawanMenu extends AppCompatActivity implements
             }
             @Override
             public void onSuccessJSONArray(String result){
-                Log.i("Test", result);
+
             }
         });
 

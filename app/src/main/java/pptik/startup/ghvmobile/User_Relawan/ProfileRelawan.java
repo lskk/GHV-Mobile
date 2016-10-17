@@ -836,9 +836,7 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
             FileOutputStream fos = new FileOutputStream(photo);
             bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
-            Log.d("Success", "File Success Created");
             Toast.makeText(ProfileRelawan.this, path, Toast.LENGTH_LONG).show();
-            Log.d("Path", path);
             return photo;
         }catch (Exception e) {
             Log.d("Failed","File Failed Created : "+e.getMessage());
