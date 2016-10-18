@@ -198,14 +198,13 @@ public class GuestMenu extends AppCompatActivity implements
                                 final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(__context);
                                 alertDialog.setTitle("Info");
                                 alertDialog.setCancelable(false);
-                                alertDialog.setMessage("Maaf, Akun Anda sedang dalam verifikasi Admin." +
-                                        "\nCobalah untuk memberikan informasi yang benar dan sesuai agar akun Anda dapat diverifikasi");
+                                alertDialog.setMessage("We Are Sorry, but your account are not verified by admin yet.");
                                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         alertDialog.create().dismiss();
                                     }
                                 });
-                                alertDialog.setNegativeButton("Edit Data Pendaftaran", new DialogInterface.OnClickListener() {
+                                alertDialog.setNegativeButton("Edit Your data", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent intent = new Intent(__context, ProfileRelawan.class);
                                         __context.startActivity(intent);

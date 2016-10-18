@@ -75,16 +75,16 @@ public class GCMNotificationIntentService extends IntentService {
         try {
             JSONObject jObj = new JSONObject(msg);
             String buat=jObj.getString("for");
-            String judul="Selamat Bergabung";
+            String judul="Wellcome";
             String content;
             if (buat.contains("1")){
-                content="Status Relawan Anda Sudah Di Approve";
+                content="Your Volunteer status Approved";
                 notifToRelawan(msg,1,judul,content);
             }else if (buat.contains("2"))  {
-                content="Ada Relawan atau Program Baru disubmit";
+                content="there's New Program or Volunteer";
                 notifToRelawan(msg,2,judul,content);
             }else if (buat.contains("3"))  {
-                content="Ada Relawan Baru Mendaftar";
+                content="New Volunteer submited";
                 notifToRelawan(msg,3,judul,content);
             }
         } catch (JSONException e) {
