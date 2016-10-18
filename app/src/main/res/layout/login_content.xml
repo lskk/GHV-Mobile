@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/login_activity"
@@ -23,39 +24,48 @@
     </View>
 
 
-    <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="Login"
-        android:background="@drawable/bg_common_button"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
+    <LinearLayout
+        android:animateLayoutChanges="true"
         android:layout_below="@+id/li3"
         android:layout_alignEnd="@+id/li3"
-        android:layout_alignStart="@+id/li3" />
+        android:layout_alignStart="@+id/li3"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Login"
+            android:background="@drawable/bg_common_button"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+             />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="left"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/email_sign_in_button"
-        android:layout_alignStart="@+id/email_sign_in_button"
-        android:layout_alignEnd="@+id/email_sign_in_button">
-        <TextView
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="left"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Belum memiliki akun ? Silahkan " />
+            android:layout_below="@+id/email_sign_in_button"
+            android:layout_alignStart="@+id/email_sign_in_button"
+            android:layout_alignEnd="@+id/email_sign_in_button">
+            <TextView
+                android:id="@+id/text"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Dont have Account yet ?  " />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Daftar"
-            android:id="@+id/fab"
-            android:textColor="@android:color/holo_orange_dark" />
+            <TextView
+                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Register"
+                android:id="@+id/fab"
+                android:textColor="@android:color/holo_orange_dark" />
+        </LinearLayout>
     </LinearLayout>
 
     <ImageView
@@ -69,6 +79,7 @@
         android:layout_centerHorizontal="true" />
 
     <LinearLayout
+        android:animateLayoutChanges="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:padding="10dp"
@@ -129,6 +140,34 @@
                 <EditText android:id="@+id/password" android:layout_width="match_parent"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content" android:hint="Password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified" android:inputType="textPassword"
+                    android:maxLines="1" android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:animateLayoutChanges="true"
+            android:visibility="gone"
+            android:id="@+id/li4"
+            android:layout_below="@id/li2"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:paddingRight="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/actkey"
+                android:id="@+id/imageView6" />
+            <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
+                android:textColorHint="#ffffff"
+                android:layout_height="wrap_content">
+
+                <EditText android:id="@+id/passwordretype" android:layout_width="match_parent"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content" android:hint="Retype Password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified" android:inputType="textPassword"

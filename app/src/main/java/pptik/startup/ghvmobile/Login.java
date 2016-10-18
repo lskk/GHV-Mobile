@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,15 +30,19 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.vision.text.Line;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
+import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import  pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
@@ -48,17 +53,21 @@ public class Login extends AppCompatActivity {
 
     // UI references.
     private EditText mEmailView;
-    private EditText mPasswordView;
+    private EditText mPasswordView,retypePassword;
     private View mProgressView;
+    private TextView text1,fab ;
 
     private ProgressDialog prgDialog;
     private RadioGroup role;
     private RadioButton inputRole;
-
+    private Button mEmailSignInButton;
     private String deviceid;
 
+    private LinearLayout li1;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private int statusLoginOrRegister=0;
 
     GoogleCloudMessaging gcmObj;
     SharedPreferences prefs;
@@ -69,14 +78,33 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.login_activity);
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
-
-
-       TextView fab = (TextView) findViewById(R.id.fab);
+        retypePassword=(EditText)findViewById(R.id.passwordretype) ;
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        text1=(TextView)findViewById(R.id.text);
+        fab = (TextView) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent i = new Intent(Login.this, Signup.class);
-                startActivity(i);
+               /*Intent i = new Intent(Login.this, Signup.class);
+                startActivity(i);*/
+                if (statusLoginOrRegister==0){
+                    li1.setEnabled(true);
+                    li1.setVisibility(View.VISIBLE);
+                    mEmailSignInButton.setText("Register");
+                    text1.setText("Have an Account? ");
+                    fab.setText("Login");
+
+                    statusLoginOrRegister=1;
+                }else {
+                    li1.setEnabled(false);
+                    li1.setVisibility(View.GONE);
+                    mEmailSignInButton.setText("Login");
+                    text1.setText("Dont have Account yet? ");
+                    fab.setText("Register");
+
+                    statusLoginOrRegister=0;
+                }
+
             }
         });
 
@@ -123,23 +151,77 @@ public class Login extends AppCompatActivity {
       /*  TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
         deviceid = tm.getDeviceId();
 */
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        li1=(LinearLayout)findViewById(R.id.li4);
+
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                // attemptLogin();
-                if(mEmailView.getText().toString().equals("") || mPasswordView.getText().toString().equals("")){
-                    Snackbar.make(view, "Kolom email dan password tidak boleh kosong", Snackbar.LENGTH_LONG).show();
+
+                if (statusLoginOrRegister==0){
+                    if(mEmailView.getText().toString().equals("") || mPasswordView.getText().toString().equals("")){
+                        Snackbar.make(view, "Please Input Email and Password", Snackbar.LENGTH_LONG).show();
+                    }else {
+                        if (checkPlayServices())
+                            registerInBackground();
+                    }
                 }else {
-                    if (checkPlayServices())
-                        registerInBackground();
+                    attemptRegister();
                 }
+
+
             }
         });
 
         mProgressView = findViewById(R.id.login_progress);
-    }
 
+    }
+    private void attemptRegister() {
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+        retypePassword.setError(null);
+
+        // Store values at the time of the login attempt.
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        String retypepassword = retypePassword.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        if (!retypepassword.equals(password)) {
+            retypePassword.setError(getString(R.string.error_invalid_password2));
+            focusView =retypePassword;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+        } else {
+            // test connection
+            //testCon();
+            registerUser(email,password,"1234");
+        }
+    }
 
     //----------- regsiter gcm
     private void registerInBackground() {
@@ -247,6 +329,56 @@ public class Login extends AppCompatActivity {
             String testregid="test";
             doLogin(email, password, regId);
         }
+    }
+    private void registerUser(String email, String password, String regId) {
+        final ProgressDialog  dialog = ProgressDialog.show(Login.this, null, "Memuat...", true);
+        RequestRest req = new RequestRest(Login.this, new IConnectionResponseHandler(){
+            @Override
+            public void OnSuccessArray(JSONArray result){
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSuccessJSONObject(String result){
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    boolean status=obj.getBoolean("status");
+                    dialog.dismiss();
+                    if (status){
+
+                        Toast.makeText(Login.this, "Success Create Account, Please Login", Toast.LENGTH_LONG).show();
+                        li1.setEnabled(false);
+                        li1.setVisibility(View.GONE);
+                        mEmailSignInButton.setText("Login");
+                        text1.setText("Dont have Account yet? ");
+                        fab.setText("Register");
+
+                        statusLoginOrRegister=0;
+
+                    }else {
+                        Toast.makeText(Login.this, "Email Sudah Digunakan", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e){
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(String e){
+                Log.i("Test", e);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSuccessJSONArray(String result){
+                dialog.dismiss();
+            }
+        });
+
+
+        req.registerUser(email, password, "12345");
     }
     private boolean isEmailValid(String email) {
         return email.contains("@");

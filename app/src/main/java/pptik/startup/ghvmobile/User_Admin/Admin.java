@@ -127,7 +127,7 @@ public class Admin extends AppCompatActivity implements
         initNavigationDrawer();
         updateMap();
         timer2 = new Timer();
-        setAndRunTimer();
+        //setAndRunTimer();
     }
     public void initNavigationDrawer(){
         drawerUtil = new DrawerUtil(this, toolbar,0);
@@ -352,7 +352,8 @@ public class Admin extends AppCompatActivity implements
         //Now lets connect to the API
         if(mGoogleApiClient.isConnected() == false)
             mGoogleApiClient.connect();
-        setAndRunTimer();
+        //setAndRunTimer();
+        updateMap();
     }
 
     @Override
