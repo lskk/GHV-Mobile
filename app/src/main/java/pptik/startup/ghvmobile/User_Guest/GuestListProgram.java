@@ -28,6 +28,7 @@ import java.util.ArrayList;
  * Created by edo on 6/12/2016.
  */
 
+import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.User_Admin.Admin;
 import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.R;
@@ -178,7 +179,7 @@ public class GuestListProgram extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()){
             case android.R.id.home:
-                intent = new Intent(applicationContext, GuestMenu.class);
+                intent = new Intent(applicationContext, MainMenu.class);
                 startActivity(intent);
                 finish();
                 return true;

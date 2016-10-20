@@ -32,6 +32,7 @@ import java.util.ArrayList;
  */
 
 import pptik.startup.ghvmobile.GetRole;
+import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitProgram;
 import pptik.startup.ghvmobile.User_Admin.Admin;
@@ -191,7 +192,7 @@ public class Relawan_Program extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()){
             case android.R.id.home:
-                intent = new Intent(applicationContext, RelawanMenu.class);
+                intent = new Intent(applicationContext, MainMenu.class);
                 startActivity(intent);
                 finish();
                 return true;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,17 +23,21 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pptik.startup.ghvmobile.Detailmateri;
 import pptik.startup.ghvmobile.EditProgram;
+import pptik.startup.ghvmobile.ImageGallery;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataProgram;
 import pptik.startup.ghvmobile.Support.DataProgram2;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 
 /**
  * Created by GIGABYTE on 20/06/2016.
@@ -43,7 +48,7 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
     private int id_program,status_program;
     private TextView nama,awal,akhir,status,supervisor,lokasi,keterangan,deskripsi;
     private ImageView imageView;
-
+    private FloatingActionButton fabGallery;
     SharedPreferences prefs;
     private ProgressDialog pDialog;
 
@@ -65,6 +70,7 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
         keterangan=(TextView) findViewById(R.id.detail_program_keterangan);
         deskripsi=(TextView) findViewById(R.id.detail_program_deskripsi);
         imageView=(ImageView)findViewById(R.id.detailapprovalimageview);
+        fabGallery=(FloatingActionButton)findViewById(R.id.fabGallery);
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
@@ -81,7 +87,20 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
             id_program=dp.getIdProgram();
 
         }
-
+        fabGallery.setImageBitmap(PictureFormatTransform.drawableToBitmap(new IconicsDrawable(this)
+                .icon(Ionicons.Icon.ion_images)
+                .color(this.getResources().getColor(R.color.white))
+                .sizeDp(60)));
+        fabGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i;
+                i = new Intent(ApprovalProgramDetail.this, ImageGallery.class);
+                i.putExtra("id_program",id_program);
+                startActivity(i);
+                finish();
+            }
+        });
         ambildataprogram();
     }
     private void deleteprogram(){
@@ -373,6 +392,11 @@ public class ApprovalProgramDetail  extends AppCompatActivity {
             case 4:deleteprogram();
 
                 break;
+            case android.R.id.home:
+                intent = new Intent(ApprovalProgramDetail.this, ApprovalProgram.class);
+                startActivity(intent);
+                finish();
+                return true;
             default:
                 break;
         }
