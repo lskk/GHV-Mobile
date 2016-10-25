@@ -91,6 +91,7 @@ dependencies {
     compile 'com.marvinlabs:android-slideshow-widget-picasso-plugin:0.5.+@aar'
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
 
 }
 apply plugin: 'com.google.gms.google-services'
