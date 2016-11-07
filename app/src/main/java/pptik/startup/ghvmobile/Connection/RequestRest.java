@@ -71,6 +71,39 @@ public class RequestRest extends ConnectionHandler {
         }, mClient);
     }
 
+    public void loginviafb( String email,  String gcmid){
+        RequestParams params = new RequestParams();
+
+        get("useract/store/"+email+"/"+gcmid, params, new JsonHttpResponseHandler() {
+
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                //   dialog = ProgressDialog.show(mContext, "Connecting", "Check Connection", true);
+            }
+
+            @Override
+            public void onSuccess(JSONObject status) {
+                super.onSuccess(status);
+                responseHandler.onSuccessJSONObject(status.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  String responseBody, Throwable e) {
+                super.onFailure(statusCode, headers, responseBody, e);
+                responseHandler.onFailure(e.toString());//e.getMessage());
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                //   dialog.dismiss();
+            }
+
+        }, mClient);
+    }
 
     public void registerUser( String email,  String password, String regId){
         RequestParams params = new RequestParams();

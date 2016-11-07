@@ -514,7 +514,7 @@ public class DaftarRelawan extends AppCompatActivity implements AdapterView.OnIt
                     Log.i("Test", result);
                     dialog.dismiss();
                     Toast.makeText(DaftarRelawan.this, "Berhasil mendaftar, Menunggu Persetujuan Admin", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(DaftarRelawan.this,GuestMenu.class);
+                    Intent i = new Intent(DaftarRelawan.this,MainMenu.class);
                     startActivity(i);
                     finish();
 

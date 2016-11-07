@@ -32,6 +32,7 @@ import pptik.startup.ghvmobile.User_Admin.ApprovalRelawanDetail;
 /**
  * Created by hynra on 8/18/16.
  */
+
 public class MarkerUserFragment extends Fragment implements View.OnClickListener {
     private JSONObject data;
     private TextView nama,hp;
@@ -55,7 +56,7 @@ public class MarkerUserFragment extends Fragment implements View.OnClickListener
             new DownloadImageTask(thumbnail)
                     .execute(pathfoto);
         }
-         prefs = getActivity().getApplicationContext().getSharedPreferences("UserDetails",
+        prefs = getActivity().getApplicationContext().getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
         String role=prefs.getString(ApplicationConstants.LEVEL_ID,"0");
         if (Integer.parseInt(role) !=1){
