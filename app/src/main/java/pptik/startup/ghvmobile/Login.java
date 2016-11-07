@@ -330,6 +330,72 @@ public class Login extends AppCompatActivity {
             doLogin(email, password, regId);
         }
     }
+    private void loginviafb(String email, String regId) {
+        final ProgressDialog  dialog = ProgressDialog.show(Login.this, null, "Memuat...", true);
+        RequestRest req = new RequestRest(Login.this, new IConnectionResponseHandler(){
+            @Override
+            public void OnSuccessArray(JSONArray result){
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSuccessJSONObject(String result){
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    boolean status=obj.getBoolean("status");
+                    dialog.dismiss();
+                    if (status){
+
+                        JSONObject user = obj.getJSONObject("user");
+                        String Email = user.getString("email");
+                        String gcmid = user.getString("gcm_id");
+                        int id_user = user.getInt("id_user");
+                        String Level = user.getString("level");
+                        String pathfoto=user.getString("path_foto");
+                        if(Level.equals("")){
+                            Level = "3";
+                        }
+                        //store to sharedpreference
+                        storeRegIdinSharedPref(getApplicationContext(), gcmid, Email, Level,id_user,pathfoto );
+                        String theRole = Level;
+
+                        if(theRole.contains("1")){
+                            Intent i = new Intent(Login.this, Admin.class);
+                            i.putExtra("regId", gcmid);
+                            startActivity(i);
+                            finish();
+                        }else {
+                            Intent i = new Intent(Login.this, MainMenu.class);
+                            i.putExtra("regId", gcmid);
+                            startActivity(i);
+                            finish();
+                        }
+
+                    }else {
+                        Toast.makeText(Login.this, "Email Sudah Digunakan", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e){
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(String e){
+                Log.i("Test", e);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSuccessJSONArray(String result){
+                dialog.dismiss();
+            }
+        });
+
+
+        req.loginviafb(email,regId);
+    }
     private void registerUser(String email, String password, String regId) {
         final ProgressDialog  dialog = ProgressDialog.show(Login.this, null, "Memuat...", true);
         RequestRest req = new RequestRest(Login.this, new IConnectionResponseHandler(){
