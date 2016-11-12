@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="materialdrawer-5.2.8">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz/materialdrawer/5.2.8/res" />
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz/materialdrawer/5.2.8/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mikepenz/materialdrawer/5.2.8/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../DEVUSERDATA/.gradle/caches/modules-2/files-2.1/com.mikepenz/materialdrawer/5.2.8/591e0d3a8203daa2547a1a088e19d510b994ebbc/materialdrawer-5.2.8-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mikepenz/materialdrawer/5.2.8/591e0d3a8203daa2547a1a088e19d510b994ebbc/materialdrawer-5.2.8-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

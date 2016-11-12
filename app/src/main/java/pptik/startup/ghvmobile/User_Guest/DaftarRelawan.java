@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -37,21 +36,19 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
+import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.SubmitProgram;
-import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
-import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
-import pptik.startup.ghvmobile.Connection.RequestRest;
-
-import pptik.startup.ghvmobile.Support.PhotoManager;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+import pptik.startup.ghvmobile.Support.PhotoManager;
+import pptik.startup.ghvmobile.User_Admin.Admin;
+
 
 /**
  * Created by edo on 6/12/2016.

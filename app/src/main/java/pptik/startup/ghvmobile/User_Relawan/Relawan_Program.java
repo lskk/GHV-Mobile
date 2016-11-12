@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,21 +26,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by edo on 6/12/2016.
- */
-
-import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.SubmitProgram;
-import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.CustomAdapter;
 import pptik.startup.ghvmobile.Support.Program;
-import pptik.startup.ghvmobile.Utilities.DrawerUtil;
-import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+
+/**
+ * Created by edo on 6/12/2016.
+ */
 
 public class Relawan_Program extends AppCompatActivity {
 

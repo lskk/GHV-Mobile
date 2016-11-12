@@ -24,19 +24,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import pptik.startup.ghvmobile.MainMenu;
+import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.Support.CustomAdapter;
+import pptik.startup.ghvmobile.Support.Program;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+
 /**
  * Created by edo on 6/12/2016.
  */
-
-import pptik.startup.ghvmobile.MainMenu;
-import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.GetRole;
-import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
-import pptik.startup.ghvmobile.Support.CustomAdapter;
-import pptik.startup.ghvmobile.Support.Program;
-import pptik.startup.ghvmobile.Utilities.DrawerUtil;
-import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class GuestListProgram extends AppCompatActivity {
 

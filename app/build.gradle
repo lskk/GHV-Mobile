@@ -1,13 +1,6 @@
 apply plugin: 'com.android.application'
 android {
-    signingConfigs {
-        config {
-            keyAlias 'GHV-Key'
-            keyPassword 'Souleater999'
-            storeFile file('C:/Users/GIGABYTE/Keystores/android.jks')
-            storePassword 'Souleater999'
-        }
-    }
+
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
     useLibrary 'org.apache.http.legacy'
@@ -27,9 +20,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            signingConfig signingConfigs.config
-        }
+
     }
 
 
@@ -43,8 +34,18 @@ android {
         exclude 'META-INF/NOTICE'
     }
 }
+repositories {
+    mavenCentral()
+}
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'junit:junit:4.12'
     //gms play service
@@ -89,9 +90,10 @@ dependencies {
     //
     compile 'com.marvinlabs:android-slideshow-widget:0.5.+@aar'
     compile 'com.marvinlabs:android-slideshow-widget-picasso-plugin:0.5.+@aar'
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
+
+    // facebook
 
 }
 apply plugin: 'com.google.gms.google-services'

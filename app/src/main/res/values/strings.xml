@@ -45,6 +45,7 @@
     </string-array>
     <string name="title_activity_edit_program">EditProgram</string>
     <string name="title_activity_image_gallery">ImageGallery</string>
+    <string name="login">login</string>
     <!-- Strings related to daftar rewalan end -->
 
 
@@ -69,4 +70,6 @@
     <!-- style_item_menu-->
 
     <!-- style_option_menu-->
+    <!-- facebook app id -->
+    <string name="facebook_app_id">224400054646541</string>
 </resources>

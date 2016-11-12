@@ -16,18 +16,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.Support.DataUser;
 import pptik.startup.ghvmobile.Support.DataUser2;
-import pptik.startup.ghvmobile.User_Admin.ApprovalProgramDetail;
 import pptik.startup.ghvmobile.User_Admin.ApprovalRelawanDetail;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 /**
  * Created by hynra on 8/18/16.

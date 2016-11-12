@@ -10,10 +10,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -46,18 +46,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
+import pptik.startup.ghvmobile.Connection.RequestRest;
 import pptik.startup.ghvmobile.GetRole;
 import pptik.startup.ghvmobile.MainMenu;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
-import pptik.startup.ghvmobile.Connection.RequestRest;
-import pptik.startup.ghvmobile.User_Guest.DaftarRelawan;
-import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Support.PhotoManager;
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Guest.GuestMenu;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
-
-import android.os.AsyncTask;
 /**
  * Created by GIGABYTE on 15/06/2016.
  */

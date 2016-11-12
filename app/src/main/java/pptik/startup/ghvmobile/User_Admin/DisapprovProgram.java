@@ -24,7 +24,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataProgram;
 import pptik.startup.ghvmobile.Support.LPS_costumAdapter;

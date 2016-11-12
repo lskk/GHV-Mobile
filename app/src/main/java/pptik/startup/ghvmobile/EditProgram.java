@@ -11,8 +11,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,9 +40,8 @@ import java.util.Date;
 
 import pptik.startup.ghvmobile.Connection.IConnectionResponseHandler;
 import pptik.startup.ghvmobile.Connection.RequestRest;
-import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 import pptik.startup.ghvmobile.Support.PhotoManager;
-import pptik.startup.ghvmobile.User_Admin.ApprovalProgramDetail;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class EditProgram extends AppCompatActivity {
 

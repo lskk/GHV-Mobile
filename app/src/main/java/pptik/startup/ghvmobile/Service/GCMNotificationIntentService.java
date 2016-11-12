@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -18,13 +17,10 @@ import org.json.JSONObject;
 
 import java.util.Random;
 
-
-import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.User_Admin.ApprovalProgram;
-import pptik.startup.ghvmobile.User_Admin.ApprovalRelawan;
 import pptik.startup.ghvmobile.R;
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Admin.ApprovalRelawan;
 import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
-import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class GCMNotificationIntentService extends IntentService {

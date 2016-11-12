@@ -1,17 +1,12 @@
 package pptik.startup.ghvmobile.User_Admin;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,16 +19,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import pptik.startup.ghvmobile.GetRole;
-import pptik.startup.ghvmobile.Login;
 import pptik.startup.ghvmobile.R;
-import pptik.startup.ghvmobile.Support.DataUser;
 import pptik.startup.ghvmobile.Support.DataUser2;
 import pptik.startup.ghvmobile.Support.LRB_costumAdapter;
-import pptik.startup.ghvmobile.Support.LRS_costumAdapter;
 import pptik.startup.ghvmobile.Setup.ApplicationConstants;
-import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
-import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
 
 /**
  * Created by GIGABYTE on 15/06/2016.

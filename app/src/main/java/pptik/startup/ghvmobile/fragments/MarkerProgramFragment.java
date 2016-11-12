@@ -17,7 +17,6 @@ import pptik.startup.ghvmobile.Detailmateri;
 import pptik.startup.ghvmobile.R;
 import pptik.startup.ghvmobile.Support.DataProgram;
 import pptik.startup.ghvmobile.Support.Program;
-import pptik.startup.ghvmobile.User_Admin.ApprovalProgram;
 import pptik.startup.ghvmobile.User_Admin.ApprovalProgramDetail;
 
 /**

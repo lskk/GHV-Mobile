@@ -16,11 +16,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.ionicons_typeface_library.Ionicons;
 import com.squareup.picasso.Picasso;
 
-import pptik.startup.ghvmobile.Setup.ApplicationConstants;
-import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.User_Guest.GuestListProgram;
 import pptik.startup.ghvmobile.Support.Program;
-import pptik.startup.ghvmobile.User_Relawan.Relawan_Program;
 import pptik.startup.ghvmobile.Utilities.PictureFormatTransform;
 
 /**

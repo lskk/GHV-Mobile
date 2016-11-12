@@ -1,6 +1,5 @@
 package pptik.startup.ghvmobile;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,16 +22,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import pptik.startup.ghvmobile.Support.Program;
+import pptik.startup.ghvmobile.Support.SubmitedAdapter;
+import pptik.startup.ghvmobile.User_Admin.Admin;
+import pptik.startup.ghvmobile.User_Guest.GuestMenu;
+import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
+import pptik.startup.ghvmobile.Setup.ApplicationConstants;
+
 /**
  * Created by edo on 6/12/2016.
  */
-
-import pptik.startup.ghvmobile.User_Admin.Admin;
-import pptik.startup.ghvmobile.User_Guest.GuestMenu;
-import pptik.startup.ghvmobile.Support.Program;
-import pptik.startup.ghvmobile.Support.SubmitedAdapter;
-import pptik.startup.ghvmobile.User_Relawan.RelawanMenu;
-import pptik.startup.ghvmobile.Setup.ApplicationConstants;
 
 public class SubmitedProgram extends AppCompatActivity {
     private ListView lv;
