@@ -77,13 +77,14 @@ public class Login extends AppCompatActivity {
 
     GoogleCloudMessaging gcmObj;
     SharedPreferences prefs;
-
+    private String email="";
     String regId;
     public  String Facebook_Email=null;
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
+    private  int loginTag=0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
@@ -175,6 +176,7 @@ public class Login extends AppCompatActivity {
                         Snackbar.make(view, "Please Input Email and Password", Snackbar.LENGTH_LONG).show();
                     }else {
                         if (checkPlayServices())
+                            loginTag=1;
                             registerInBackground();
                     }
                 }else {
@@ -201,7 +203,17 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 Log.v("Main", response.toString());
-                                setProfileToView(object);
+                                if (checkPlayServices())
+                                    loginTag=2;
+                                try {
+                                    email=object.getString("email").trim();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                    registerInBackground();
+                               // setProfileToView(object);
 
                             }
                         });
@@ -334,8 +346,13 @@ public class Login extends AppCompatActivity {
                     //    storeRegIdinSharedPref(applicationContext, regId, email);
                     prgDialog.dismiss();
                     //    registerUser(name, email, gender, birth, phone, password, role, ojegNumber, idktp, regId);
+                    if (loginTag==1){
+                        attemptLogin();
 
-                    attemptLogin();
+                    }else {
+                        loginviafb();
+                    }
+
                     //    Toast.makeText(applicationContext, "Registered with GCM Server successfully.\n\n" + msg, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Login.this, "Login Failed.\nPlease Check Your Internet Connection", Toast.LENGTH_LONG).show();
@@ -405,7 +422,7 @@ public class Login extends AppCompatActivity {
             doLogin(email, password, regId);
         }
     }
-    private void loginviafb(String email, String regId) {
+    private void loginviafb() {
         final ProgressDialog  dialog = ProgressDialog.show(Login.this, null, "Memuat...", true);
         RequestRest req = new RequestRest(Login.this, new IConnectionResponseHandler(){
             @Override
