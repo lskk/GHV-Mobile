@@ -276,7 +276,7 @@ public class Login extends AppCompatActivity {
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            // Signed in successfully
+            // Signed in successfully daksjdklj
             GoogleSignInAccount acct = result.getSignInAccount();
            // personName = acct.getDisplayName();
             Google_email = acct.getEmail();
