@@ -56,7 +56,7 @@
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_sign_in"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
+            android:layout_height="35dp"
             tools:ignore="ObsoleteLayoutParam,UnusedAttribute"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
