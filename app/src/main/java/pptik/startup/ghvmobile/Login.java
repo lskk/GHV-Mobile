@@ -271,7 +271,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-    }// onCreate
+    }// onCreate end
     // actifity result google account
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
