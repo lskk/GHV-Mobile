@@ -250,7 +250,7 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Login Error", Toast.LENGTH_SHORT).show();
             }
         });
-// Google sign In
+        // Google sign In
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -270,7 +270,6 @@ public class Login extends AppCompatActivity {
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
-
     }// onCreate end
     // actifity result google account
     private void handleSignInResult(GoogleSignInResult result) {
