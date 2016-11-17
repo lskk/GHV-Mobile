@@ -281,7 +281,7 @@ public class Login extends AppCompatActivity {
            // personName = acct.getDisplayName();
             Google_email = acct.getEmail();
             Toast.makeText(this, " E-Mail  Google : "+Google_email, Toast.LENGTH_SHORT).show();
-           // updateUI(true); fgfgf
+           // updateUI(true);
         } else {
             // Signed out
            // updateUI(false);
