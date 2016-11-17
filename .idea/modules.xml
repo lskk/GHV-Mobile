@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GHV-Mobile.iml" filepath="$PROJECT_DIR$/GHV-Mobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ghv.iml" filepath="$PROJECT_DIR$/ghv.iml" />
     </modules>
   </component>
 </project>

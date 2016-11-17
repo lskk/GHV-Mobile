@@ -23,6 +23,7 @@
         android:alpha="0.9">
     </View>
 
+
     <LinearLayout
         android:animateLayoutChanges="true"
         android:layout_below="@+id/li3"
@@ -31,7 +32,8 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/action">
+        android:id="@+id/action"
+        android:weightSum="1">
 
 
         <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
@@ -42,15 +44,25 @@
             android:textColor="#ffffff"
             android:textStyle="bold"
              />
+
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btn_fb_login"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:elevation="4dp"
-            android:layout_marginBottom="23dp"
             tools:ignore="ObsoleteLayoutParam,UnusedAttribute"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            tools:ignore="ObsoleteLayoutParam,UnusedAttribute"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+             />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
@@ -190,4 +202,5 @@
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>

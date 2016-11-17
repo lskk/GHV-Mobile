@@ -33,8 +33,14 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -83,6 +89,16 @@ public class Login extends AppCompatActivity {
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    // google sign
+    private static final String TAG = Login.class.getSimpleName();
+    private static final int RC_SIGN_IN = 007;
+
+    private GoogleApiClient mGoogleApiClient;
+
+    private SignInButton btnSignIn;
+    private Button btnSignOut;
+    private String Google_email;
+
 
     private  int loginTag=0;
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +162,6 @@ public class Login extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-
                     return true;
                 }
                 return false;
@@ -235,14 +250,58 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Login Error", Toast.LENGTH_SHORT).show();
             }
         });
+// Google sign In
+        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, null)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
+        // Customizing G+ button
+        btnSignIn.setSize(SignInButton.SIZE_STANDARD);
+        btnSignIn.setScopes(gso.getScopeArray());
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
 
+    }// onCreate
+    // actifity result google account
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully
+            GoogleSignInAccount acct = result.getSignInAccount();
+           // personName = acct.getDisplayName();
+            Google_email = acct.getEmail();
+            Toast.makeText(this, " E-Mail  Google : "+Google_email, Toast.LENGTH_SHORT).show();
+           // updateUI(true);
+        } else {
+            // Signed out
+           // updateUI(false);
+            Toast.makeText(this,"Failed Login",Toast.LENGTH_LONG).show();
+        }
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
     }
+    // actifity result facebook
+
     private void setProfileToView(JSONObject jsonObject) {
         try { // ambil object dari profile user facebook
            // String s_facebookName=jsonObject.getString("name").trim();
