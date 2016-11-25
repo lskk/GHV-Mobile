@@ -34,8 +34,14 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -259,6 +265,25 @@ public class Login extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+    private void setProfileToView(JSONObject jsonObject) {
+        try { // ambil object dari profile user facebook
+           // String s_facebookName=jsonObject.getString("name").trim();
+            //String s_email=jsonObject.getString("email").trim();
+            //String s_gender=jsonObject.getString("gender").trim();
+            //String s_birthday=jsonObject.getString("age_range").trim();
+           // String s_profilePictureView=jsonObject.getString("id").trim();
+            //String s_firstName=jsonObject.getString("locale").trim();
+
+            Facebook_Email = jsonObject.getString("email").trim();
+            // tampilkan info email facebook user
+            Toast.makeText(getApplicationContext(), "Email Facebook : "+Facebook_Email, Toast.LENGTH_SHORT).show();
+
+            // shared data
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }   // facebook selesai
 
     private void attemptRegister() {
 
