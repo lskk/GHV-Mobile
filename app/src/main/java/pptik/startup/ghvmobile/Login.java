@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,6 +40,9 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.ionicons_typeface_library.Ionicons;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,15 +89,27 @@ public class Login extends AppCompatActivity {
     private CallbackManager callbackManager;
 
     private  int loginTag=0;
+    private Context context;
+    private ImageButton IB_fb,IB_google;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-
+        context = this;
         prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
         retypePassword=(EditText)findViewById(R.id.passwordretype) ;
         mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         text1=(TextView)findViewById(R.id.text);
+        IB_fb=(ImageButton) findViewById(R.id.IB_fb);
+        IB_google=(ImageButton) findViewById(R.id.IB_google);
+        IB_fb.setImageDrawable(new IconicsDrawable(this)
+                .icon(Ionicons.Icon.ion_social_facebook_outline)
+                .color(context.getResources().getColor(R.color.white))
+                .sizeDp(50));
+        IB_google.setImageDrawable(new IconicsDrawable(this)
+                .icon(Ionicons.Icon.ion_social_google_outline)
+                .color(context.getResources().getColor(R.color.white))
+                .sizeDp(50));
         fab = (TextView) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,25 +259,6 @@ public class Login extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-    private void setProfileToView(JSONObject jsonObject) {
-        try { // ambil object dari profile user facebook
-           // String s_facebookName=jsonObject.getString("name").trim();
-            //String s_email=jsonObject.getString("email").trim();
-            //String s_gender=jsonObject.getString("gender").trim();
-            //String s_birthday=jsonObject.getString("age_range").trim();
-           // String s_profilePictureView=jsonObject.getString("id").trim();
-            //String s_firstName=jsonObject.getString("locale").trim();
-
-            Facebook_Email = jsonObject.getString("email").trim();
-            // tampilkan info email facebook user
-            Toast.makeText(getApplicationContext(), "Email Facebook : "+Facebook_Email, Toast.LENGTH_SHORT).show();
-
-            // shared data
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }   // facebook selesai
 
     private void attemptRegister() {
 
@@ -350,7 +347,7 @@ public class Login extends AppCompatActivity {
                         attemptLogin();
 
                     }else {
-                        loginviafb();
+                        loginviasocmed();
                     }
 
                     //    Toast.makeText(applicationContext, "Registered with GCM Server successfully.\n\n" + msg, Toast.LENGTH_SHORT).show();
@@ -422,7 +419,7 @@ public class Login extends AppCompatActivity {
             doLogin(email, password, regId);
         }
     }
-    private void loginviafb() {
+    private void loginviasocmed() {
         final ProgressDialog  dialog = ProgressDialog.show(Login.this, null, "Memuat...", true);
         RequestRest req = new RequestRest(Login.this, new IConnectionResponseHandler(){
             @Override
@@ -485,8 +482,12 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        if (loginTag==2){
+            req.loginviafb(email,regId);
+        }else {
+            req.loginviagoogle(email,regId);
+        }
 
-        req.loginviafb(email,regId);
     }
     private void registerUser(String email, String password, String regId) {
         final ProgressDialog  dialog = ProgressDialog.show(Login.this, null, "Memuat...", true);
