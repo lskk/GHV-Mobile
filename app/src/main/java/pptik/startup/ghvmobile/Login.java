@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -97,6 +98,15 @@ public class Login extends AppCompatActivity {
     private  int loginTag=0;
     private Context context;
     private ImageButton IB_fb,IB_google;
+    private FrameLayout fl_google,fl_fb;
+
+    // deklarasi
+    private SignInButton btnSignIn;
+    private static final String TAG = Login.class.getSimpleName();
+    private static final int RC_SIGN_IN = 007;
+
+    private GoogleApiClient mGoogleApiClient;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
@@ -116,6 +126,15 @@ public class Login extends AppCompatActivity {
                 .icon(Ionicons.Icon.ion_social_google_outline)
                 .color(context.getResources().getColor(R.color.white))
                 .sizeDp(50));
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, null)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
         fab = (TextView) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +161,7 @@ public class Login extends AppCompatActivity {
 
             }
         });
+
 
         String registrationId = prefs.getString(ApplicationConstants.REG_ID, "");
         String theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
@@ -212,8 +232,8 @@ public class Login extends AppCompatActivity {
 
         // login facebook
         callbackManager = CallbackManager.Factory.create();
-       loginButton = (LoginButton) findViewById(R.id.btn_fb_login);
-       loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_birthday"));
+        loginButton = (LoginButton) findViewById(R.id.btn_fb_login);
+        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_birthday"));
         callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -258,32 +278,75 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        fl_google=(FrameLayout)findViewById(R.id.FrameLayout2);
+        fl_fb=(FrameLayout)findViewById(R.id.FrameLayout1);
+        fl_fb.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                loginButton.performClick();
+            }
+        });
+        btnSignIn=(SignInButton)findViewById(R.id.btn_sign_in);
+        btnSignIn.setScopes(gso.getScopeArray());
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Snackbar.make(v, "Tes Login by google", Snackbar.LENGTH_LONG).show();
+
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+
+            }
+        });
+
+        fl_google.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
     }
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.d(TAG, "handleSignInResult:" + result.toString());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+    
+            if (checkPlayServices()) {
+                loginTag = 3;
+                email = acct.getEmail();
+                registerInBackground();
+            } else {
+                Toast.makeText(this,"Please Update Your Play Service",Toast.LENGTH_LONG).show();
+            }
+        } else {
+            // Signed out, show unauthenticated UI.
+
+            Toast.makeText(this,"Failed",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-    private void setProfileToView(JSONObject jsonObject) {
-        try { // ambil object dari profile user facebook
-           // String s_facebookName=jsonObject.getString("name").trim();
-            //String s_email=jsonObject.getString("email").trim();
-            //String s_gender=jsonObject.getString("gender").trim();
-            //String s_birthday=jsonObject.getString("age_range").trim();
-           // String s_profilePictureView=jsonObject.getString("id").trim();
-            //String s_firstName=jsonObject.getString("locale").trim();
-
-            Facebook_Email = jsonObject.getString("email").trim();
-            // tampilkan info email facebook user
-            Toast.makeText(getApplicationContext(), "Email Facebook : "+Facebook_Email, Toast.LENGTH_SHORT).show();
-
-            // shared data
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
-    }   // facebook selesai
+
+    }
+
 
     private void attemptRegister() {
 
@@ -676,6 +739,7 @@ public class Login extends AppCompatActivity {
         editor.putString(ApplicationConstants.LEVEL_ID, role);
         editor.putInt(ApplicationConstants.USER_ID, id);
         editor.putString(ApplicationConstants.PATH_FOTO_USER, pathfotouser);
+        editor.putInt(ApplicationConstants.LOGIN_TAG_BY,loginTag);
         editor.commit();
     }
 }

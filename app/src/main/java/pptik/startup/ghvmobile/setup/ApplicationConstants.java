@@ -51,6 +51,7 @@ public interface ApplicationConstants {
   static final String USER_LATITUDE="LaTidude";
   static final String USER_LONGITUDE="LongiTude";
   static final String PATH_FOTO_USER = "PatHFotOUser";
+  static final String LOGIN_TAG_BY = "LogInTagBy";
   static final String DEFAULT_PATH_FOTO="http://167.205.7.228:8087/v1/resources/assets/image/default.png";
   static final int MARKER_ME = 0,MARKER_ADMIN=1,MARKER_USER=2,MARKER_PROGRAM=3;
   //------- MARKER PREFS NAME
