@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
@@ -109,6 +110,7 @@ public class Login extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.login_activity);
         context = this;
         prefs = getSharedPreferences("UserDetails",
@@ -165,7 +167,6 @@ public class Login extends AppCompatActivity {
 
         String registrationId = prefs.getString(ApplicationConstants.REG_ID, "");
         String theRole = prefs.getString(ApplicationConstants.LEVEL_ID, "");
-        int user_ID=prefs.getInt(ApplicationConstants.USER_ID,0);
         if (!TextUtils.isEmpty(registrationId)) {
            if(theRole.contains("1")){
                 Intent i = new Intent(Login.this, Admin.class);

@@ -68,6 +68,7 @@
                     android:layout_alignBottom="@+id/btn_sign_in" />
 
                 <ImageButton
+                    android:clickable="false"
                     android:layout_margin="3dp"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:background="@null"
@@ -94,6 +95,7 @@
                     />
 
                 <ImageButton
+                    android:clickable="false"
                     android:layout_margin="3dp"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:background="@null"
