@@ -166,7 +166,7 @@ public class GuestListProgram extends AppCompatActivity {
     }
     public void onBackPressed() {
         Intent intent;
-        intent = new Intent(applicationContext, GuestMenu.class);
+        intent = new Intent(applicationContext, MainMenu.class);
         startActivity(intent);
         finish();
     }

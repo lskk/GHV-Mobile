@@ -276,11 +276,11 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
                             "Please Fill Required Form", Toast.LENGTH_LONG)
                             .show();
                 }else {
-                    if (finalPhotoPath.isEmpty() || finalPhotoPath == null) {
+                  /*  if (finalPhotoPath.isEmpty() || finalPhotoPath == null) {
                         Toast.makeText(getApplicationContext(),
                                 "Please Upload Photo", Toast.LENGTH_LONG)
                                 .show();
-                    }else if(pendidikanterakhir.contains("0")){
+                    }else*/ if(pendidikanterakhir.contains("0")){
                         Toast.makeText(getApplicationContext(),
                                 "Please Choose your Education Background", Toast.LENGTH_LONG)
                                 .show();
@@ -704,15 +704,15 @@ public class ProfileRelawan extends AppCompatActivity implements AdapterView.OnI
                     Intent intent;
 
                     if (roleid.contains("2")){
-                        intent = new Intent(applicationContext, RelawanMenu.class);
+                        intent = new Intent(applicationContext, MainMenu.class);
                         startActivity(intent);
                         finish();
                     }else if (roleid.contains("3")){
-                        intent = new Intent(applicationContext, GuestMenu.class);
+                        intent = new Intent(applicationContext, MainMenu.class);
                         startActivity(intent);
                         finish();
                     }else if (roleid.contains("1")) {
-                        intent = new Intent(applicationContext, Admin.class);
+                        intent = new Intent(applicationContext, MainMenu.class);
                         startActivity(intent);
                         finish();
                     }
