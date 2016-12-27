@@ -154,7 +154,7 @@ public class ImageGallery extends AppCompatActivity {
             String fullPhotoPath = rootPhotoDirectory+File.separator+photoName.toString();
             final_path_foto = fullPhotoPath;
             Bitmap resizedimage=Bitmap.createScaledBitmap(photo,(int)(photo.getWidth()*0.5), (int)(photo.getHeight()*0.5), true);
-            savebitmap(resizedimage, fullPhotoPath);
+            savebitmap(photo, fullPhotoPath);
         }else if(requestCode == SELECT_PICTURE && resultCode==RESULT_OK && data!=null){
             Uri selectedImage = data.getData();
             String path = getPath(selectedImage);
